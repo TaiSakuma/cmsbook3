@@ -55,7 +55,7 @@ export default {
 <style>
 @import "../../node_modules/github-markdown-css/github-markdown.css";
 .markdown-body {
-  background-color: #f5f5f5;
+  background-color: #ffffff;
   box-sizing: border-box;
   min-width: 200px;
   max-width: 980px;
