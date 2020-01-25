@@ -56,14 +56,14 @@ export default {
 <style>
 @import "../../node_modules/github-markdown-css/github-markdown.css";
 .markdown-body {
-  background-color: white;
+  background-color: #f5f5f5;
   box-sizing: border-box;
   min-width: 200px;
   max-width: 980px;
   padding: 10px;
 }
 .v-application .markdown-body code {
-  background-color: #f5f5f5;
+  background-color: #f0f0f0;
   box-shadow: none;
 }
 .v-application .markdown-body code:before {
