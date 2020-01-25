@@ -33,9 +33,12 @@ export default {
   },
   methods: {
     loadData() {
-      const pathTop =
-        "http://localhost/~sakuma/cmsbook/help/s0000_index_001/log.md";
-      const path = pathTop;
+      const pathTop = "http://localhost/~sakuma/cmsbook";
+      let path = pathTop + "/" + this.$route.params.chapter;
+      path = path + "/" + this.$route.params.section;
+      path = path + "/" + this.$route.params.page;
+      path = path + ".md";
+      console.log(path);
       axios.get(path).then(response => {
         this.markdown = response.data;
       });
