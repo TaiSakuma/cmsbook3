@@ -2,10 +2,9 @@
   <div class="page">
     <v-breadcrumbs :items="breadcrumbsItems"></v-breadcrumbs>
     <v-container>
-        <article class="markdown-body">
-          <VueShowdown :markdown="markdown" flavor="github"></VueShowdown>
-        </article>
-      </div>
+      <article class="markdown-body">
+        <VueShowdown :markdown="markdown" flavor="github"></VueShowdown>
+      </article>
     </v-container>
   </div>
 </template>
