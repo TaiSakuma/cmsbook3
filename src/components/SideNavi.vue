@@ -1,5 +1,6 @@
 <template>
   <v-list>
+    <v-subheader inset v-text="$route.params.chapter"></v-subheader>
     <v-list-item link router v-for="page in pages" :key="page.title" :to="page.to">
       <v-list-item-action>
         <v-icon v-text="page.icon"></v-icon>
@@ -15,11 +16,12 @@
 export default {
   name: "SideNavi",
   data: () => ({
-      pages: [
-          {title: "Home", icon: "mdi-book-open", to: "/"},
-          {title: "About", icon: "mdi-information", to: "/about"},
-          {title: "Page", icon: "mdi-book-open", to: "/page"}
-      ]
+    pages: [
+      { title: "Home", icon: "mdi-book-open", to: "/" },
+      { title: "About", icon: "mdi-information", to: "/about" },
+      { title: "Page", icon: "mdi-book-open", to: "/page" },
+      { title: "log", icon: "mdi-book-open", to: "/help/s0000_index_001/log" }
+    ]
   })
 };
 </script>
