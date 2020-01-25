@@ -54,11 +54,11 @@ export default {
   max-width: 980px;
   padding: 10px;
 }
-.markdown-body code {
+.v-application .markdown-body code {
   background-color: #f5f5f5;
   box-shadow: none;
 }
-.markdown-body code:before {
-  content: ""
+.v-application .markdown-body code:before {
+  content: "";
 }
 </style>
