@@ -2,50 +2,42 @@
   <div class="page">
     <v-container>
       <p>Page</p>
+      <p>{{ $route.params.chapter }}</p>
+      <p>{{ $route.params.section }}</p>
+      <p>{{ $route.params.page }}</p>
+      <div>
+        <VueShowdown :markdown="markdown" flavor="github"></VueShowdown>
+      </div>
     </v-container>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import { VueShowdown } from "vue-showdown";
 
 export default {
   name: "page",
+  components: {
+    VueShowdown
+  },
   data() {
     return {
-      headers: [],
-      items: [],
-      shows: {}
+      markdown: ""
     };
-  },
-  computed: {
-    showsAny: {
-      get: function() {
-        return Object.keys(this.shows).some(i => this.shows[i]);
-      },
-      set: function(v) {
-        for (const k in this.shows) {
-          this.shows[k] = v;
-        }
-      }
-    }
   },
   created: function() {
     this.loadData();
   },
   methods: {
     loadData() {
-      const path = "http://localhost:5000/maps";
+      const pathTop =
+        "http://localhost/~sakuma/cmsbook/help/s0000_index_001/log.md";
+      const path = pathTop;
       axios.get(path).then(response => {
-        this.headers = response.data.schema.fields.map(f => ({
-          text: f.name,
-          value: f.name
-        }));
-        this.items = response.data.data;
-        this.items.sort((a, b) => (a.date_posted > b.date_posted ? -1 : 1));
-        this.shows = this.items.reduce((obj, x) => ({ ...obj, [x.id]: false }), {});
+        this.markdown = response.data;
       });
-    },
+    }
   }
 };
 </script>
