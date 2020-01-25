@@ -1,11 +1,7 @@
 <template>
   <div class="page">
+    <v-breadcrumbs :items="breadcrumbsItems"></v-breadcrumbs>
     <v-container>
-      <p>Page</p>
-      <p>{{ $route.params.chapter }}</p>
-      <p>{{ $route.params.section }}</p>
-      <p>{{ $route.params.page }}</p>
-      <div>
         <article class="markdown-body">
           <VueShowdown :markdown="markdown" flavor="github"></VueShowdown>
         </article>
@@ -27,6 +23,15 @@ export default {
     return {
       markdown: ""
     };
+  },
+  computed: {
+    breadcrumbsItems() {
+      return [
+        { text: this.$route.params.chapter },
+        { text: this.$route.params.section },
+        { text: this.$route.params.page }
+      ];
+    }
   },
   created: function() {
     this.loadData();
