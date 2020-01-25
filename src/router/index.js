@@ -21,7 +21,7 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/About.vue")
   },
   {
-    path: "/page",
+    path: "/:chapter/:section/:page",
     name: "page",
     component: Page
   }
