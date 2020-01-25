@@ -1,19 +1,11 @@
 <template>
   <v-list>
-    <v-list-item link router :to="'/'">
+    <v-list-item link router v-for="page in pages" :key="page.title" :to="page.to">
       <v-list-item-action>
-        <v-icon>mdi-book-open</v-icon>
+        <v-icon v-text="page.icon"></v-icon>
       </v-list-item-action>
       <v-list-item-content>
-        <v-list-item-title>Home</v-list-item-title>
-      </v-list-item-content>
-    </v-list-item>
-    <v-list-item link router :to="'/about'">
-      <v-list-item-action>
-        <v-icon>mdi-information</v-icon>
-      </v-list-item-action>
-      <v-list-item-content>
-        <v-list-item-title>About</v-list-item-title>
+        <v-list-item-title v-text="page.title"></v-list-item-title>
       </v-list-item-content>
     </v-list-item>
   </v-list>
@@ -22,6 +14,11 @@
 <script>
 export default {
   name: "SideNavi",
-  data: () => ({})
+  data: () => ({
+      pages: [
+          {title: "Home", icon: "mdi-book-open", to: "/"},
+          {title: "About", icon: "mdi-information", to: "/about"}
+      ]
+  })
 };
 </script>
