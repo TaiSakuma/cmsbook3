@@ -6,7 +6,9 @@
       <p>{{ $route.params.section }}</p>
       <p>{{ $route.params.page }}</p>
       <div>
+        <article class="markdown-body">
         <VueShowdown :markdown="markdown" flavor="github"></VueShowdown>
+        </article>
       </div>
     </v-container>
   </div>
@@ -41,3 +43,20 @@ export default {
   }
 };
 </script>
+
+<!-- https://github.com/sindresorhus/github-markdown-css -->
+<style scoped>
+@import '../../node_modules/github-markdown-css/github-markdown.css';
+  	.markdown-body {
+		box-sizing: border-box;
+		min-width: 200px;
+		max-width: 980px;
+		margin: 0 auto;
+		padding: 45px;
+	}
+	@media (max-width: 767px) {
+		.markdown-body {
+			padding: 15px;
+		}
+	}
+</style>
