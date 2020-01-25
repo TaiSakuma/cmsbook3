@@ -17,7 +17,8 @@ export default {
   data: () => ({
       pages: [
           {title: "Home", icon: "mdi-book-open", to: "/"},
-          {title: "About", icon: "mdi-information", to: "/about"}
+          {title: "About", icon: "mdi-information", to: "/about"},
+          {title: "Page", icon: "mdi-book-open", to: "/page"}
       ]
   })
 };
