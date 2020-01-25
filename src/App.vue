@@ -1,5 +1,18 @@
 <template>
   <v-app>
+    <v-app-bar app dense clipped-left>
+      <v-app-bar-nav-icon @click="drawer = !drawer" />
+      <v-toolbar-title>cmsbook</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-tooltip left open-delay="800">
+        <template v-slot:activator="{ on }">
+          <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark" v-on="on">
+            <v-icon>mdi-invert-colors</v-icon>
+          </v-btn>
+        </template>
+        <span>Toggle dark mode</span>
+      </v-tooltip>
+    </v-app-bar>
   </v-app>
 </template>
 
@@ -14,7 +27,7 @@ export default {
   },
 
   data: () => ({
-    //
+    drawer: null
   })
 };
 </script>
