@@ -23,14 +23,12 @@
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld";
 import SideNavi from "./components/SideNavi";
 
 export default {
   name: "App",
 
   components: {
-    HelloWorld,
     SideNavi
   },
 
