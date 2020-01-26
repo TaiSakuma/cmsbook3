@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Page from "../views/Page.vue";
+import Redirect from "../views/Redirect.vue";
 import PageNotFound from "../views/PageNotFound.vue";
 
 Vue.use(VueRouter);
@@ -19,6 +20,11 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue")
+  },
+  {
+    path: "/:chapter/*.pdf",
+    name: "redirect",
+    component: Redirect
   },
   {
     path: "/:chapter/:section/:page",
