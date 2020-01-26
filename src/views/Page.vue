@@ -35,6 +35,11 @@ export default {
   created: function() {
     this.loadData();
   },
+  watch: {
+    $route(to, from) {
+      this.loadData();
+    }
+  },
   methods: {
     loadData() {
       const pathTop = "http://localhost/~sakuma/cmsbook";
