@@ -6,7 +6,7 @@
     <v-list>
       <v-list-item link router v-for="page in pages" :key="page.path" :to="page.path">
         <v-list-item-action>
-          <v-icon v-text="page.icon"></v-icon>
+          <v-icon >mdi-book-open</v-icon>
         </v-list-item-action>
         <v-list-item-content>
           <v-list-item-title v-text="page.name"></v-list-item-title>
@@ -22,10 +22,10 @@ export default {
   name: "SideNavi",
   data: () => ({
     pages: [
-      { name: "Home", icon: "mdi-book-open", path: "/" },
-      { name: "About", icon: "mdi-information", path: "/about" },
-      { name: "Page", icon: "mdi-book-open", path: "/page" },
-      { name: "log", icon: "mdi-book-open", path: "/help/s0000_index_001/log" }
+      { name: "Home", path: "/" },
+      { name: "About", path: "/about" },
+      { name: "Page", path: "/page" },
+      { name: "log", path: "/help/s0000_index_001/log" }
     ]
   })
 };
