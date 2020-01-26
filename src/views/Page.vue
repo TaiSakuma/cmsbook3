@@ -9,6 +9,7 @@
   </div>
 </template>
 
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
 <script>
 import axios from "axios";
 import { VueShowdown } from "vue-showdown";
@@ -34,6 +35,9 @@ export default {
   },
   created: function() {
     this.loadData();
+  },
+  updated: function() {
+    $(".markdown-body a:not([href^='#'])").attr('target', '_blank');
   },
   watch: {
     $route(to, from) {
