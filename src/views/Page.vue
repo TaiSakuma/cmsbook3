@@ -3,7 +3,7 @@
     <v-breadcrumbs :items="breadcrumbsItems"></v-breadcrumbs>
     <v-container>
       <article class="markdown-body">
-        <VueShowdown :markdown="markdown" flavor="github"></VueShowdown>
+        <div v-html="content"></div>
       </article>
     </v-container>
   </div>
@@ -12,16 +12,13 @@
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
 <script>
 import axios from "axios";
-import { VueShowdown } from "vue-showdown";
+import marked from "marked";
 
 export default {
   name: "page",
-  components: {
-    VueShowdown
-  },
   data() {
     return {
-      markdown: ""
+      content: ""
     };
   },
   computed: {
@@ -53,7 +50,7 @@ export default {
       path = path + ".md";
       console.log(path);
       axios.get(path).then(response => {
-        this.markdown = response.data;
+        this.content = marked(response.data);
       });
     }
   }
