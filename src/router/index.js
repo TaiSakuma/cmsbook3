@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Page from "../views/Page.vue";
+import PageNotFound from "../views/PageNotFound.vue";
 
 Vue.use(VueRouter);
 
@@ -23,6 +24,11 @@ const routes = [
     path: "/:chapter/:section/:page",
     name: "page",
     component: Page
+  },
+  {
+    path: "*",
+    name: "pagenotfound",
+    component: PageNotFound
   }
 ];
 
