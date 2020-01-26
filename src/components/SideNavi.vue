@@ -13,11 +13,12 @@
         </v-list-item-content>
       </v-list-item>
     </v-list>
-    <p>{{ $route.path }}</p>
   </v-card>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "SideNavi",
   data: () => ({
@@ -26,7 +27,21 @@ export default {
       { name: "About", path: "/about" },
       { name: "Page", path: "/page" },
       { name: "log", path: "/help/s0000_index_001/log" }
-    ]
-  })
+    ],
+    scratch: null
+  }),
+  created() {
+      const pathTop = "http://localhost/~sakuma/cmsbook";
+      let path = pathTop + "/" + this.$route.params.chapter;
+      path = path + "/cmsbook_frame/sections.json";
+      console.log(path);
+      axios.get(path).then(response => {
+        let sections = response.data['sections'];
+        for(const s of sections) {
+          s["path"] = "/" + this.$route.params.chapter + "/" + s["path"];
+        }
+        this.pages = sections;
+      });
+  }
 };
 </script>
