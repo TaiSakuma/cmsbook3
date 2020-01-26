@@ -1,15 +1,19 @@
 <template>
-  <v-list>
-    <v-subheader inset v-text="$route.params.chapter"></v-subheader>
-    <v-list-item link router v-for="page in pages" :key="page.title" :to="page.to">
-      <v-list-item-action>
-        <v-icon v-text="page.icon"></v-icon>
-      </v-list-item-action>
-      <v-list-item-content>
-        <v-list-item-title v-text="page.title"></v-list-item-title>
-      </v-list-item-content>
-    </v-list-item>
-  </v-list>
+  <v-card flat>
+    <v-toolbar flat>
+          <v-toolbar-title v-text="$route.params.chapter"></v-toolbar-title>      
+    </v-toolbar>
+    <v-list>
+      <v-list-item link router v-for="page in pages" :key="page.title" :to="page.to">
+        <v-list-item-action>
+          <v-icon v-text="page.icon"></v-icon>
+        </v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title v-text="page.title"></v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
+  </v-card>
 </template>
 
 <script>
