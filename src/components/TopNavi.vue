@@ -15,7 +15,9 @@ export default {
       { name: "Publications", path: "/publications" },
       { name: "Meetings", path: "/meetings" },
       { name: "CV", path: "/CV" },
-      { name: "References", path: "/references" }
+      { name: "References", path: "/references" },
+      { name: "Help", path: "/help" },
+      { name: "Scratch", path: "/scratch" }
     ]
   }),
   methods: {
