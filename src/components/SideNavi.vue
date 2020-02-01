@@ -35,6 +35,9 @@ export default {
           s["path"] = "/" + this.$route.params.chapter + "/" + s["path"];
         }
         this.pages = sections;
+      })
+      .catch(error => {
+        this.pages = [ ]
       });
     }
   },
