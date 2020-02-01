@@ -1,11 +1,6 @@
 <template>
   <v-tabs align-with-title background-color="transparent">
-    <v-tab to="/conferences">Conferences</v-tab>
-    <v-tab to="/publications">Publications</v-tab>
-    <v-tab to="/meetings">Meetings</v-tab>
-    <v-tab to="/seminars">Seminars</v-tab>
-    <v-tab to="/CV">CV</v-tab>
-    <v-tab to="/references">References</v-tab>
+    <v-tab v-for="page in pages" :key="page.namme" :to="page.path" v-text="page.name"></v-tab>
   </v-tabs>
 </template>
 
@@ -15,7 +10,13 @@ import axios from "axios";
 export default {
   name: "TopNavi",
   data: () => ({
-    pages: []
+    pages: [
+      { name: "Conferences", path: "/conferences" },
+      { name: "Publications", path: "/publications" },
+      { name: "Meetings", path: "/meetings" },
+      { name: "CV", path: "/CV" },
+      { name: "References", path: "/references" }
+    ]
   }),
   methods: {
     updatePages() {}
