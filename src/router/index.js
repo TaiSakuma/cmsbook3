@@ -32,6 +32,16 @@ const routes = [
     component: Page
   },
   {
+    path: "/:chapter/:section",
+    name: "page",
+    component: Page
+  },
+  {
+    path: "/:chapter",
+    name: "page",
+    component: Page
+  },
+  {
     path: "*",
     name: "pagenotfound",
     component: PageNotFound
