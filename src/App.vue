@@ -15,6 +15,9 @@
         </template>
         <span>Toggle dark mode</span>
       </v-tooltip>
+      <template v-slot:extension>
+        <TopNavi></TopNavi>
+      </template>
     </v-app-bar>
     <v-content>
       <router-view></router-view>
@@ -24,12 +27,14 @@
 
 <script>
 import SideNavi from "./components/SideNavi";
+import TopNavi from "./components/TopNavi";
 
 export default {
   name: "App",
 
   components: {
-    SideNavi
+    SideNavi,
+    TopNavi
   },
 
   data: () => ({
