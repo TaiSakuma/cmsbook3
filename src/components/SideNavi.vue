@@ -28,7 +28,7 @@ export default {
     updatePages() {
       const pathTop = "http://localhost/~sakuma/cmsbook";
       let path = pathTop + "/" + this.$route.params.chapter;
-      path = path + "/cmsbook_frame/sections.json";
+      path = path + "/.cmsbook3/sections.json";
       axios.get(path).then(response => {
         let sections = response.data["sections"];
         for (const s of sections) {
