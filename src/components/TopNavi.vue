@@ -10,18 +10,18 @@ import axios from "axios";
 export default {
   name: "TopNavi",
   data: () => ({
-    pages: [
-      { name: "Conferences", path: "/conferences" },
-      { name: "Publications", path: "/publications" },
-      { name: "Meetings", path: "/meetings" },
-      { name: "CV", path: "/CV" },
-      { name: "References", path: "/references" },
-      { name: "Help", path: "/help" },
-      { name: "Scratch", path: "/scratch" }
-    ]
+    pages: [ ]
   }),
   methods: {
-    updatePages() {}
+    updatePages() {
+      const pathTop = "http://localhost/~sakuma/cmsbook";
+      const path = pathTop + "/.cmsbook3/chapters.json";
+      axios.get(path).then(response => {
+        this.pages = response.data["chapters"];
+      }).catch(error => {
+        this.page = [];
+      });
+    }
   },
   created() {
     this.updatePages();
