@@ -34,7 +34,7 @@ export default {
     this.loadData();
   },
   updated: function() {
-    $(".markdown-body a:not([href^='#'])").attr('target', '_blank');
+    $(".markdown-body a:not([href^='#'])").attr("target", "_blank");
   },
   watch: {
     $route(to, from) {
