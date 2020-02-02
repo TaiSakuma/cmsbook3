@@ -74,6 +74,13 @@ export default {
       }
 
       const sectionUrl = chapterUrl + "/" + this.$route.params.section;
+
+      if(!this.$route.params.page) {
+        const contentUrl = sectionUrl + "/" + process.env.VUE_APP_CMSBOOK_INDEX_FILENAME;
+        this.path = contentUrl;
+        return;
+      }
+
       const contentUrl = sectionUrl + "/" + this.$route.params.page;
       this.path = contentUrl;
     },
