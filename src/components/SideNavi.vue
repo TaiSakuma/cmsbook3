@@ -21,7 +21,7 @@
           </v-list-item>
         </template>
         <template v-else-if="page.subcontents">
-          <v-list-group prepend-icon="mdi-book-open" value="true" :key="page.name">
+          <v-list-group prepend-icon="mdi-book-open" :key="page.name">
             <template v-slot:activator>
               <v-list-item-title v-text="page.name"></v-list-item-title>
             </template>
@@ -32,11 +32,10 @@
               :key="subpage.name"
               :to="'/' + $route.params.chapter + '/' + subpage.path"
             >
-            <v-list-item-action>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title v-text="subpage.name"></v-list-item-title>
-            </v-list-item-content>
+              <v-list-item-action></v-list-item-action>
+              <v-list-item-content>
+                <v-list-item-title v-text="subpage.name"></v-list-item-title>
+              </v-list-item-content>
             </v-list-item>
           </v-list-group>
         </template>
