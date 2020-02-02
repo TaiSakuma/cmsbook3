@@ -24,11 +24,14 @@ export default {
   },
   computed: {
     breadcrumbsItems() {
-      return [
-        { text: this.$route.params.chapter },
-        { text: this.$route.params.section },
-        { text: this.$route.params.page }
-      ];
+      let ret = [ { text: this.$route.params.chapter } ];
+      if(this.$route.params.section) {
+        ret.push({ text: this.$route.params.section});
+      }
+      if(this.$route.params.page) {
+        ret.push({ text: this.$route.params.page});
+      }
+      return ret;
     }
   },
   created: function() {
