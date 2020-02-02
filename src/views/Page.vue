@@ -35,6 +35,7 @@ export default {
   },
   updated: function() {
     $(".markdown-body a:not([href^='#'])").attr("target", "_blank");
+    MathJax.typeset()
   },
   watch: {
     $route(to, from) {
