@@ -9,7 +9,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    redirect: "/references/SUSY/web"
+    redirect: "/references/SUSY/web.md"
   },
   {
     path: "/about",
