@@ -58,6 +58,7 @@ export default {
       this.path = path;
     },
     loadData() {
+      if(!this.path) return;
       axios.get(this.path).then(response => {
         this.content = marked(response.data);
       });
