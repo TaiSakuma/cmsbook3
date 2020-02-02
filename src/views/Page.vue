@@ -49,13 +49,30 @@ export default {
   },
   methods: {
     updatePath() {
-      let path = process.env.VUE_APP_CMSBOOK_URL;
-      path = path + "/" + this.$route.params.chapter;
-      path = path + "/" + this.$route.params.section;
-      path = path + "/" + this.$route.params.page;
-      path = path + ".md";
-      console.log(path);
-      this.path = path;
+      const cmsbookUrl = process.env.VUE_APP_CMSBOOK_URL;
+      const chapterUrl = cmsbookUrl + "/" + this.$route.params.chapter;
+
+      if(!this.$route.params.section) {
+        const configUrl = chapterUrl + "/.cmsbook3/sections.json";
+        axios.get(configUrl)
+        .then(response => {
+          if(!response.data.home) {
+            this.path = "";
+            return;
+          }
+          this.path = chapterUrl + "/" + response.data.home + ".md";
+          return;
+        })
+        .catch(error => {
+          this.path = "";
+          return;
+        });
+
+      }
+
+      const sectionUrl = chapterUrl + "/" + this.$route.params.section;
+      const contentUrl = sectionUrl + "/" + this.$route.params.page + ".md";
+      this.path = contentUrl;
     },
     loadData() {
       if(!this.path) return;
