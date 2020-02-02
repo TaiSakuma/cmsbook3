@@ -1,6 +1,5 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
 import Page from "../views/Page.vue";
 import Redirect from "../views/Redirect.vue";
 import PageNotFound from "../views/PageNotFound.vue";
