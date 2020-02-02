@@ -63,7 +63,7 @@ export default {
             this.path = "";
             return;
           }
-          this.path = chapterUrl + "/" + response.data.home + ".md";
+          this.path = chapterUrl + "/" + response.data.home;
           return;
         })
         .catch(error => {
@@ -74,7 +74,7 @@ export default {
       }
 
       const sectionUrl = chapterUrl + "/" + this.$route.params.section;
-      const contentUrl = sectionUrl + "/" + this.$route.params.page + ".md";
+      const contentUrl = sectionUrl + "/" + this.$route.params.page;
       this.path = contentUrl;
     },
     loadData() {
