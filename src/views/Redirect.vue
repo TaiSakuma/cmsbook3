@@ -9,7 +9,7 @@
 <script>
 export default {
   name: "redirect",
-  created() {
+  beforeCreate() {
     const pathTop = "http://localhost/~sakuma/cmsbook";
     const path = pathTop + this.$route.path;
     window.location = path;
