@@ -45,8 +45,8 @@ export default {
   methods: {
     loadData() {
       this.content = "";
-      const pathTop = "http://localhost/~sakuma/cmsbook";
-      let path = pathTop + "/" + this.$route.params.chapter;
+      let path = process.env.VUE_APP_CMSBOOK_URL;
+      path = path + "/" + this.$route.params.chapter;
       path = path + "/" + this.$route.params.section;
       path = path + "/" + this.$route.params.page;
       path = path + ".md";

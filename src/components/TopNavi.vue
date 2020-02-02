@@ -14,8 +14,8 @@ export default {
   }),
   methods: {
     updatePages() {
-      const pathTop = "http://localhost/~sakuma/cmsbook";
-      const path = pathTop + "/.cmsbook3/chapters.json";
+      let path = process.env.VUE_APP_CMSBOOK_URL;
+      path = path + "/.cmsbook3/chapters.json";
       axios.get(path).then(response => {
         this.pages = response.data["chapters"];
       }).catch(error => {

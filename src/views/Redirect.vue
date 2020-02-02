@@ -10,8 +10,8 @@
 export default {
   name: "redirect",
   beforeCreate() {
-    const pathTop = "http://localhost/~sakuma/cmsbook";
-    const path = pathTop + this.$route.path;
+    let path = process.env.VUE_APP_CMSBOOK_URL;
+    path = path + this.$route.path;
     window.location = path;
   }
 };
