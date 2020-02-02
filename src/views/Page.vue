@@ -18,7 +18,8 @@ export default {
   name: "page",
   data() {
     return {
-      content: ""
+      content: "",
+      path: ""
     };
   },
   computed: {
@@ -31,27 +32,33 @@ export default {
     }
   },
   created: function() {
-    this.loadData();
+    this.updatePath();
   },
   updated: function() {
     $(".markdown-body a:not([href^='#'])").attr("target", "_blank");
     MathJax.typeset()
   },
   watch: {
-    $route(to, from) {
+    path() {
       this.loadData();
+    },
+    $route(to, from) {
+      this.content = "";
+      this.updatePath();
     }
   },
   methods: {
-    loadData() {
-      this.content = "";
+    updatePath() {
       let path = process.env.VUE_APP_CMSBOOK_URL;
       path = path + "/" + this.$route.params.chapter;
       path = path + "/" + this.$route.params.section;
       path = path + "/" + this.$route.params.page;
       path = path + ".md";
       console.log(path);
-      axios.get(path).then(response => {
+      this.path = path;
+    },
+    loadData() {
+      axios.get(this.path).then(response => {
         this.content = marked(response.data);
       });
     }
