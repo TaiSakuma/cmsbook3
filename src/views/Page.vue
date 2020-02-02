@@ -51,6 +51,9 @@ export default {
       console.log(path);
       axios.get(path).then(response => {
         this.content = marked(response.data);
+      })
+      .catch(error => {
+        this.content = ""
       });
     }
   }
