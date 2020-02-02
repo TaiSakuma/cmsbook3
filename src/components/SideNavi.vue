@@ -3,7 +3,7 @@
     <v-toolbar flat>
       <v-toolbar-title v-text="$route.params.chapter"></v-toolbar-title>
     </v-toolbar>
-    <v-list>
+    <v-list dense>
       <template v-for="page in pages">
         <template v-if="page.path">
           <v-list-item
