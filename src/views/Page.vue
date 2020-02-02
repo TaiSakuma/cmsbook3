@@ -44,6 +44,7 @@ export default {
   },
   methods: {
     loadData() {
+      this.content = "";
       const pathTop = "http://localhost/~sakuma/cmsbook";
       let path = pathTop + "/" + this.$route.params.chapter;
       path = path + "/" + this.$route.params.section;
@@ -52,9 +53,6 @@ export default {
       console.log(path);
       axios.get(path).then(response => {
         this.content = marked(response.data);
-      })
-      .catch(error => {
-        this.content = ""
       });
     }
   }
