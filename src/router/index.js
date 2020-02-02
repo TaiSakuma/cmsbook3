@@ -32,12 +32,12 @@ const routes = [
   },
   {
     path: "/:chapter/:section",
-    name: "page",
+    name: "section",
     component: Page
   },
   {
     path: "/:chapter",
-    name: "page",
+    name: "chapter",
     component: Page
   },
   {
