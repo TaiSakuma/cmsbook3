@@ -20,7 +20,9 @@
       </template>
     </v-app-bar>
     <v-content>
-      <router-view></router-view>
+      <transition name="fade" mode="out-in">
+        <router-view :key="$route.params.chapter + $route.params.section + $route.params.page"></router-view>
+      </transition>
     </v-content>
   </v-app>
 </template>
@@ -42,3 +44,14 @@ export default {
   })
 };
 </script>
+
+<style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s;
+}
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}
+</style>
