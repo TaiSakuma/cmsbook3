@@ -1,5 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+
+import Chapter from "../views/Chapter.vue";
 import Page from "../views/Page.vue";
 import Redirect from "../views/Redirect.vue";
 import PageNotFound from "../views/PageNotFound.vue";
@@ -48,7 +50,7 @@ const routes = [
   {
     path: "/:chapter",
     name: "chapter",
-    component: Page
+    component: Chapter
   },
   {
     path: "*",
