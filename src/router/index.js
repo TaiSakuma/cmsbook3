@@ -32,8 +32,18 @@ const routes = [
   },
   {
     path: "/:chapter/:section",
-    name: "section",
-    component: Page
+    redirect: to => {
+      const pathChapterSection = to.path;
+      // e.g. /abc/xyz
+
+      const defaultPage = process.env.VUE_APP_CMSBOOK_INDEX_FILENAME;
+      // e.g. web.md
+
+      const ret = pathChapterSection + "/" + defaultPage;
+      // e.g., /abc/xyz/web.md
+
+      return ret;
+    }
   },
   {
     path: "/:chapter",
