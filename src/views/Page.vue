@@ -87,10 +87,15 @@ export default {
   box-sizing: border-box;
   min-width: 200px;
   max-width: 980px;
-  padding: 10px;
+  padding: 20px;
+  border-radius: 10px;
 }
-.v-application .markdown-body code {
+
+.v-application .markdown-body pre {
   background-color: #f0f0f0;
+}
+
+.v-application .markdown-body code {
   box-shadow: none;
 }
 .v-application .markdown-body code:before {
