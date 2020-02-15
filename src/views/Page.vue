@@ -82,8 +82,15 @@ export default {
 <!-- https://github.com/sindresorhus/github-markdown-css -->
 <style>
 @import "../../node_modules/github-markdown-css/github-markdown.css";
+
+.theme--dark .markdown-body {
+  color: #F5F5F5;
+}
+
+.theme--light .markdown-body {
+}
+
 .markdown-body {
-  background-color: #ffffff;
   box-sizing: border-box;
   min-width: 200px;
   max-width: 980px;
@@ -91,8 +98,17 @@ export default {
   border-radius: 10px;
 }
 
-.v-application .markdown-body pre {
-  background-color: #f0f0f0;
+.theme--dark .markdown-body pre {
+  background-color: #212121;
+}
+
+.theme--dark .markdown-body code {
+  background-color: #212121;
+  color: #F44336;
+}
+
+.theme--light .markdown-body pre {
+  background-color: #EEEEEE;
 }
 
 .v-application .markdown-body code {
