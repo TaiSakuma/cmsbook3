@@ -1,10 +1,10 @@
 <template>
   <div class="page">
     <v-breadcrumbs :items="breadcrumbsItems"></v-breadcrumbs>
-    <v-container>
-      <article class="markdown-body">
-        <div v-html="content"></div>
-      </article>
+    <v-container fluid>
+      <v-row>
+        <v-col class="markdown-body ma-5 pa-5" v-html="content"></v-col>
+      </v-row>
     </v-container>
   </div>
 </template>
@@ -94,7 +94,6 @@ export default {
   box-sizing: border-box;
   min-width: 200px;
   max-width: 980px;
-  padding: 20px;
   border-radius: 10px;
 }
 
