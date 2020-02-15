@@ -9,7 +9,11 @@
       <v-spacer></v-spacer>
       <v-tooltip left open-delay="800">
         <template v-slot:activator="{ on }">
-          <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark" v-on="on">
+          <v-btn
+            icon
+            @click="$vuetify.theme.dark = !$vuetify.theme.dark"
+            v-on="on"
+          >
             <v-icon>mdi-invert-colors</v-icon>
           </v-btn>
         </template>
@@ -21,7 +25,11 @@
     </v-app-bar>
     <v-content>
       <transition name="fade" mode="out-in">
-        <router-view :key="$route.params.chapter + $route.params.section + $route.params.page"></router-view>
+        <router-view
+          :key="
+            $route.params.chapter + $route.params.section + $route.params.page
+          "
+        ></router-view>
       </transition>
     </v-content>
   </v-app>

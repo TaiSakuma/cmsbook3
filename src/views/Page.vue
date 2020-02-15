@@ -24,12 +24,12 @@ export default {
   },
   computed: {
     breadcrumbsItems() {
-      let ret = [ { text: this.$route.params.chapter } ];
-      if(this.$route.params.section) {
-        ret.push({ text: this.$route.params.section});
+      let ret = [{ text: this.$route.params.chapter }];
+      if (this.$route.params.section) {
+        ret.push({ text: this.$route.params.section });
       }
-      if(this.$route.params.page) {
-        ret.push({ text: this.$route.params.page});
+      if (this.$route.params.page) {
+        ret.push({ text: this.$route.params.page });
       }
       return ret;
     }
@@ -39,7 +39,7 @@ export default {
   },
   updated: function() {
     $(".markdown-body a:not([href^='#'])").attr("target", "_blank");
-    MathJax.typeset()
+    MathJax.typeset();
   },
   watch: {
     path() {
@@ -59,7 +59,7 @@ export default {
       this.path = contentUrl;
     },
     loadData() {
-      if(!this.path) return;
+      if (!this.path) return;
       axios.get(this.path).then(response => {
         this.content = marked(response.data);
       });

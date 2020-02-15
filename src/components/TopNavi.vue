@@ -1,6 +1,11 @@
 <template>
   <v-tabs align-with-title background-color="transparent">
-    <v-tab v-for="page in pages" :key="page.namme" :to="page.path" v-text="page.name"></v-tab>
+    <v-tab
+      v-for="page in pages"
+      :key="page.namme"
+      :to="page.path"
+      v-text="page.name"
+    ></v-tab>
   </v-tabs>
 </template>
 
@@ -10,17 +15,20 @@ import axios from "axios";
 export default {
   name: "TopNavi",
   data: () => ({
-    pages: [ ]
+    pages: []
   }),
   methods: {
     updatePages() {
       let path = process.env.VUE_APP_CMSBOOK_URL;
       path = path + "/.cmsbook3/chapters.json";
-      axios.get(path).then(response => {
-        this.pages = response.data["chapters"];
-      }).catch(error => {
-        this.page = [];
-      });
+      axios
+        .get(path)
+        .then(response => {
+          this.pages = response.data["chapters"];
+        })
+        .catch(error => {
+          this.page = [];
+        });
     }
   },
   created() {
