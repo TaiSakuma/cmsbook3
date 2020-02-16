@@ -43,15 +43,21 @@ import TopNavi from "./components/TopNavi";
 
 export default {
   name: "App",
-
   components: {
     SideNavi,
     TopNavi
   },
-
   data: () => ({
     drawer: null
-  })
+  }),
+  mounted() {
+    this.$vuetify.theme.dark = (localStorage.dark === 'true');
+  },
+  watch: {
+    "$vuetify.theme.dark": function(v) {
+      localStorage.dark = v;
+    }
+  }
 };
 </script>
 
