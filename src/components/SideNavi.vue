@@ -3,7 +3,7 @@
     <v-toolbar flat>
       <v-toolbar-title v-text="$route.params.chapter"></v-toolbar-title>
     </v-toolbar>
-    <v-list dense>
+    <v-list shaped nav dense>
       <template v-for="page in pages">
         <template v-if="page.path">
           <v-list-item
@@ -13,7 +13,7 @@
             :to="'/' + $route.params.chapter + '/' + page.path"
           >
             <v-list-item-action>
-              <v-icon>mdi-book-open</v-icon>
+              <v-icon>mdi-book</v-icon>
             </v-list-item-action>
             <v-list-item-content>
               <v-list-item-title v-text="page.name"></v-list-item-title>
@@ -21,7 +21,7 @@
           </v-list-item>
         </template>
         <template v-else-if="page.subcontents">
-          <v-list-group prepend-icon="mdi-book-open" :key="page.name">
+          <v-list-group sub-group :key="page.name">
             <template v-slot:activator>
               <v-list-item-title v-html="page.name"></v-list-item-title>
             </template>
@@ -32,7 +32,9 @@
               :key="subpage.name"
               :to="'/' + $route.params.chapter + '/' + subpage.path"
             >
-              <v-list-item-action></v-list-item-action>
+              <v-list-item-action>
+                <v-icon>mdi-book</v-icon>
+              </v-list-item-action>
               <v-list-item-content>
                 <v-list-item-title v-html="subpage.name"></v-list-item-title>
               </v-list-item-content>
