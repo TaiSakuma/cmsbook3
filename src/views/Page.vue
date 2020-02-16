@@ -3,6 +3,18 @@
     <v-breadcrumbs :items="breadcrumbsItems"></v-breadcrumbs>
     <v-container fluid>
       <v-row>
+        <v-col class="mx-5">
+          <v-tooltip bottom open-delay="800">
+            <template v-slot:activator="{ on }">
+              <v-btn icon @click="loadData()" v-on="on">
+                <v-icon>mdi-reload</v-icon>
+              </v-btn>
+            </template>
+            <span>Reload</span>
+          </v-tooltip>
+        </v-col>
+      </v-row>
+      <v-row>
         <v-col class="markdown-body ma-5 pa-5" v-html="content"></v-col>
       </v-row>
     </v-container>
