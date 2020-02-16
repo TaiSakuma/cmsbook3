@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
+import Home from "../views/Home.vue"
 import Chapter from "../views/Chapter.vue";
 import Page from "../views/Page.vue";
 import Redirect from "../views/Redirect.vue";
@@ -11,7 +12,8 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    redirect: "/references/SUSY/web.md"
+    name: "home",
+    component: Home
   },
   {
     path: "/about",
