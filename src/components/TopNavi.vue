@@ -1,11 +1,14 @@
 <template>
-  <v-tabs align-with-title background-color="transparent">
+  <v-tabs optional align-with-title background-color="transparent">
     <v-tab
       v-for="page in pages"
       :key="page.namme"
       :to="page.path"
       v-text="page.name"
     ></v-tab>
+    <v-tab to="/" v-show="false">
+       <!-- to hide v-tabs-slider when none is selected -->
+    </v-tab>
   </v-tabs>
 </template>
 
