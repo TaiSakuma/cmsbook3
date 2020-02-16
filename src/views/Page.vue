@@ -83,18 +83,31 @@ export default {
 <style>
 @import "../../node_modules/github-markdown-css/github-markdown.css";
 
-.theme--dark .markdown-body {
-  color: #F5F5F5;
-}
-
-.theme--light .markdown-body {
-}
-
 .markdown-body {
   box-sizing: border-box;
   min-width: 200px;
   max-width: 980px;
   border-radius: 10px;
+}
+
+.v-application .markdown-body code {
+  box-shadow: none;
+}
+.v-application .markdown-body code:before {
+  content: "";
+}
+
+.theme--dark .markdown-body {
+  color: #F5F5F5;
+}
+
+.theme--dark .markdown-body hr {
+  background-color: #757575;
+}
+
+.theme--dark .markdown-body blockquote {
+  border-left-color: #757575;
+  color: #BDBDBD;
 }
 
 .theme--dark .markdown-body pre {
@@ -110,10 +123,17 @@ export default {
   background-color: #EEEEEE;
 }
 
-.v-application .markdown-body code {
-  box-shadow: none;
+.theme--dark .markdown-body table td,
+.theme--dark .markdown-body table th {
+  border: 1px solid #616161;
 }
-.v-application .markdown-body code:before {
-  content: "";
+
+.theme--dark .markdown-body table tr {
+  background-color: #212121;
 }
+
+.theme--dark .markdown-body table tr:nth-child(2n) {
+  background-color: #424242;
+}
+
 </style>
