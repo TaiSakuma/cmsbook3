@@ -3,7 +3,7 @@
     <v-toolbar flat>
       <v-toolbar-title v-text="$route.params.chapter"></v-toolbar-title>
     </v-toolbar>
-    <v-list shaped nav dense>
+    <v-list shaped nav dense expand>
       <template v-for="page in pages">
         <template v-if="page.path">
           <v-list-item
@@ -21,24 +21,49 @@
           </v-list-item>
         </template>
         <template v-else-if="page.subcontents">
-          <v-list-group sub-group :key="page.name">
+          <v-list-group prepend-icon="mdi-book-multiple" :key="page.name" >
             <template v-slot:activator>
               <v-list-item-title v-html="page.name"></v-list-item-title>
             </template>
-            <v-list-item
-              link
-              router
-              v-for="subpage in page.subcontents"
-              :key="subpage.name"
-              :to="'/' + $route.params.chapter + '/' + subpage.path"
-            >
-              <v-list-item-action>
-                <v-icon>mdi-book</v-icon>
-              </v-list-item-action>
-              <v-list-item-content>
-                <v-list-item-title v-html="subpage.name"></v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
+            <template v-for="subpage in page.subcontents">
+              <template v-if="subpage.path">
+                <v-list-item
+                  link
+                  router
+                  :key="subpage.name"
+                  :to="'/' + $route.params.chapter + '/' + subpage.path"
+                >
+                  <v-list-item-action></v-list-item-action>
+                  <v-list-item-content>
+                    <v-list-item-title v-html="subpage.name"></v-list-item-title>
+                  </v-list-item-content>
+                  <v-list-item-icon>
+                    <v-icon>mdi-book</v-icon>
+                  </v-list-item-icon>
+                </v-list-item>
+              </template>
+              <template v-else-if="subpage.subcontents">
+                <v-list-group no-action sub-group :key="subpage.name">
+                  <template v-slot:activator>
+                    <v-list-item-content>
+                      <v-list-item-title v-html="subpage.name"></v-list-item-title>
+                    </v-list-item-content>
+                  </template>
+                  <v-list-item
+                    link
+                    router
+                    v-for="subsubpage in subpage.subcontents"
+                    :key="subsubpage.name"
+                    :to="'/' + $route.params.chapter + '/' + subsubpage.path"
+                  >
+                    <v-list-item-title v-html="subsubpage.name"></v-list-item-title>
+                    <v-list-item-icon>
+                      <v-icon>mdi-book</v-icon>
+                    </v-list-item-icon>
+                  </v-list-item>
+                </v-list-group>
+              </template>
+            </template>
           </v-list-group>
         </template>
       </template>
