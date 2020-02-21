@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-import Home from "../views/Home.vue"
+import Home from "../views/Home.vue";
 import Chapter from "../views/Chapter.vue";
 import Page from "../views/Page.vue";
 import Redirect from "../views/Redirect.vue";

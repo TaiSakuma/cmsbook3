@@ -40,15 +40,20 @@ export default {
   updated: function() {
     $(".markdown-body a:not([href^='#'])").attr("target", "_blank");
 
-    const path = process.env.VUE_APP_CMSBOOK_URL + this.$route.path.match(/.*\//)
+    const path =
+      process.env.VUE_APP_CMSBOOK_URL + this.$route.path.match(/.*\//);
 
-    $(".markdown-body a:not([href^='http:'],[href^='https:'],[href^='/'],[href^='#'])").each(function() {
+    $(
+      ".markdown-body a:not([href^='http:'],[href^='https:'],[href^='/'],[href^='#'])"
+    ).each(function() {
       this.setAttribute("href", this.getAttribute("href").replace(/^/, path));
     });
 
-    $(".markdown-body img:not([src^='http:'],[src^='https:'],[src^='/'])").each(function() {
-      this.setAttribute("src", this.getAttribute("src").replace(/^/, path));
-    });
+    $(".markdown-body img:not([src^='http:'],[src^='https:'],[src^='/'])").each(
+      function() {
+        this.setAttribute("src", this.getAttribute("src").replace(/^/, path));
+      }
+    );
 
     MathJax.typeset();
   },
@@ -98,7 +103,7 @@ export default {
 }
 
 .theme--dark .markdown-body {
-  color: #F5F5F5;
+  color: #f5f5f5;
 }
 
 .theme--dark .markdown-body hr {
@@ -107,7 +112,7 @@ export default {
 
 .theme--dark .markdown-body blockquote {
   border-left-color: #757575;
-  color: #BDBDBD;
+  color: #bdbdbd;
 }
 
 .theme--dark .markdown-body pre {
@@ -116,11 +121,11 @@ export default {
 
 .theme--dark .markdown-body code {
   background-color: #212121;
-  color: #F44336;
+  color: #f44336;
 }
 
 .theme--light .markdown-body pre {
-  background-color: #EEEEEE;
+  background-color: #eeeeee;
 }
 
 .theme--dark .markdown-body table td,
@@ -135,5 +140,4 @@ export default {
 .theme--dark .markdown-body table tr:nth-child(2n) {
   background-color: #424242;
 }
-
 </style>

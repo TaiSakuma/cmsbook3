@@ -7,7 +7,7 @@
       v-text="page.name"
     ></v-tab>
     <v-tab to="/" v-show="false">
-       <!-- to hide v-tabs-slider when none is selected -->
+      <!-- to hide v-tabs-slider when none is selected -->
     </v-tab>
   </v-tabs>
 </template>
