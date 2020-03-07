@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TopNavi.vue snapshot 1`] = `
+<v-tabs-stub activeclass="" alignwithtitle="true" backgroundcolor="transparent" mobilebreakpoint="1264" nexticon="$next" optional="true" previcon="$prev" slidersize="2">
+  <v-tab-stub to="/chapter-A" ripple="true">Chapter A</v-tab-stub>
+  <v-tab-stub to="/chapter-B" ripple="true">Chapter B</v-tab-stub>
+  <v-tab-stub to="/chapter-C" ripple="true">Chapter C</v-tab-stub>
+  <v-tab-stub to="/" ripple="true" style="display: none;"></v-tab-stub>
+</v-tabs-stub>
+`;
