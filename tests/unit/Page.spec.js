@@ -82,7 +82,6 @@ describe("Page.vue", () => {
   });
 
   it("marked", done => {
-    console.log(wrapper.vm.path);
     moxios.wait(async () => {
       let request = moxios.requests.mostRecent();
       await request.respondWith({
@@ -105,19 +104,4 @@ describe("Page.vue", () => {
     });
   });
 
-  it("test text", done => {
-    console.log(wrapper.vm.path);
-    moxios.wait(async () => {
-      let request = moxios.requests.mostRecent();
-
-      await request.respondWith({
-        status: 200,
-        response: "**marked**"
-      });
-
-      console.log(request.config);
-      console.log(wrapper.html());
-      done();
-    });
-  });
 });

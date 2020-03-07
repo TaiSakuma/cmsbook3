@@ -26,11 +26,10 @@ export default {
       return marked(this.md);
     },
     path() {
-      const cmsbookUrl = process.env.VUE_APP_CMSBOOK_URL;
-      const chapterUrl = cmsbookUrl + "/" + this.$route.params.chapter;
-      const sectionUrl = chapterUrl + "/" + this.$route.params.section;
-      const contentUrl = sectionUrl + "/" + this.$route.params.page;
-      return contentUrl;
+      return process.env.VUE_APP_CMSBOOK_URL
+      + "/" + this.$route.params.chapter
+      + "/" + this.$route.params.section
+      + "/" + this.$route.params.page;
     },
     breadcrumbsItems() {
       let ret = [{ text: this.$route.params.chapter }];
@@ -66,8 +65,8 @@ export default {
   watch: {
     path: {
       handler: function() {
-        this.getMarkDownFromPath()
-        },
+        this.getMarkDownFromPath();
+      },
       immediate: true
     }
   },
@@ -78,9 +77,9 @@ export default {
         return;
       }
       try {
-        const response = await axios.get(this.path)
+        const response = await axios.get(this.path);
         this.md = response.data;
-      } catch(error) {
+      } catch (error) {
         this.md = "Error: cannot get: " + this.path;
       }
     }
