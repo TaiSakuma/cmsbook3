@@ -18,13 +18,19 @@ export default {
   name: "page",
   data() {
     return {
-      path: "",
       md: ""
     };
   },
   computed: {
     content() {
       return marked(this.md);
+    },
+    path() {
+      const cmsbookUrl = process.env.VUE_APP_CMSBOOK_URL;
+      const chapterUrl = cmsbookUrl + "/" + this.$route.params.chapter;
+      const sectionUrl = chapterUrl + "/" + this.$route.params.section;
+      const contentUrl = sectionUrl + "/" + this.$route.params.page;
+      return contentUrl;
     },
     breadcrumbsItems() {
       let ret = [{ text: this.$route.params.chapter }];
@@ -36,9 +42,6 @@ export default {
       }
       return ret;
     }
-  },
-  created: function() {
-    this.updatePath();
   },
   updated: function() {
     $(".markdown-body a:not([href^='#'])").attr("target", "_blank");
@@ -61,22 +64,14 @@ export default {
     MathJax.typeset();
   },
   watch: {
-    path() {
-      this.getMarkDownFromPath();
-    },
-    $route(to, from) {
-      this.content = "";
-      this.updatePath();
+    path: {
+      handler: function() {
+        this.getMarkDownFromPath()
+        },
+      immediate: true
     }
   },
   methods: {
-    updatePath() {
-      const cmsbookUrl = process.env.VUE_APP_CMSBOOK_URL;
-      const chapterUrl = cmsbookUrl + "/" + this.$route.params.chapter;
-      const sectionUrl = chapterUrl + "/" + this.$route.params.section;
-      const contentUrl = sectionUrl + "/" + this.$route.params.page;
-      this.path = contentUrl;
-    },
     async getMarkDownFromPath() {
       if (!this.path) {
         this.md = "";
