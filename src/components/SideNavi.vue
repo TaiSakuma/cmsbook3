@@ -35,9 +35,7 @@
                 >
                   <v-list-item-action></v-list-item-action>
                   <v-list-item-content>
-                    <v-list-item-title
-                      v-html="subpage.name"
-                    ></v-list-item-title>
+                    <v-list-item-title v-html="subpage.name"></v-list-item-title>
                   </v-list-item-content>
                   <v-list-item-icon>
                     <v-icon>mdi-book</v-icon>
@@ -48,9 +46,7 @@
                 <v-list-group no-action sub-group :key="subpage.name">
                   <template v-slot:activator>
                     <v-list-item-content>
-                      <v-list-item-title
-                        v-html="subpage.name"
-                      ></v-list-item-title>
+                      <v-list-item-title v-html="subpage.name"></v-list-item-title>
                     </v-list-item-content>
                   </template>
                   <v-list-item
@@ -60,9 +56,7 @@
                     :key="subsubpage.name"
                     :to="'/' + $route.params.chapter + '/' + subsubpage.path"
                   >
-                    <v-list-item-title
-                      v-html="subsubpage.name"
-                    ></v-list-item-title>
+                    <v-list-item-title v-html="subsubpage.name"></v-list-item-title>
                     <v-list-item-icon>
                       <v-icon>mdi-book</v-icon>
                     </v-list-item-icon>
@@ -86,26 +80,26 @@ export default {
     pages: []
   }),
   methods: {
-    updatePages() {
-      let path = process.env.VUE_APP_CMSBOOK_URL;
-      path = path + "/" + this.$route.params.chapter;
-      path = path + "/.cmsbook3/sections.json";
-      axios
-        .get(path)
-        .then(response => {
-          this.pages = response.data.sections;
-        })
-        .catch(error => {
-          this.pages = [];
-        });
+    async updatePages() {
+      let path =
+        process.env.VUE_APP_CMSBOOK_URL +
+        "/" +
+        this.$route.params.chapter +
+        "/.cmsbook3/sections.json";
+      try {
+        const response = await axios.get(path);
+        this.pages = response.data.sections;
+      } catch (error) {
+        this.pages = [];
+      }
     }
   },
-  created() {
-    this.updatePages();
-  },
   watch: {
-    "$route.params.chapter": function() {
-      this.updatePages();
+    "$route.params.chapter": {
+      handler: function() {
+        this.updatePages();
+      },
+      immediate: true
     }
   }
 };
