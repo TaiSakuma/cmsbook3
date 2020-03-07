@@ -82,8 +82,12 @@ export default {
         this.md = "";
         return;
       }
-      const response = await axios.get(this.path)
-      this.md = response.data;
+      try {
+        const response = await axios.get(this.path)
+        this.md = response.data;
+      } catch(error) {
+        this.md = "Error: cannot get: " + this.path;
+      }
     }
   }
 };

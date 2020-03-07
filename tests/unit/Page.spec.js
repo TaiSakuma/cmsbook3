@@ -23,7 +23,7 @@ describe("Page.vue", () => {
   beforeEach(() => {
     process.env.VUE_APP_CMSBOOK_URL = "http://localhost/cmsbook";
     global.$ = $;
-    global.MathJax = { typeset: jest.fn() }
+    global.MathJax = { typeset: jest.fn() };
     moxios.install();
     localVue = createLocalVue();
     router = new VueRouter();
@@ -60,7 +60,9 @@ describe("Page.vue", () => {
   it("axios request ", done => {
     moxios.wait(() => {
       let request = moxios.requests.mostRecent();
-      expect(request.config.url).toBe("http://localhost/cmsbook/chapter-A/section-b/page-3.md");
+      expect(request.config.url).toBe(
+        "http://localhost/cmsbook/chapter-A/section-b/page-3.md"
+      );
       expect(request.config.method).toBe("get");
       expect(request.config.data).toBeUndefined();
       done();
@@ -73,8 +75,19 @@ describe("Page.vue", () => {
       await request.respondWith({
         status: 200,
         response: "**marked**"
-      })
+      });
       expect(wrapper.html()).toMatchSnapshot();
+      done();
+    });
+  });
+
+  it("404", done => {
+    moxios.wait(async () => {
+      let request = moxios.requests.mostRecent();
+      await request.respondWith({
+        status: 404
+      });
+      expect(wrapper.text()).toContain("Error: cannot get");
       done();
     });
   });
@@ -87,7 +100,7 @@ describe("Page.vue", () => {
       await request.respondWith({
         status: 200,
         response: "**marked**"
-      })
+      });
 
       console.log(request.config);
       console.log(wrapper.html());
