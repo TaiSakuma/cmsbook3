@@ -62,7 +62,7 @@ export default {
   },
   watch: {
     path() {
-      this.loadData();
+      this.getMarkDownFromPath();
     },
     $route(to, from) {
       this.content = "";
@@ -77,7 +77,7 @@ export default {
       const contentUrl = sectionUrl + "/" + this.$route.params.page;
       this.path = contentUrl;
     },
-    async loadData() {
+    async getMarkDownFromPath() {
       if (!this.path) {
         this.md = "";
         return;
