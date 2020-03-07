@@ -57,17 +57,36 @@ describe("Page.vue", () => {
     );
   });
 
-  it("test text", done => {
-    console.log(wrapper.vm.path);
-    moxios.wait(async () => {
+  it("axios request ", done => {
+    moxios.wait(() => {
       let request = moxios.requests.mostRecent();
       expect(request.config.url).toBe("http://localhost/cmsbook/chapter-A/section-b/page-3.md");
       expect(request.config.method).toBe("get");
       expect(request.config.data).toBeUndefined();
+      done();
+    });
+  });
+
+  it("snapshot", done => {
+    moxios.wait(async () => {
+      let request = moxios.requests.mostRecent();
+      await request.respondWith({
+        status: 200,
+        response: "**marked**"
+      })
+      expect(wrapper.html()).toMatchSnapshot();
+      done();
+    });
+  });
+
+  it("test text", done => {
+    console.log(wrapper.vm.path);
+    moxios.wait(async () => {
+      let request = moxios.requests.mostRecent();
 
       await request.respondWith({
         status: 200,
-        response: "aaa"
+        response: "**marked**"
       })
 
       console.log(request.config);

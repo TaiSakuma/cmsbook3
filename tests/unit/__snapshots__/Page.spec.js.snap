@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Page.vue snapshot 1`] = `
+<div class="page">
+  <ul class="v-breadcrumbs theme--light">
+    <li>
+      <div class="v-breadcrumbs__item">chapter-A</div>
+    </li>
+    <li class="v-breadcrumbs__divider">/</li>
+    <li>
+      <div class="v-breadcrumbs__item">section-b</div>
+    </li>
+    <li class="v-breadcrumbs__divider">/</li>
+    <li>
+      <div class="v-breadcrumbs__item">page-3.md</div>
+    </li>
+  </ul>
+  <div class="container pt-0 container--fluid">
+    <div class="row">
+      <div class="markdown-body mx-5 pa-5 col">
+        <p><strong>marked</strong></p>
+      </div>
+    </div>
+  </div>
+</div>
+`;
