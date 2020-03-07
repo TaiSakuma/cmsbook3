@@ -2,7 +2,7 @@
   <v-tabs optional align-with-title background-color="transparent">
     <v-tab
       v-for="page in pages"
-      :key="page.namme"
+      :key="page.name"
       :to="page.path"
       v-text="page.name"
     ></v-tab>
@@ -21,26 +21,19 @@ export default {
     pages: []
   }),
   methods: {
-    updatePages() {
+    async updatePages() {
       let path = process.env.VUE_APP_CMSBOOK_URL;
       path = path + "/.cmsbook3/chapters.json";
-      axios
-        .get(path)
-        .then(response => {
-          this.pages = response.data["chapters"];
-        })
-        .catch(error => {
-          this.page = [];
-        });
+      try {
+        const response = await axios.get(path);
+        this.pages = response.data["chapters"];
+      } catch (error) {
+        this.pages = [];
+      }
     }
   },
   created() {
     this.updatePages();
-  },
-  watch: {
-    "$route.params.chapter": function() {
-      this.updatePages();
-    }
   }
 };
 </script>
