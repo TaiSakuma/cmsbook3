@@ -74,11 +74,10 @@ export default {
       const contentUrl = sectionUrl + "/" + this.$route.params.page;
       this.path = contentUrl;
     },
-    loadData() {
+    async loadData() {
       if (!this.path) return;
-      axios.get(this.path).then(response => {
-        this.content = marked(response.data);
-      });
+      const response = await axios.get(this.path)
+      this.content = marked(response.data);
     }
   }
 };
