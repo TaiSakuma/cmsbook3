@@ -81,6 +81,19 @@ describe("Page.vue", () => {
     });
   });
 
+  it("marked", done => {
+    console.log(wrapper.vm.path);
+    moxios.wait(async () => {
+      let request = moxios.requests.mostRecent();
+      await request.respondWith({
+        status: 200,
+        response: "**marked**"
+      });
+      expect(wrapper.html()).toContain("<strong>marked</strong>");
+      done();
+    });
+  });
+
   it("404", done => {
     moxios.wait(async () => {
       let request = moxios.requests.mostRecent();
