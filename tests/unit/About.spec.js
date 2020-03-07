@@ -8,13 +8,14 @@ import About from "@/views/About.vue";
 Vue.use(Vuetify);
 Vue.use(VueRouter);
 
-const localVue = createLocalVue();
-
 describe("About.vue", () => {
+  let localVue;
   let wrapper;
+
   beforeEach(() => {
+    localVue = createLocalVue();
     wrapper = mount(About, {
-      localVue,
+      localVue
     });
   });
 
