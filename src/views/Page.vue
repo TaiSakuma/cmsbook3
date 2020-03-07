@@ -18,11 +18,14 @@ export default {
   name: "page",
   data() {
     return {
-      content: "",
-      path: ""
+      path: "",
+      md: ""
     };
   },
   computed: {
+    content() {
+      return marked(this.md);
+    },
     breadcrumbsItems() {
       let ret = [{ text: this.$route.params.chapter }];
       if (this.$route.params.section) {
@@ -75,9 +78,12 @@ export default {
       this.path = contentUrl;
     },
     async loadData() {
-      if (!this.path) return;
+      if (!this.path) {
+        this.md = "";
+        return;
+      }
       const response = await axios.get(this.path)
-      this.content = marked(response.data);
+      this.md = response.data;
     }
   }
 };
