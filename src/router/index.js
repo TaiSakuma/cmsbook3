@@ -26,11 +26,6 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/About.vue")
   },
   {
-    path: "/:chapter/*.pdf",
-    name: "redirect",
-    component: Redirect
-  },
-  {
     path: "/:chapter/:section/:page",
     name: "page",
     component: Page
