@@ -3,9 +3,7 @@ import VueRouter from "vue-router";
 
 import axios from "axios";
 
-import Home from "../views/Home.vue";
 import Page from "../views/Page.vue";
-import Redirect from "../views/Redirect.vue";
 import PageNotFound from "../views/PageNotFound.vue";
 
 Vue.use(VueRouter);
@@ -13,8 +11,20 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    name: "home",
-    component: Home
+    beforeEnter: async (to, from, next) => {
+      const configUrl =
+        process.env.VUE_APP_CMSBOOK_URL +
+        "/.cmsbook3/home.json";
+      const defaultHome = "index/web.md";
+      let path;
+      try {
+        const response = await axios.get(configUrl);
+        path = to.path + response.data.home;
+      } catch {
+        path = to.path + defaultHome;
+      }
+      next(path);
+    }
   },
   {
     path: "/about",
