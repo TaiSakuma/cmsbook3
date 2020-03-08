@@ -1,8 +1,9 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
+import axios from "axios";
+
 import Home from "../views/Home.vue";
-import Chapter from "../views/Chapter.vue";
 import Page from "../views/Page.vue";
 import Redirect from "../views/Redirect.vue";
 import PageNotFound from "../views/PageNotFound.vue";
@@ -51,8 +52,22 @@ const routes = [
   },
   {
     path: "/:chapter",
-    name: "chapter",
-    component: Chapter
+    beforeEnter: async (to, from, next) => {
+      const configUrl =
+        process.env.VUE_APP_CMSBOOK_URL +
+        "/" +
+        to.params.chapter +
+        "/.cmsbook3/sections.json";
+      const defaultHome = "index/web.md";
+      let path;
+      try {
+        const response = await axios.get(configUrl);
+        path = to.path + "/" + response.data.home;
+      } catch {
+        path = to.path + "/" + defaultHome;
+      }
+      next(path);
+    }
   },
   {
     path: "*",
