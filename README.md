@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/TaiSakuma/cmsbook3.svg?branch=master)](https://travis-ci.org/TaiSakuma/cmsbook3)
+[![Build Status](https://travis-ci.org/TaiSakuma/cmsbook3.svg?branch=master)](https://travis-ci.org/TaiSakuma/cmsbook3) [![Coverage Status](https://coveralls.io/repos/github/TaiSakuma/cmsbook3/badge.svg?branch=master)](https://coveralls.io/github/TaiSakuma/cmsbook3?branch=master)
 
 # cmsbook3
 
