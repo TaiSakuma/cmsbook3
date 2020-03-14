@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App.vue match snapshot 1`] = `
+<v-app-stub id="app">
+  <v-navigation-drawer-stub app="true" clipped="true" height="100vh" minivariantwidth="56" mobilebreakpoint="1264" src="" tag="nav" width="256">
+    <sidenavi-stub></sidenavi-stub>
+  </v-navigation-drawer-stub>
+  <v-app-bar-stub tag="header" tile="true" dense="true" extensionheight="48" src="" value="true" app="true" clippedleft="true">
+    <v-app-bar-nav-icon-stub></v-app-bar-nav-icon-stub>
+    <v-toolbar-title-stub>
+      <router-link-stub to="/" style="text-decoration: none;">cmsbook</router-link-stub>
+    </v-toolbar-title-stub>
+    <v-spacer-stub></v-spacer-stub>
+    <v-tooltip-stub opendelay="800" closedelay="0" contentclass="" fixed="true" left="true" openonhover="true" maxwidth="auto" nudgebottom="0" nudgeleft="0" nudgeright="0" nudgetop="0" nudgewidth="0" tag="span"> <span>Toggle dark mode</span></v-tooltip-stub>
+  </v-app-bar-stub>
+  <v-content-stub tag="main">
+    <transition-stub name="fade" mode="out-in">
+      <router-view-stub></router-view-stub>
+    </transition-stub>
+  </v-content-stub>
+</v-app-stub>
+`;
