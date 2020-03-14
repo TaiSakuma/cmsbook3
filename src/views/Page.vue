@@ -1,9 +1,11 @@
 <template>
   <div class="page">
     <v-breadcrumbs :items="breadcrumbsItems"></v-breadcrumbs>
-    <v-container fluid class="pt-0">
-      <v-row>
-        <v-col class="markdown-body mx-5 pa-5" v-html="content"></v-col>
+    <v-container fluid class="px-0 pt-0">
+      <v-row class="mx-0 px-5">
+        <v-col class="ma-0 pa-0">
+          <v-card outlined class="markdown-body pa-5" v-html="content"></v-card>
+        </v-col>
       </v-row>
     </v-container>
   </div>
