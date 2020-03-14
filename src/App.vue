@@ -6,18 +6,12 @@
     <v-app-bar app dense clipped-left>
       <v-app-bar-nav-icon @click="drawer = !drawer" />
       <v-toolbar-title>
-        <router-link to="/" style="text-decoration: none; color: inherit;"
-          >cmsbook</router-link
-        >
+        <router-link to="/" style="text-decoration: none; color: inherit;">cmsbook</router-link>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-tooltip left open-delay="800">
         <template v-slot:activator="{ on }">
-          <v-btn
-            icon
-            @click="$vuetify.theme.dark = !$vuetify.theme.dark"
-            v-on="on"
-          >
+          <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark" v-on="on">
             <v-icon>mdi-invert-colors</v-icon>
           </v-btn>
         </template>
@@ -36,8 +30,8 @@
 </template>
 
 <script>
-import SideNavi from "./components/SideNavi";
-import TopNavi from "./components/TopNavi";
+import SideNavi from "@/components/SideNavi";
+import TopNavi from "@/components/TopNavi";
 
 export default {
   name: "App",
