@@ -6,7 +6,7 @@
     <v-app-bar app dense clipped-left>
       <v-app-bar-nav-icon @click="drawer = !drawer" />
       <v-toolbar-title>
-        <router-link to="/" style="text-decoration: none; color: inherit;">cmsbook</router-link>
+        <router-link to="/" style="text-decoration: none; color: inherit;">{{ $store.state.title }}</router-link>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-tooltip left open-delay="800">
@@ -44,6 +44,7 @@ export default {
   }),
   mounted() {
     this.$vuetify.theme.dark = localStorage.dark === "true";
+    this.$store.dispatch('loadTitle');
   },
   watch: {
     "$vuetify.theme.dark": function(v) {
