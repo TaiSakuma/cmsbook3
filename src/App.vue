@@ -39,12 +39,19 @@ export default {
     SideNavi,
     TopNavi
   },
+  metaInfo() {
+    const title= this.$store.state.title;
+    return {
+      title: title,
+      titleTemplate: "%s | " + title
+    };
+  },
   data: () => ({
     drawer: null
   }),
   mounted() {
     this.$vuetify.theme.dark = localStorage.dark === "true";
-    this.$store.dispatch('loadTitle');
+    this.$store.dispatch("loadTitle");
   },
   watch: {
     "$vuetify.theme.dark": function(v) {
