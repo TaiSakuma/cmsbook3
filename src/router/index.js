@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import VueMeta from 'vue-meta';
 
 import axios from "axios";
 
@@ -7,6 +8,7 @@ import Page from "../views/Page.vue";
 import PageNotFound from "../views/PageNotFound.vue";
 
 Vue.use(VueRouter);
+Vue.use(VueMeta);
 
 const routes = [
   {
