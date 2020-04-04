@@ -5,10 +5,19 @@ import axios from "axios";
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
-  state: {
-    title: "cmsbook"
+const state = {
+  title: "cmsbook",
+};
+
+export const mutations = {
+  set_title(state, title) {
+    state.title = title;
   },
+};
+
+export default new Vuex.Store({
+  state,
+  mutations,
   actions: {
     async loadTitle({ commit }) {
       const configUrl =
@@ -19,16 +28,10 @@ export default new Vuex.Store({
           throw "title undefined";
         }
         const title = response.data.title;
-        commit("SET_TITLE", title);
+        commit("set_title", title);
       } catch (error) {
         console.log(error);
       }
-
-    }
+    },
   },
-  mutations: {
-    SET_TITLE(state, title) {
-      state.title = title;
-    }
-  }
 });
