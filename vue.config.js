@@ -1,4 +1,4 @@
 module.exports = {
   transpileDependencies: ["vuetify"],
-  publicPath: process.env.NODE_ENV === "production" ? "/~sakuma/cmsbook3/" : "/"
+  publicPath: process.env.VUE_APP_CMSBOOK_PUBLIC_PATH
 };
