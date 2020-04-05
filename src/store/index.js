@@ -15,15 +15,19 @@ const mutations = {
   },
 };
 
+async function get_title() {
+  const configUrl = process.env.VUE_APP_CMSBOOK_URL + "/.cmsbook3/title.json";
+  const response = await axios.get(configUrl);
+  if (response.data.title == undefined) {
+    throw "title not found";
+  }
+  return response.data.title;
+}
+
 const actions = {
   async loadTitle({ commit }) {
-    const configUrl = process.env.VUE_APP_CMSBOOK_URL + "/.cmsbook3/title.json";
     try {
-      const response = await axios.get(configUrl);
-      if (response.data.title == undefined) {
-        throw "title undefined";
-      }
-      const title = response.data.title;
+      const title = await get_title();
       commit("set_title", title);
     } catch (error) {
       console.log(error);
