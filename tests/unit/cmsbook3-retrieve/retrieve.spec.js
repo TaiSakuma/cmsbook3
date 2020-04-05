@@ -43,4 +43,20 @@ describe("retrieveFrom", () => {
       done();
     });
   });
+
+  it("retrieveFrom 404 not catched", async (done) => {
+    const path = "/path/to/data.json";
+    try {
+      const promiss = retrieveFrom(path);
+      moxios.wait(async () => {
+        let request = moxios.requests.mostRecent();
+        await request.respondWith({
+          status: 404,
+        });
+      });
+      const result = await promiss;
+    } catch (error) {
+      done();
+    }
+  });
 });
