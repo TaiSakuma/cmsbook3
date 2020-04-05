@@ -2,26 +2,20 @@ import { createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
 import { cloneDeep } from "lodash";
 
-import moxios from "moxios";
-
 import { storeConfig } from "@/store/index.js";
 
+import retrieve from "@/cmsbook3-retrieve";
+
+jest.mock("@/cmsbook3-retrieve");
+
 describe("store", () => {
-  const ENV_ORG = process.env;
   let localVue;
   let store;
 
   beforeEach(() => {
-    process.env.VUE_APP_CMSBOOK_URL = "http://localhost/cmsbook";
-    moxios.install();
     localVue = createLocalVue();
     localVue.use(Vuex);
     store = new Vuex.Store(cloneDeep(storeConfig));
-  });
-
-  afterEach(() => {
-    moxios.uninstall();
-    process.env = ENV_ORG;
   });
 
   it("commit set_title", () => {
@@ -30,45 +24,17 @@ describe("store", () => {
     expect(store.state.title).toBe("new title");
   });
 
-  it("dispatch loadTitle url", async (done) => {
+  it("dispatch loadTitle success", async () => {
     expect(store.state.title).toBe("cmsbook");
-    store.dispatch("loadTitle");
-    moxios.wait(async () => {
-      let request = moxios.requests.mostRecent();
-      expect(request.config.url).toBe(
-        "http://localhost/cmsbook/.cmsbook3/title.json"
-      );
-      done();
-    });
+    retrieve.get_title.mockResolvedValue("new title");
+    await store.dispatch("loadTitle");
+    expect(store.state.title).toBe("new title");
   });
 
-  it("dispatch loadTitle success", async (done) => {
+  it("dispatch loadTitle error", async () => {
     expect(store.state.title).toBe("cmsbook");
-    store.dispatch("loadTitle");
-    moxios.wait(async () => {
-      let request = moxios.requests.mostRecent();
-      await request.respondWith({
-        status: 200,
-        response: {
-          title: "new title",
-        },
-      });
-      expect(store.state.title).toBe("new title");
-      done();
-    });
-  });
-
-  it("dispatch loadTitle error", async (done) => {
+    retrieve.get_title.mockRejectedValueOnce("cannot get title");
+    await store.dispatch("loadTitle");
     expect(store.state.title).toBe("cmsbook");
-    store.dispatch("loadTitle");
-    moxios.wait(async () => {
-      let request = moxios.requests.mostRecent();
-      await request.respondWith({
-        status: 200,
-        response: {},
-      });
-      expect(store.state.title).toBe("cmsbook");
-      done();
-    });
   });
 });
