@@ -15,7 +15,7 @@ export const mutations = {
   },
 };
 
-export default new Vuex.Store({
+export const storeConfig = {
   state,
   mutations,
   actions: {
@@ -34,4 +34,6 @@ export default new Vuex.Store({
       }
     },
   },
-});
+};
+
+export default new Vuex.Store(storeConfig);
