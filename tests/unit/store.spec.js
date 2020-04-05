@@ -1,11 +1,22 @@
-import { mutations } from "@/store/index.js";
+import { createLocalVue } from "@vue/test-utils";
+import Vuex from "vuex";
+import { cloneDeep } from "lodash";
 
-const { set_title } = mutations;
+import { storeConfig } from "@/store/index.js";
 
-describe("mutation", () => {
-  it("set title", () => {
-    const state = { title: "abc def" };
-    set_title(state, 'xyz uvw')
-    expect(state.title).toBe('xyz uvw')
+describe("store", () => {
+  let localVue;
+  let store;
+
+  beforeEach(() => {
+    localVue = createLocalVue();
+    localVue.use(Vuex);
+    store = new Vuex.Store(cloneDeep(storeConfig));
+  });
+
+  it("commit set_title", () => {
+    expect(store.state.title).toBe("cmsbook");
+    store.commit("set_title", "new title");
+    expect(store.state.title).toBe("new title");
   });
 });
