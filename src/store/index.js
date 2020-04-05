@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
-import axios from "axios";
+import { get_title } from "@/cmsbook3-retrieve";
 
 Vue.use(Vuex);
 
@@ -14,15 +14,6 @@ const mutations = {
     state.title = title;
   },
 };
-
-async function get_title() {
-  const configUrl = process.env.VUE_APP_CMSBOOK_URL + "/.cmsbook3/title.json";
-  const response = await axios.get(configUrl);
-  if (response.data.title == undefined) {
-    throw "title not found";
-  }
-  return response.data.title;
-}
 
 const actions = {
   async loadTitle({ commit }) {
