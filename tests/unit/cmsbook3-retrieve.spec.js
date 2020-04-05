@@ -1,6 +1,8 @@
 import moxios from "moxios";
 
-import { getTitle } from "@/cmsbook3-retrieve";
+import * as retrieve from "@/cmsbook3-retrieve";
+
+const { getTitle } = retrieve;
 
 describe("cmsbook3-retrieve", () => {
   const ENV_ORG = process.env;
@@ -15,47 +17,52 @@ describe("cmsbook3-retrieve", () => {
     process.env = ENV_ORG;
   });
 
-  it("getTitle url", async (done) => {
-    const result = getTitle();
+  it("retrieveFrom url", async (done) => {
+    const path = "/path/to/data.json";
+    const result = retrieve.retrieveFrom(path);
     moxios.wait(async () => {
       let request = moxios.requests.mostRecent();
       expect(request.config.url).toBe(
-        "http://localhost/cmsbook/.cmsbook3/title.json"
+        "http://localhost/cmsbook/path/to/data.json"
       );
       done();
     });
   });
 
-  it("getTitle success", async (done) => {
-    const promiss = getTitle();
+  it("retrieveFrom success", async (done) => {
+    const path = "/path/to/data.json";
+    const promiss = retrieve.retrieveFrom(path);
     moxios.wait(async () => {
       let request = moxios.requests.mostRecent();
       await request.respondWith({
         status: 200,
         response: {
-          title: "new title",
+          fieldA: "data A",
         },
       });
       const result = await promiss;
-      expect(result).toBe("new title");
+      expect(result).toEqual({ fieldA: "data A" });
       done();
     });
   });
 
-  it("getTitle error", async (done) => {
+  it("getTitle success", async () => {
+    retrieve.lib.retrieveFrom = jest
+      .fn()
+      .mockResolvedValue({ title: "new title" });
+    const result = await getTitle();
+    expect(result).toBe("new title");
+  });
+
+  it("getTitle error", async () => {
+    retrieve.lib.retrieveFrom = jest
+      .fn()
+      .mockResolvedValue({ });
     try {
-      const promiss = getTitle();
-      moxios.wait(async () => {
-        let request = moxios.requests.mostRecent();
-        await request.respondWith({
-          status: 200,
-          response: {},
-        });
-      });
-      const result = await promiss;
+      const result = await getTitle();
     } catch (error) {
       expect(error).toBe("title not found");
-      done();
     }
   });
+
 });
