@@ -30,7 +30,7 @@ describe("store", () => {
     expect(store.state.title).toBe("new title");
   });
 
-  it("dispatch loadTitle", async (done) => {
+  it("dispatch loadTitle url", async (done) => {
     expect(store.state.title).toBe("cmsbook");
     store.dispatch("loadTitle");
     moxios.wait(async () => {
@@ -38,6 +38,15 @@ describe("store", () => {
       expect(request.config.url).toBe(
         "http://localhost/cmsbook/.cmsbook3/title.json"
       );
+      done();
+    });
+  });
+
+  it("dispatch loadTitle success", async (done) => {
+    expect(store.state.title).toBe("cmsbook");
+    store.dispatch("loadTitle");
+    moxios.wait(async () => {
+      let request = moxios.requests.mostRecent();
       await request.respondWith({
         status: 200,
         response: {
@@ -45,6 +54,20 @@ describe("store", () => {
         },
       });
       expect(store.state.title).toBe("new title");
+      done();
+    });
+  });
+
+  it("dispatch loadTitle error", async (done) => {
+    expect(store.state.title).toBe("cmsbook");
+    store.dispatch("loadTitle");
+    moxios.wait(async () => {
+      let request = moxios.requests.mostRecent();
+      await request.respondWith({
+        status: 200,
+        response: {},
+      });
+      expect(store.state.title).toBe("cmsbook");
       done();
     });
   });
