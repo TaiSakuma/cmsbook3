@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
-import { get_title } from "@/cmsbook3-retrieve";
+import { getTitle } from "@/cmsbook3-retrieve";
 
 Vue.use(Vuex);
 
@@ -18,7 +18,7 @@ const mutations = {
 const actions = {
   async loadTitle({ commit }) {
     try {
-      const title = await get_title();
+      const title = await getTitle();
       commit("set_title", title);
     } catch (error) {
       console.log(error);

@@ -1,6 +1,6 @@
 import moxios from "moxios";
 
-import { get_title } from "@/cmsbook3-retrieve";
+import { getTitle } from "@/cmsbook3-retrieve";
 
 describe("cmsbook3-retrieve", () => {
   const ENV_ORG = process.env;
@@ -15,8 +15,8 @@ describe("cmsbook3-retrieve", () => {
     process.env = ENV_ORG;
   });
 
-  it("get_title url", async (done) => {
-    const result = get_title();
+  it("getTitle url", async (done) => {
+    const result = getTitle();
     moxios.wait(async () => {
       let request = moxios.requests.mostRecent();
       expect(request.config.url).toBe(
@@ -26,8 +26,8 @@ describe("cmsbook3-retrieve", () => {
     });
   });
 
-  it("get_title success", async (done) => {
-    const promiss = get_title();
+  it("getTitle success", async (done) => {
+    const promiss = getTitle();
     moxios.wait(async () => {
       let request = moxios.requests.mostRecent();
       await request.respondWith({
@@ -42,9 +42,9 @@ describe("cmsbook3-retrieve", () => {
     });
   });
 
-  it("get_title error", async (done) => {
+  it("getTitle error", async (done) => {
     try {
-      const promiss = get_title();
+      const promiss = getTitle();
       moxios.wait(async () => {
         let request = moxios.requests.mostRecent();
         await request.respondWith({

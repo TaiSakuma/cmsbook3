@@ -26,14 +26,14 @@ describe("store", () => {
 
   it("dispatch loadTitle success", async () => {
     expect(store.state.title).toBe("cmsbook");
-    retrieve.get_title.mockResolvedValue("new title");
+    retrieve.getTitle.mockResolvedValue("new title");
     await store.dispatch("loadTitle");
     expect(store.state.title).toBe("new title");
   });
 
   it("dispatch loadTitle error", async () => {
     expect(store.state.title).toBe("cmsbook");
-    retrieve.get_title.mockRejectedValueOnce("cannot get title");
+    retrieve.getTitle.mockRejectedValueOnce("cannot get title");
     await store.dispatch("loadTitle");
     expect(store.state.title).toBe("cmsbook");
   });
