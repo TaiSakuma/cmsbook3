@@ -13,8 +13,9 @@
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
 <script>
-import axios from "axios";
 import marked from "marked";
+
+import { retrieveFrom } from "@/cmsbook3-retrieve";
 
 export default {
   name: "page",
@@ -25,13 +26,21 @@ export default {
   },
   computed: {
     content() {
-      return marked(this.md);
+      try {
+        return marked(this.md);
+      } catch(error) {
+        return "cannot parsed as markdown"
+      }
     },
     path() {
-      return process.env.VUE_APP_CMSBOOK_URL
-      + "/" + this.$route.params.chapter
-      + "/" + this.$route.params.section
-      + "/" + this.$route.params.page;
+      return (
+        "/" +
+        this.$route.params.chapter +
+        "/" +
+        this.$route.params.section +
+        "/" +
+        this.$route.params.page
+      );
     },
     breadcrumbsItems() {
       let ret = [{ text: this.$route.params.chapter }];
@@ -79,8 +88,7 @@ export default {
         return;
       }
       try {
-        const response = await axios.get(this.path);
-        this.md = response.data;
+        this.md = await retrieveFrom(this.path);
       } catch (error) {
         this.md = "Error: cannot get: " + this.path;
       }

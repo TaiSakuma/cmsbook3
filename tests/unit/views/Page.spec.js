@@ -3,9 +3,9 @@ import VueRouter from "vue-router";
 import Vuetify from "vuetify";
 import { mount, shallowMount, createLocalVue } from "@vue/test-utils";
 
-import moxios from "moxios";
-
 import $ from "jquery";
+
+import * as retrieve from "@/cmsbook3-retrieve/retrieve.js";
 
 import Page from "@/views/Page.vue";
 
@@ -19,16 +19,9 @@ describe("Page.vue", () => {
 
   let localVue;
   let router;
-  let wrapper;
-  beforeEach(() => {
-    process.env.VUE_APP_CMSBOOK_URL = "http://localhost/cmsbook";
-    global.$ = $;
-    global.MathJax = { typeset: jest.fn() };
-    moxios.install();
-    localVue = createLocalVue();
-    router = new VueRouter();
 
-    wrapper = mount(Page, {
+  function createWrapper() {
+    return mount(Page, {
       localVue,
       router,
       mocks: {
@@ -37,71 +30,54 @@ describe("Page.vue", () => {
           params: {
             chapter: "chapter-A",
             section: "section-b",
-            page: "page-3.md"
-          }
-        }
-      }
+            page: "page-3.md",
+          },
+        },
+      },
     });
+  }
+
+  beforeEach(() => {
+    process.env.VUE_APP_CMSBOOK_URL = "http://localhost/cmsbook";
+    global.$ = $;
+    global.MathJax = { typeset: jest.fn() };
+    retrieve.retrieveFrom = jest.fn();
+    localVue = createLocalVue();
+    router = new VueRouter();
   });
 
   afterEach(() => {
-    moxios.uninstall();
     global.MathJax = MathJax_ORG;
     global.$ = $_ORG;
     process.env = ENV_ORG;
   });
 
   it("server URL", () => {
-    expect(wrapper.vm.path).toBe(
-      "http://localhost/cmsbook/chapter-A/section-b/page-3.md"
-    );
+    const wrapper = createWrapper();
+    expect(wrapper.vm.path).toBe("/chapter-A/section-b/page-3.md");
   });
 
-  it("axios request ", done => {
-    moxios.wait(() => {
-      let request = moxios.requests.mostRecent();
-      expect(request.config.url).toBe(
-        "http://localhost/cmsbook/chapter-A/section-b/page-3.md"
-      );
-      expect(request.config.method).toBe("get");
-      expect(request.config.data).toBeUndefined();
-      done();
-    });
+  it("retrieveFrom path", () => {
+    const wrapper = createWrapper();
+    expect(retrieve.retrieveFrom.mock.calls).toEqual([
+      ["/chapter-A/section-b/page-3.md"],
+    ]);
   });
 
-  it("snapshot", done => {
-    moxios.wait(async () => {
-      let request = moxios.requests.mostRecent();
-      await request.respondWith({
-        status: 200,
-        response: "**marked**"
-      });
-      expect(wrapper.html()).toMatchSnapshot();
-      done();
-    });
+  it("snapshot", async () => {
+    retrieve.retrieveFrom.mockResolvedValue("**marked**");
+    const wrapper = createWrapper();
+    await Vue.nextTick();
+    await Vue.nextTick();
+    expect(wrapper.html()).toMatchSnapshot();
   });
 
-  it("marked", done => {
-    moxios.wait(async () => {
-      let request = moxios.requests.mostRecent();
-      await request.respondWith({
-        status: 200,
-        response: "**marked**"
-      });
-      expect(wrapper.html()).toContain("<strong>marked</strong>");
-      done();
-    });
-  });
-
-  it("404", done => {
-    moxios.wait(async () => {
-      let request = moxios.requests.mostRecent();
-      await request.respondWith({
-        status: 404
-      });
-      expect(wrapper.text()).toContain("Error: cannot get");
-      done();
-    });
+  it("marked", async () => {
+    retrieve.retrieveFrom.mockResolvedValue("**marked**");
+    const wrapper = createWrapper();
+    await Vue.nextTick();
+    await Vue.nextTick();
+    expect(wrapper.html()).toContain("<strong>marked</strong>");
   });
 
 });
