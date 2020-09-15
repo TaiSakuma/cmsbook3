@@ -5,6 +5,7 @@
       :key="page.name"
       :to="page.path"
       v-text="page.name"
+      class="no-uppercase"
     ></v-tab>
     <v-tab to="/" v-show="false">
       <!-- to hide v-tabs-slider when none is selected -->
@@ -37,3 +38,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.no-uppercase {
+  text-transform: none;
+}
+</style>
