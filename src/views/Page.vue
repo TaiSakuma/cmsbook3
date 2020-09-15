@@ -39,7 +39,9 @@ export default {
         ret.push({ text: this.$route.params.section });
       }
       if (this.$route.params.page) {
-        ret.push({ text: this.$route.params.page });
+        this.$route.params.page.split("/").forEach(e => {
+          ret.push({ text: e });
+        });
       }
       return ret;
     }

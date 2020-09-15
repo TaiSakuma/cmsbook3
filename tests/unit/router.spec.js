@@ -49,6 +49,19 @@ describe("About.vue", () => {
     });
   });
 
+  it("test page in a folder", () => {
+    router.push("/chapter-A/section-B/folder-C/page-c.md");
+    expect(router.history.pending).toBeNull();
+    const current = router.history.current;
+    expect(current.name).toBe("page");
+    expect(current.path).toBe("/chapter-A/section-B/folder-C/page-c.md");
+    expect(current.params).toEqual({
+      chapter: "chapter-A",
+      section: "section-B",
+      page: "folder-C/page-c.md"
+    });
+  });
+
   it("test section", () => {
     router.push("/chapter-A/section-B");
     expect(router.history.current.path).toBe(

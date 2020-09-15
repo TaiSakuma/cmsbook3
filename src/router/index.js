@@ -40,11 +40,6 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/About.vue")
   },
   {
-    path: "/:chapter/:section/:page",
-    name: "page",
-    component: Page
-  },
-  {
     path: "/:chapter/:section",
     redirect: to => {
       const pathChapterSection = to.path;
@@ -80,6 +75,11 @@ const routes = [
       }
       next(path);
     }
+  },
+  {
+    path: "/:chapter/:section/:page*",
+    name: "page",
+    component: Page
   },
   {
     path: "*",
