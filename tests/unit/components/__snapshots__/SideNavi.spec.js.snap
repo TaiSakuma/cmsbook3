@@ -2,10 +2,10 @@
 
 exports[`SideNavi.vue snapshot 1`] = `
 <v-card-stub loaderheight="4" tag="div" flat="true">
-  <v-toolbar-stub tag="header" tile="true" extensionheight="48" flat="true" src="">
+  <v-toolbar-stub tag="header" extensionheight="48" flat="true" src="">
     <v-toolbar-title-stub></v-toolbar-title-stub>
   </v-toolbar-stub>
-  <v-list-stub tag="div" tile="true" dense="true" expand="true" nav="true" shaped="true">
+  <v-list-stub shaped="true" tag="div" dense="true" expand="true" nav="true">
     <v-list-item-stub activeclass="" link="true" to="/chapter-A/index/inbox.md" tag="div" router="">
       <v-list-item-action-stub>
         <v-icon-stub>mdi-book</v-icon-stub>
