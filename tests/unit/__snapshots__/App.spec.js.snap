@@ -13,10 +13,10 @@ exports[`App.vue match snapshot 1`] = `
     <v-spacer-stub></v-spacer-stub>
     <v-tooltip-stub opendelay="800" closedelay="0" contentclass="" fixed="true" left="true" openonhover="true" maxwidth="auto" nudgebottom="0" nudgeleft="0" nudgeright="0" nudgetop="0" nudgewidth="0" tag="span"> <span>Toggle dark mode</span></v-tooltip-stub>
   </v-app-bar-stub>
-  <v-content-stub tag="main">
+  <v-main-stub tag="main">
     <transition-stub name="fade" mode="out-in">
       <router-view-stub></router-view-stub>
     </transition-stub>
-  </v-content-stub>
+  </v-main-stub>
 </v-app-stub>
 `;

@@ -21,11 +21,11 @@
         <TopNavi></TopNavi>
       </template>
     </v-app-bar>
-    <v-content>
+    <v-main>
       <transition name="fade" mode="out-in">
         <router-view :key="$route.path"></router-view>
       </transition>
-    </v-content>
+    </v-main>
   </v-app>
 </template>
 
