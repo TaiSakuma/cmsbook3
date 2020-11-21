@@ -73,7 +73,7 @@ export default {
       }
     );
 
-    MathJax.typeset();
+    MathJax.Hub.Typeset()
   },
   watch: {
     path: {
