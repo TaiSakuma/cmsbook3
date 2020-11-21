@@ -35,7 +35,9 @@
                 >
                   <v-list-item-action></v-list-item-action>
                   <v-list-item-content>
-                    <v-list-item-title v-html="subpage.name"></v-list-item-title>
+                    <v-list-item-title
+                      v-html="subpage.name"
+                    ></v-list-item-title>
                   </v-list-item-content>
                   <v-list-item-icon>
                     <v-icon>mdi-book</v-icon>
@@ -46,7 +48,9 @@
                 <v-list-group no-action sub-group :key="subpage.name">
                   <template v-slot:activator>
                     <v-list-item-content>
-                      <v-list-item-title v-html="subpage.name"></v-list-item-title>
+                      <v-list-item-title
+                        v-html="subpage.name"
+                      ></v-list-item-title>
                     </v-list-item-content>
                   </template>
                   <v-list-item
@@ -56,7 +60,9 @@
                     :key="subsubpage.name"
                     :to="'/' + $route.params.chapter + '/' + subsubpage.path"
                   >
-                    <v-list-item-title v-html="subsubpage.name"></v-list-item-title>
+                    <v-list-item-title
+                      v-html="subsubpage.name"
+                    ></v-list-item-title>
                     <v-list-item-icon>
                       <v-icon>mdi-book</v-icon>
                     </v-list-item-icon>
@@ -77,12 +83,13 @@ import axios from "axios";
 export default {
   name: "SideNavi",
   data: () => ({
-    pages: []
+    cmsbook_url: process.env.VUE_APP_CMSBOOK_URL,
+    pages: [],
   }),
   methods: {
     async updatePages() {
       let path =
-        process.env.VUE_APP_CMSBOOK_URL +
+        this.cmsbook_url +
         "/" +
         this.$route.params.chapter +
         "/.cmsbook3/sections.json";
@@ -92,15 +99,15 @@ export default {
       } catch (error) {
         this.pages = [];
       }
-    }
+    },
   },
   watch: {
     "$route.params.chapter": {
-      handler: function() {
+      handler: function () {
         this.updatePages();
       },
-      immediate: true
-    }
-  }
+      immediate: true,
+    },
+  },
 };
 </script>
