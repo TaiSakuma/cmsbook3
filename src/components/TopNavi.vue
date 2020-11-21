@@ -14,20 +14,19 @@
 </template>
 
 <script>
-import axios from "axios";
+import { retrieveFrom } from "@/cmsbook3-retrieve";
 
 export default {
   name: "TopNavi",
   data: () => ({
-    cmsbook_url: process.env.VUE_APP_CMSBOOK_URL,
     pages: []
   }),
   methods: {
     async updatePages() {
-      const path = this.cmsbook_url + "/.cmsbook3/chapters.json";
+      const path = "/.cmsbook3/chapters.json";
       try {
-        const response = await axios.get(path);
-        this.pages = response.data["chapters"];
+        const data = await retrieveFrom(path);
+        this.pages = data["chapters"];
       } catch (error) {
         this.pages = [];
       }
