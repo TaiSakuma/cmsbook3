@@ -7,7 +7,7 @@ Vue.use(Vuex);
 
 const state = {
   title: "cmsbook",
-  chapters: []
+  chapters: [] // e.g., [{ name: "Chapter A", path: "/chapter-A" }]
 };
 
 const mutations = {
