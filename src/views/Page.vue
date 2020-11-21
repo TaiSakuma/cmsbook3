@@ -21,6 +21,7 @@ export default {
   name: "page",
   data() {
     return {
+      cmsbook_url: process.env.VUE_APP_CMSBOOK_URL,
       md: ""
     };
   },
@@ -58,8 +59,7 @@ export default {
   updated: function() {
     $(".markdown-body a:not([href^='#'])").attr("target", "_blank");
 
-    const path =
-      process.env.VUE_APP_CMSBOOK_URL + this.$route.path.match(/.*\//);
+    const path = this.cmsbook_url + this.$route.path.match(/.*\//);
 
     $(
       ".markdown-body a:not([href^='http:'],[href^='https:'],[href^='/'],[href^='#'])"
