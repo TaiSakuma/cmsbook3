@@ -1,18 +1,22 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
-import { getTitle } from "@/cmsbook3-retrieve";
+import { getTitle, getChapters } from "@/cmsbook3-retrieve";
 
 Vue.use(Vuex);
 
 const state = {
   title: "cmsbook",
+  chapters: []
 };
 
 const mutations = {
   set_title(state, title) {
     state.title = title;
   },
+  set_chapters(state, chapters) {
+    state.chapters = chapters
+  }
 };
 
 const actions = {
@@ -20,6 +24,14 @@ const actions = {
     try {
       const title = await getTitle();
       commit("set_title", title);
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  async loadChapters({ commit }) {
+    try {
+      const chapters = await getChapters();
+      commit("set_chapters", chapters);
     } catch (error) {
       console.log(error);
     }
