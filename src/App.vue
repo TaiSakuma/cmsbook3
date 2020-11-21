@@ -52,6 +52,7 @@ export default {
   mounted() {
     this.$vuetify.theme.dark = localStorage.dark === "true";
     this.$store.dispatch("loadTitle");
+    this.$store.dispatch("loadChapters");
   },
   watch: {
     "$vuetify.theme.dark": function(v) {

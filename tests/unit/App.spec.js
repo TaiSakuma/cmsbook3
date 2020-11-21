@@ -24,7 +24,8 @@ describe("App.vue", () => {
     router = new VueRouter();
 
     actions = {
-      loadTitle: jest.fn()
+      loadTitle: jest.fn(),
+      loadChapters: jest.fn()
     };
     store = new Vuex.Store({
       actions,
@@ -51,7 +52,8 @@ describe("App.vue", () => {
     expect(wrapper.html()).toMatchSnapshot();
   });
 
-  it("action loadTitle", () => {
+  it("actions", () => {
     expect(actions.loadTitle).toHaveBeenCalled();
+    expect(actions.loadChapters).toHaveBeenCalled();
   });
 });

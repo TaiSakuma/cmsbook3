@@ -14,26 +14,13 @@
 </template>
 
 <script>
-import { retrieveFrom } from "@/cmsbook3-retrieve";
-
 export default {
   name: "TopNavi",
-  data: () => ({
-    chapters: [],
-  }),
-  methods: {
-    async updatePages() {
-      const path = "/.cmsbook3/chapters.json";
-      try {
-        const data = await retrieveFrom(path);
-        this.chapters = data["chapters"];
-      } catch (error) {
-        this.chapters = [];
-      }
+  data: () => ({}),
+  computed: {
+    chapters() {
+      return this.$store.state.chapters;
     },
-  },
-  created() {
-    this.updatePages();
   },
 };
 </script>
