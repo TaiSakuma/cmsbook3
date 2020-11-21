@@ -3,7 +3,7 @@
 exports[`SideNavi.vue snapshot 1`] = `
 <v-card-stub loaderheight="4" tag="div" flat="true">
   <v-toolbar-stub tag="header" extensionheight="48" flat="true" src="">
-    <v-toolbar-title-stub></v-toolbar-title-stub>
+    <v-toolbar-title-stub>chapter-A</v-toolbar-title-stub>
   </v-toolbar-stub>
   <v-list-stub shaped="true" tag="div" dense="true" expand="true" nav="true">
     <v-list-item-stub activeclass="" link="true" to="/chapter-A/index/inbox.md" tag="div" router="">
@@ -11,14 +11,14 @@ exports[`SideNavi.vue snapshot 1`] = `
         <v-icon-stub>mdi-book</v-icon-stub>
       </v-list-item-action-stub>
       <v-list-item-content-stub>
-        <v-list-item-title-stub></v-list-item-title-stub>
+        <v-list-item-title-stub>Inbox</v-list-item-title-stub>
       </v-list-item-content-stub>
     </v-list-item-stub>
     <v-list-group-stub color="primary" activeclass="" appendicon="$expand" prependicon="mdi-book-multiple" ripple="true">
       <v-list-item-stub activeclass="" link="true" to="/chapter-A/a1" tag="div" router="">
         <v-list-item-action-stub></v-list-item-action-stub>
         <v-list-item-content-stub>
-          <v-list-item-title-stub></v-list-item-title-stub>
+          <v-list-item-title-stub>a1</v-list-item-title-stub>
         </v-list-item-content-stub>
         <v-list-item-icon-stub>
           <v-icon-stub>mdi-book</v-icon-stub>
@@ -27,7 +27,7 @@ exports[`SideNavi.vue snapshot 1`] = `
       <v-list-item-stub activeclass="" link="true" to="/chapter-A/a2" tag="div" router="">
         <v-list-item-action-stub></v-list-item-action-stub>
         <v-list-item-content-stub>
-          <v-list-item-title-stub></v-list-item-title-stub>
+          <v-list-item-title-stub>a2</v-list-item-title-stub>
         </v-list-item-content-stub>
         <v-list-item-icon-stub>
           <v-icon-stub>mdi-book</v-icon-stub>
@@ -37,13 +37,13 @@ exports[`SideNavi.vue snapshot 1`] = `
     <v-list-group-stub color="primary" activeclass="" appendicon="$expand" prependicon="mdi-book-multiple" ripple="true">
       <v-list-group-stub color="primary" activeclass="" appendicon="$expand" noaction="true" ripple="true" subgroup="true">
         <v-list-item-stub activeclass="" link="true" to="/chapter-A/b11" tag="div" router="">
-          <v-list-item-title-stub></v-list-item-title-stub>
+          <v-list-item-title-stub>b11</v-list-item-title-stub>
           <v-list-item-icon-stub>
             <v-icon-stub>mdi-book</v-icon-stub>
           </v-list-item-icon-stub>
         </v-list-item-stub>
         <v-list-item-stub activeclass="" link="true" to="/chapter-A/b12" tag="div" router="">
-          <v-list-item-title-stub></v-list-item-title-stub>
+          <v-list-item-title-stub>b12</v-list-item-title-stub>
           <v-list-item-icon-stub>
             <v-icon-stub>mdi-book</v-icon-stub>
           </v-list-item-icon-stub>
@@ -52,7 +52,7 @@ exports[`SideNavi.vue snapshot 1`] = `
       <v-list-item-stub activeclass="" link="true" to="/chapter-A/b2" tag="div" router="">
         <v-list-item-action-stub></v-list-item-action-stub>
         <v-list-item-content-stub>
-          <v-list-item-title-stub></v-list-item-title-stub>
+          <v-list-item-title-stub>b2</v-list-item-title-stub>
         </v-list-item-content-stub>
         <v-list-item-icon-stub>
           <v-icon-stub>mdi-book</v-icon-stub>
