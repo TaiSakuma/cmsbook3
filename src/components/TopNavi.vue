@@ -19,12 +19,12 @@ import axios from "axios";
 export default {
   name: "TopNavi",
   data: () => ({
+    cmsbook_url: process.env.VUE_APP_CMSBOOK_URL,
     pages: []
   }),
   methods: {
     async updatePages() {
-      let path = process.env.VUE_APP_CMSBOOK_URL;
-      path = path + "/.cmsbook3/chapters.json";
+      const path = this.cmsbook_url + "/.cmsbook3/chapters.json";
       try {
         const response = await axios.get(path);
         this.pages = response.data["chapters"];
