@@ -78,24 +78,19 @@
 </template>
 
 <script>
-import axios from "axios";
+import { retrieveFrom } from "@/cmsbook3-retrieve";
 
 export default {
   name: "SideNavi",
   data: () => ({
-    cmsbook_url: process.env.VUE_APP_CMSBOOK_URL,
     pages: [],
   }),
   methods: {
     async updatePages() {
-      let path =
-        this.cmsbook_url +
-        "/" +
-        this.$route.params.chapter +
-        "/.cmsbook3/sections.json";
+      let path = "/" + this.$route.params.chapter + "/.cmsbook3/sections.json";
       try {
-        const response = await axios.get(path);
-        this.pages = response.data.sections;
+        const data = await retrieveFrom(path);
+        this.pages = data.sections;
       } catch (error) {
         this.pages = [];
       }
