@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import Vuex from "vuex";
 import Vuetify from "vuetify";
 import { mount, shallowMount, createLocalVue } from "@vue/test-utils";
 
@@ -15,27 +16,41 @@ describe("SideNavi.vue", () => {
 
   let localVue;
   let router;
+  let actions;
+  let store;
   let wrapper;
 
   beforeEach(() => {
     process.env.VUE_APP_CMSBOOK_URL = "http://localhost/cmsbook";
     moxios.install();
     localVue = createLocalVue();
+    localVue.use(Vuex);
     router = new VueRouter();
+
+    actions = {};
+    store = new Vuex.Store({
+      actions,
+      getters: {
+        chapterMap: () => {
+          return { "/chapter-A": { name: "Chapter A", path: "/chapter-A" } };
+        },
+      },
+    });
 
     wrapper = shallowMount(SideNavi, {
       localVue,
       router,
+      store,
       mocks: {
         $route: {
           path: "/chapter-A/section-b/page-3.md",
           params: {
             chapter: "chapter-A",
             section: "section-b",
-            page: "page-3.md"
-          }
-        }
-      }
+            page: "page-3.md",
+          },
+        },
+      },
     });
   });
 
@@ -51,8 +66,8 @@ describe("SideNavi.vue", () => {
         name: "A",
         subcontents: [
           { name: "a1", path: "a1" },
-          { name: "a2", path: "a2" }
-        ]
+          { name: "a2", path: "a2" },
+        ],
       },
       {
         name: "B",
@@ -61,28 +76,28 @@ describe("SideNavi.vue", () => {
             name: "b1",
             subcontents: [
               { name: "b11", path: "b11" },
-              { name: "b12", path: "b12" }
-            ]
+              { name: "b12", path: "b12" },
+            ],
           },
-          { name: "b2", path: "b2" }
-        ]
-      }
-    ]
+          { name: "b2", path: "b2" },
+        ],
+      },
+    ],
   };
 
-  it("snapshot", done => {
+  it("snapshot", (done) => {
     moxios.wait(async () => {
       let request = moxios.requests.mostRecent();
       await request.respondWith({
         status: 200,
-        response: response
+        response: response,
       });
       expect(wrapper.html()).toMatchSnapshot();
       done();
     });
   });
 
-  it("axios request ", done => {
+  it("axios request ", (done) => {
     moxios.wait(() => {
       let request = moxios.requests.mostRecent();
       expect(request.config.url).toBe(

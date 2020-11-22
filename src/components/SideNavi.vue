@@ -1,7 +1,7 @@
 <template>
   <v-card flat>
     <v-toolbar flat>
-      <v-toolbar-title v-text="$route.params.chapter"></v-toolbar-title>
+      <v-toolbar-title v-text="chapter.name"></v-toolbar-title>
     </v-toolbar>
     <v-list shaped nav dense expand>
       <template v-for="page in pages">
@@ -85,6 +85,11 @@ export default {
   data: () => ({
     pages: [],
   }),
+  computed: {
+    chapter() {
+      return this.$store.getters.chapterMap["/" + this.$route.params.chapter];
+    }
+  },
   methods: {
     async updatePages() {
       let path = "/" + this.$route.params.chapter + "/.cmsbook3/sections.json";
