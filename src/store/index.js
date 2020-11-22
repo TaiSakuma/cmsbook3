@@ -10,6 +10,16 @@ const state = {
   chapters: [], // e.g., [{ name: "Chapter A", path: "/chapter-A" }, ...]
 };
 
+const getters = {
+  chapterMap: (state) => {
+    // e.g., { "/chapter-A": { name: "Chapter A", path: "/chapter-A" }, ...}
+    return state.chapters.reduce(
+      (acc, cur) => ({ ...acc, [cur.path]: cur }),
+      {}
+    );
+  },
+};
+
 const mutations = {
   set_title(state, title) {
     state.title = title;
@@ -40,6 +50,7 @@ const actions = {
 
 export const storeConfig = {
   state,
+  getters,
   mutations,
   actions,
 };
