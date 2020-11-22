@@ -25,8 +25,8 @@ const mutations = {
     state.title = title;
   },
   set_chapters(state, chapters) {
-    state.chapters = chapters
-  }
+    state.chapters = chapters;
+  },
 };
 
 const actions = {
