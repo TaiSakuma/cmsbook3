@@ -62,7 +62,7 @@ export default {
     const path = this.cmsbook_url + this.$route.path.match(/.*\//);
 
     $(
-      ".markdown-body a:not([href^='http:'],[href^='https:'],[href^='/'],[href^='#'])"
+      ".markdown-body a:not([href^='http:'],[href^='https:'],[href^='file:'],[href^='/'],[href^='#'])"
     ).each(function() {
       this.setAttribute("href", this.getAttribute("href").replace(/^/, path));
     });
