@@ -1,7 +1,7 @@
 <template>
   <v-card flat>
     <v-toolbar flat>
-      <v-toolbar-title v-text="chapter.name"></v-toolbar-title>
+      <v-toolbar-title v-text="chapter.name" v-if="chapter"></v-toolbar-title>
     </v-toolbar>
     <v-list shaped nav dense expand>
       <template v-for="page in pages">
