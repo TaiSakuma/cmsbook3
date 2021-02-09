@@ -21,7 +21,7 @@
           </v-list-item>
         </template>
         <template v-else-if="page.subcontents">
-          <v-list-group prepend-icon="mdi-book-multiple" :key="page.name">
+          <v-list-group prepend-icon="mdi-book-multiple" :key="page.name" :value="page.active">
             <template v-slot:activator>
               <v-list-item-title v-html="page.name"></v-list-item-title>
             </template>
@@ -45,7 +45,7 @@
                 </v-list-item>
               </template>
               <template v-else-if="subpage.subcontents">
-                <v-list-group no-action sub-group :key="subpage.name">
+                <v-list-group no-action sub-group :key="subpage.name" :value="subpage.active">
                   <template v-slot:activator>
                     <v-list-item-content>
                       <v-list-item-title
@@ -88,17 +88,70 @@ export default {
   computed: {
     chapter() {
       return this.$store.getters.chapterMap["/" + this.$route.params.chapter];
-    }
+    },
   },
   methods: {
     async updatePages() {
-      let path = "/" + this.$route.params.chapter + "/.cmsbook3/sections.json";
+      let pathToSectionConfig =
+        "/" + this.$route.params.chapter + "/.cmsbook3/sections.json";
       try {
-        const data = await retrieveFrom(path);
+        const data = await retrieveFrom(pathToSectionConfig);
         this.pages = data.sections;
       } catch (error) {
         this.pages = [];
       }
+
+      const relativePath = this.$route.path.split("/").slice(2).join("/");
+      // relative to chapger path, e.g., "section/web.md"
+
+      // open v-list-group containing the current page
+      this.pages.forEach(function (section) {
+        if (section.subcontents) {
+          section.subcontents.forEach(function (page) {
+            if (page.subcontents) {
+              page.subcontents.forEach(function (subpage) {
+                if (subpage.path) {
+                  if (subpage.path.split("/").length < 2) {
+                    subpage.active =
+                      relativePath ==
+                      subpage.path +
+                        "/" +
+                        process.env.VUE_APP_CMSBOOK_INDEX_FILENAME;
+                  } else {
+                    subpage.active = relativePath == subpage.path;
+                  }
+                } else {
+                  subpage.active = false;
+                }
+              });
+              page.active = page.subcontents.map((s) => s.active).some(Boolean);
+            } else if (page.path) {
+              if (page.path.split("/").length < 2) {
+                page.active =
+                  relativePath ==
+                  page.path + "/" + process.env.VUE_APP_CMSBOOK_INDEX_FILENAME;
+              } else {
+                page.active = relativePath == page.path;
+              }
+            } else {
+              page.active = false;
+            }
+          });
+          section.active = section.subcontents
+            .map((s) => s.active)
+            .some(Boolean);
+        } else if (section.path) {
+          if (section.path.split("/").length < 2) {
+            section.active =
+              relativePath ==
+              section.path + "/" + process.env.VUE_APP_CMSBOOK_INDEX_FILENAME;
+          } else {
+            section.active = relativePath == section.path;
+          }
+        } else {
+          section.active = false;
+        }
+      });
     },
   },
   watch: {
