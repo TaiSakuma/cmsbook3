@@ -9,7 +9,7 @@
           <v-list-item
             link
             router
-            :key="page.name"
+            :key="page.path"
             :to="'/' + $route.params.chapter + '/' + page.path"
           >
             <v-list-item-action>
@@ -30,7 +30,7 @@
                 <v-list-item
                   link
                   router
-                  :key="subpage.name"
+                  :key="subpage.path"
                   :to="'/' + $route.params.chapter + '/' + subpage.path"
                 >
                   <v-list-item-action></v-list-item-action>
