@@ -22,26 +22,19 @@ export default {
   data() {
     return {
       cmsbook_url: process.env.VUE_APP_CMSBOOK_URL,
-      md: ""
+      md: "",
     };
   },
   computed: {
     content() {
       try {
         return marked(this.md);
-      } catch(error) {
-        return "cannot parsed as markdown"
+      } catch (error) {
+        return "cannot parsed as markdown";
       }
     },
     path() {
-      return (
-        "/" +
-        this.$route.params.chapter +
-        "/" +
-        this.$route.params.section +
-        "/" +
-        this.$route.params.page
-      );
+      return `/${this.$route.params.chapter}/${this.$route.params.section}/${this.$route.params.page}`;
     },
     breadcrumbsItems() {
       let ret = [{ text: this.$route.params.chapter }];
@@ -49,39 +42,43 @@ export default {
         ret.push({ text: this.$route.params.section });
       }
       if (this.$route.params.page) {
-        this.$route.params.page.split("/").forEach(e => {
+        this.$route.params.page.split("/").forEach((e) => {
           ret.push({ text: e });
         });
       }
       return ret;
-    }
+    },
   },
-  updated: function() {
+  updated: function () {
     $(".markdown-body a:not([href^='#'])").attr("target", "_blank");
 
     const path = this.cmsbook_url + this.$route.path.match(/.*\//);
 
     $(
       ".markdown-body a:not([href^='http:'],[href^='https:'],[href^='file:'],[href^='/'],[href^='#'])"
-    ).each(function() {
+    ).each(function () {
       this.setAttribute("href", this.getAttribute("href").replace(/^/, path));
     });
 
     $(".markdown-body img:not([src^='http:'],[src^='https:'],[src^='/'])").each(
-      function() {
+      function () {
         this.setAttribute("src", this.getAttribute("src").replace(/^/, path));
       }
     );
 
-    MathJax.Hub.Typeset()
+    try{
+      MathJax.Hub.Typeset();
+    } catch (error) {
+      console.log(error);
+    }
   },
   watch: {
     path: {
-      handler: function() {
+      handler: function () {
         this.getMarkDownFromPath();
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   methods: {
     async getMarkDownFromPath() {
@@ -94,8 +91,8 @@ export default {
       } catch (error) {
         this.md = "Error: cannot get: " + this.path;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
