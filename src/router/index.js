@@ -26,6 +26,23 @@ async function getPathToHome() {
   return path;
 }
 
+async function getPathToChapterHome(chapter) {
+  const configUrl =
+    process.env.VUE_APP_CMSBOOK_URL + "/" + chapter + "/.cmsbook3/home.json";
+  const defaultHome = "index/web.md";
+  let path;
+  try {
+    const response = await axios.get(configUrl);
+    if (response.data.home == undefined) {
+      throw "home undefined";
+    }
+    path = response.data.home;
+  } catch {
+    path = defaultHome;
+  }
+  return path;
+}
+
 const routes = [
   {
     path: "/",
@@ -61,22 +78,7 @@ const routes = [
   {
     path: "/:chapter",
     beforeEnter: async (to, from, next) => {
-      const configUrl =
-        process.env.VUE_APP_CMSBOOK_URL +
-        "/" +
-        to.params.chapter +
-        "/.cmsbook3/home.json";
-      const defaultHome = "index/web.md";
-      let path;
-      try {
-        const response = await axios.get(configUrl);
-        if (response.data.home == undefined) {
-          throw "home undefined";
-        }
-        path = to.path + "/" + response.data.home;
-      } catch {
-        path = to.path + "/" + defaultHome;
-      }
+      const path = `/${to.params.chapter}/` + (await getPathToChapterHome(to.params.chapter));
       next(path);
     },
   },
