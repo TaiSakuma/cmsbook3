@@ -27,10 +27,18 @@ export default {
   },
   computed: {
     content() {
+      let htmlString;
       try {
-        return marked(this.md);
+        htmlString = marked(this.md);
       } catch (error) {
         return "cannot parsed as markdown";
+      }
+
+      try {
+        return this.editHtml(htmlString);
+      } catch (error) {
+        console.error(error);
+        return htmlString;
       }
     },
     path() {
@@ -50,23 +58,7 @@ export default {
     },
   },
   updated: function () {
-    $(".markdown-body a:not([href^='#'])").attr("target", "_blank");
-
-    const path = this.cmsbook_url + this.$route.path.match(/.*\//);
-
-    $(
-      ".markdown-body a:not([href^='http:'],[href^='https:'],[href^='file:'],[href^='/'],[href^='#'])"
-    ).each(function () {
-      this.setAttribute("href", this.getAttribute("href").replace(/^/, path));
-    });
-
-    $(".markdown-body img:not([src^='http:'],[src^='https:'],[src^='/'])").each(
-      function () {
-        this.setAttribute("src", this.getAttribute("src").replace(/^/, path));
-      }
-    );
-
-    try{
+    try {
       MathJax.Hub.Typeset();
     } catch (error) {
       console.log(error);
@@ -91,6 +83,31 @@ export default {
       } catch (error) {
         this.md = "Error: cannot get: " + this.path;
       }
+    },
+    editHtml(htmlString) {
+      let tree = $(`<div>${htmlString}</div>`);
+      tree.find("a:not([href^='#'])").attr("target", "_blank");
+
+      const path = this.cmsbook_url + this.$route.path.match(/.*\//);
+
+      tree
+        .find(
+          "a:not([href^='http:'],[href^='https:'],[href^='file:'],[href^='/'],[href^='#'])"
+        )
+        .each(function () {
+          this.setAttribute(
+            "href",
+            this.getAttribute("href").replace(/^/, path)
+          );
+        });
+
+      tree
+        .find("img:not([src^='http:'],[src^='https:'],[src^='/'])")
+        .each(function () {
+          this.setAttribute("src", this.getAttribute("src").replace(/^/, path));
+        });
+
+      return tree.html();
     },
   },
 };
