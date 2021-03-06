@@ -2,7 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import VueMeta from "vue-meta";
 
-import axios from "axios";
+import { retrieveFrom } from "@/cmsbook3-retrieve";
 
 import Page from "@/views/Page.vue";
 import PageNotFound from "@/views/PageNotFound.vue";
@@ -11,28 +11,26 @@ Vue.use(VueRouter);
 Vue.use(VueMeta);
 
 async function getPathToHome() {
-  const configUrl = process.env.VUE_APP_CMSBOOK_URL + "/.cmsbook3/home.json";
   const defaultHome = "index/web.md";
   try {
-    const response = await axios.get(configUrl);
-    if (response.data.home == undefined) {
+    const data = await retrieveFrom("/.cmsbook3/home.json");
+    if (data.home == undefined) {
       throw "home undefined";
     }
-    return response.data.home;
+    return data.home;
   } catch {
     return defaultHome;
   }
 }
 
 async function getPathToChapterHome(chapter) {
-  const configUrl = `${process.env.VUE_APP_CMSBOOK_URL}/${chapter}/.cmsbook3/home.json`;
   const defaultHome = "index/web.md";
   try {
-    const response = await axios.get(configUrl);
-    if (response.data.home == undefined) {
+    const data = await retrieveFrom(`/${chapter}/.cmsbook3/home.json`);
+    if (data.home == undefined) {
       throw "home undefined";
     }
-    return response.data.home;
+    return data.home;
   } catch {
     return defaultHome;
   }
