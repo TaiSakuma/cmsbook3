@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import VueMeta from 'vue-meta';
+import VueMeta from "vue-meta";
 
 import axios from "axios";
 
@@ -32,7 +32,7 @@ const routes = [
     beforeEnter: async (to, from, next) => {
       const path = to.path + await getPathToHome(to);
       next(path);
-    }
+    },
   },
   {
     path: "/about",
@@ -41,11 +41,11 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
+      import(/* webpackChunkName: "about" */ "../views/About.vue"),
   },
   {
     path: "/:chapter/:section",
-    redirect: to => {
+    redirect: (to) => {
       const pathChapterSection = to.path;
       // e.g. /abc/xyz
 
@@ -56,7 +56,7 @@ const routes = [
       // e.g., /abc/xyz/web.md
 
       return ret;
-    }
+    },
   },
   {
     path: "/:chapter",
@@ -78,18 +78,18 @@ const routes = [
         path = to.path + "/" + defaultHome;
       }
       next(path);
-    }
+    },
   },
   {
     path: "/:chapter/:section/:page*",
     name: "page",
-    component: Page
+    component: Page,
   },
   {
     path: "*",
     name: "pagenotfound",
-    component: PageNotFound
-  }
+    component: PageNotFound,
+  },
 ];
 
 const router = new VueRouter({
@@ -102,7 +102,7 @@ const router = new VueRouter({
     } else {
       return { x: 0, y: 0 };
     }
-  }
+  },
 });
 
 export default router;
