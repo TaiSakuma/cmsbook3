@@ -4,8 +4,8 @@ import VueMeta from "vue-meta";
 
 import axios from "axios";
 
-import Page from "../views/Page.vue";
-import PageNotFound from "../views/PageNotFound.vue";
+import Page from "@/views/Page.vue";
+import PageNotFound from "@/views/PageNotFound.vue";
 
 Vue.use(VueRouter);
 Vue.use(VueMeta);
@@ -13,41 +13,37 @@ Vue.use(VueMeta);
 async function getPathToHome() {
   const configUrl = process.env.VUE_APP_CMSBOOK_URL + "/.cmsbook3/home.json";
   const defaultHome = "index/web.md";
-  let path;
   try {
     const response = await axios.get(configUrl);
     if (response.data.home == undefined) {
       throw "home undefined";
     }
-    path = response.data.home;
+    return response.data.home;
   } catch {
-    path = defaultHome;
+    return defaultHome;
   }
-  return path;
 }
 
 async function getPathToChapterHome(chapter) {
-  const configUrl =
-    process.env.VUE_APP_CMSBOOK_URL + "/" + chapter + "/.cmsbook3/home.json";
+  const configUrl = `${process.env.VUE_APP_CMSBOOK_URL}/${chapter}/.cmsbook3/home.json`;
   const defaultHome = "index/web.md";
-  let path;
   try {
     const response = await axios.get(configUrl);
     if (response.data.home == undefined) {
       throw "home undefined";
     }
-    path = response.data.home;
+    return response.data.home;
   } catch {
-    path = defaultHome;
+    return defaultHome;
   }
-  return path;
 }
 
 const routes = [
   {
     path: "/",
     beforeEnter: async (to, from, next) => {
-      const path = to.path + await getPathToHome();
+      const relPath = await getPathToHome();
+      const path = to.path + relPath;
       next(path);
     },
   },
@@ -69,7 +65,7 @@ const routes = [
       const defaultPage = process.env.VUE_APP_CMSBOOK_INDEX_FILENAME;
       // e.g. web.md
 
-      const ret = pathChapterSection + "/" + defaultPage;
+      const ret = `${pathChapterSection}/${defaultPage}`;
       // e.g., /abc/xyz/web.md
 
       return ret;
@@ -78,7 +74,8 @@ const routes = [
   {
     path: "/:chapter",
     beforeEnter: async (to, from, next) => {
-      const path = `/${to.params.chapter}/` + (await getPathToChapterHome(to.params.chapter));
+      const relPath = await getPathToChapterHome(to.params.chapter);
+      const path = `/${to.params.chapter}/${relPath}`;
       next(path);
     },
   },
