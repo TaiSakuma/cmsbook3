@@ -10,7 +10,7 @@ import PageNotFound from "../views/PageNotFound.vue";
 Vue.use(VueRouter);
 Vue.use(VueMeta);
 
-async function getPathToHome(to) {
+async function getPathToHome() {
   const configUrl = process.env.VUE_APP_CMSBOOK_URL + "/.cmsbook3/home.json";
   const defaultHome = "index/web.md";
   let path;
@@ -30,7 +30,7 @@ const routes = [
   {
     path: "/",
     beforeEnter: async (to, from, next) => {
-      const path = to.path + await getPathToHome(to);
+      const path = to.path + await getPathToHome();
       next(path);
     },
   },
