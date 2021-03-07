@@ -15,13 +15,9 @@ exports[`Page.vue snapshot 1`] = `
       <div class="v-breadcrumbs__item">page-3.md</div>
     </li>
   </ul>
-  <div class="container px-0 pt-0 container--fluid">
-    <div class="row mx-0 px-5">
-      <div class="ma-0 pa-0 col">
-        <div class="markdown-body pa-5 v-card v-sheet v-sheet--outlined theme--light">
-          <p><strong>marked</strong></p>
-        </div>
-      </div>
+  <div class="ma-3 pa-3 v-card v-sheet v-sheet--outlined theme--light" style="max-width: 980px;">
+    <div class="v-card__text markdown-body">
+      <p><strong>marked</strong></p>
     </div>
   </div>
 </div>

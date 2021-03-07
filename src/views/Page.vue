@@ -1,13 +1,9 @@
 <template>
   <div class="page">
     <v-breadcrumbs :items="breadcrumbsItems"></v-breadcrumbs>
-    <v-container fluid class="px-0 pt-0">
-      <v-row class="mx-0 px-5">
-        <v-col class="ma-0 pa-0">
-          <v-card outlined class="markdown-body pa-5" v-html="content"></v-card>
-        </v-col>
-      </v-row>
-    </v-container>
+    <v-card outlined max-width="980" class="ma-3 pa-3">
+      <v-card-text class="markdown-body" v-html="content"></v-card-text>
+    </v-card>
   </div>
 </template>
 
@@ -118,10 +114,10 @@ export default {
 @import "../../node_modules/github-markdown-css/github-markdown.css";
 
 .markdown-body {
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
   min-width: 200px;
-  max-width: 980px;
-  border-radius: 10px;
+  /* max-width: 980px; */
+  /* border-radius: 10px; */
 }
 
 .v-application .markdown-body code {
