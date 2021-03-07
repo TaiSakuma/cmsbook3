@@ -10,6 +10,14 @@
 <script>
 import marked from "marked";
 
+// import Prism from 'prism-es6'; // Jest doesn't work with this
+import Prism from 'prismjs';
+import "prism-es6/components/prism-markup-templating";
+import "prism-es6/components/prism-python";
+import "prism-es6/components/prism-bash";
+import "prism-es6/components/prism-latex";
+import "@/prism.css";
+
 import { retrieveFrom } from "@/cmsbook3-retrieve";
 
 export default {
@@ -53,6 +61,7 @@ export default {
     },
   },
   updated: function () {
+    Prism.highlightAll();
     try {
       MathJax.Hub.Typeset();
     } catch (error) {
@@ -81,8 +90,8 @@ export default {
     },
     editHtml(htmlString) {
       const pathToCurrentDir = this.cmsbook_url + this.$route.path.match(/.*\//);
-      const h = this.editHtmlWithJQuery(htmlString, pathToCurrentDir);
-      return h;
+      let ret = this.editHtmlWithJQuery(htmlString, pathToCurrentDir);
+      return ret;
     },
     editHtmlWithJQuery(htmlString, pathToCurrentDir) {
       const $ = require( "jquery" );
@@ -126,6 +135,7 @@ export default {
 
 .v-application .markdown-body code {
   box-shadow: none;
+  color: inherit;
 }
 .v-application .markdown-body code:before {
   content: "";
@@ -150,7 +160,7 @@ export default {
 
 .theme--dark .markdown-body code {
   background-color: #212121;
-  color: #f44336;
+  /* color: #f44336; */
 }
 
 .theme--light .markdown-body pre {
