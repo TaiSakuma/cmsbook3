@@ -80,12 +80,15 @@ export default {
       }
     },
     editHtml(htmlString) {
+      const pathToCurrentDir = this.cmsbook_url + this.$route.path.match(/.*\//);
+      const h = this.editHtmlWithJQuery(htmlString, pathToCurrentDir);
+      return h;
+    },
+    editHtmlWithJQuery(htmlString, pathToCurrentDir) {
       const $ = require( "jquery" );
 
       let tree = $(`<div>${htmlString}</div>`);
       tree.find("a:not([href^='#'])").attr("target", "_blank");
-
-      const path = this.cmsbook_url + this.$route.path.match(/.*\//);
 
       tree
         .find(
@@ -94,14 +97,14 @@ export default {
         .each(function () {
           this.setAttribute(
             "href",
-            this.getAttribute("href").replace(/^/, path)
+            this.getAttribute("href").replace(/^/, pathToCurrentDir)
           );
         });
 
       tree
         .find("img:not([src^='http:'],[src^='https:'],[src^='/'])")
         .each(function () {
-          this.setAttribute("src", this.getAttribute("src").replace(/^/, path));
+          this.setAttribute("src", this.getAttribute("src").replace(/^/, pathToCurrentDir));
         });
 
       return tree.html();
