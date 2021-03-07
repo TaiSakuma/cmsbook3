@@ -7,7 +7,6 @@
   </div>
 </template>
 
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
 <script>
 import marked from "marked";
 
@@ -81,6 +80,8 @@ export default {
       }
     },
     editHtml(htmlString) {
+      const $ = require( "jquery" );
+
       let tree = $(`<div>${htmlString}</div>`);
       tree.find("a:not([href^='#'])").attr("target", "_blank");
 
