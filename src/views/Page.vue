@@ -163,9 +163,9 @@ export default {
   /* color: #f44336; */
 }
 
-.theme--light .markdown-body pre {
+/* .theme--light .markdown-body pre {
   background-color: #eeeeee;
-}
+} */
 
 .theme--dark .markdown-body table td,
 .theme--dark .markdown-body table th {
