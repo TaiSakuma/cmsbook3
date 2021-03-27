@@ -159,8 +159,12 @@ export default {
 }
 
 .theme--dark .markdown-body code {
-  background-color: #212121;
+  background-color: inherit;
   /* color: #f44336; */
+}
+
+.theme--light .markdown-body code {
+  background-color: inherit;
 }
 
 .theme--light .markdown-body pre {
