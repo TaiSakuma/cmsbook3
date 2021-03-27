@@ -2,6 +2,7 @@
   <v-card flat>
     <v-toolbar flat>
       <router-link
+        v-if="chapter"
         :to="chapter.path"
         style="text-decoration: none; color: inherit"
       >
