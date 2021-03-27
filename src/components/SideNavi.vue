@@ -1,7 +1,9 @@
 <template>
   <v-card flat>
     <v-toolbar flat>
-      <v-toolbar-title v-text="chapter.name" v-if="chapter"></v-toolbar-title>
+      <router-link :to="chapter.path" style="text-decoration: none; color: inherit">
+        <v-toolbar-title v-text="chapter.name" v-if="chapter"></v-toolbar-title>
+      </router-link>
     </v-toolbar>
     <v-list shaped nav dense expand>
       <template v-for="page in pages">

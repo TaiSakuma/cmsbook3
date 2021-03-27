@@ -51,6 +51,7 @@ describe("SideNavi.vue", () => {
           },
         },
       },
+      stubs: ["router-link", "router-view"],
     });
   });
 
