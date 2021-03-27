@@ -1,7 +1,10 @@
 <template>
   <v-card flat>
     <v-toolbar flat>
-      <router-link :to="chapter.path" style="text-decoration: none; color: inherit">
+      <router-link
+        :to="chapter.path"
+        style="text-decoration: none; color: inherit"
+      >
         <v-toolbar-title v-text="chapter.name" v-if="chapter"></v-toolbar-title>
       </router-link>
     </v-toolbar>
@@ -23,7 +26,11 @@
           </v-list-item>
         </template>
         <template v-else-if="page.subcontents">
-          <v-list-group prepend-icon="mdi-book-multiple" :key="page.name" :value="page.active">
+          <v-list-group
+            prepend-icon="mdi-book-multiple"
+            :key="page.name"
+            :value="page.active"
+          >
             <template v-slot:activator>
               <v-list-item-title v-html="page.name"></v-list-item-title>
             </template>
@@ -47,7 +54,12 @@
                 </v-list-item>
               </template>
               <template v-else-if="subpage.subcontents">
-                <v-list-group no-action sub-group :key="subpage.name" :value="subpage.active">
+                <v-list-group
+                  no-action
+                  sub-group
+                  :key="subpage.name"
+                  :value="subpage.active"
+                >
                   <template v-slot:activator>
                     <v-list-item-content>
                       <v-list-item-title
