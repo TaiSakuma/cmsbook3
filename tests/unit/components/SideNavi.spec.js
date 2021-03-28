@@ -4,7 +4,8 @@ import Vuex from "vuex";
 import Vuetify from "vuetify";
 import { mount, shallowMount, createLocalVue } from "@vue/test-utils";
 
-import moxios from "moxios";
+import { retrieveFrom } from "@/cmsbook3-retrieve";
+jest.mock("@/cmsbook3-retrieve");
 
 import SideNavi from "@/components/SideNavi.vue";
 
@@ -13,22 +14,12 @@ Vue.use(Vuetify);
 
 describe("SideNavi.vue", () => {
   const ENV_ORG = process.env;
-
   let localVue;
   let router;
-  let actions;
-  let store;
-  let wrapper;
 
-  beforeEach(() => {
-    process.env.VUE_APP_CMSBOOK_URL = "http://localhost/cmsbook";
-    moxios.install();
-    localVue = createLocalVue();
-    localVue.use(Vuex);
-    router = new VueRouter();
-
-    actions = {};
-    store = new Vuex.Store({
+  function createWrapper() {
+    let actions = {};
+    let store = new Vuex.Store({
       actions,
       getters: {
         chapterMap: () => {
@@ -37,7 +28,7 @@ describe("SideNavi.vue", () => {
       },
     });
 
-    wrapper = shallowMount(SideNavi, {
+    return shallowMount(SideNavi, {
       localVue,
       router,
       store,
@@ -53,10 +44,17 @@ describe("SideNavi.vue", () => {
       },
       stubs: ["router-link", "router-view"],
     });
+  }
+
+  beforeEach(() => {
+    process.env.VUE_APP_CMSBOOK_URL = "http://localhost/cmsbook";
+    localVue = createLocalVue();
+    localVue.use(Vuex);
+    router = new VueRouter();
   });
 
   afterEach(() => {
-    moxios.uninstall();
+    // moxios.uninstall();
     process.env = ENV_ORG;
   });
 
@@ -86,27 +84,12 @@ describe("SideNavi.vue", () => {
     ],
   };
 
-  it("snapshot", (done) => {
-    moxios.wait(async () => {
-      let request = moxios.requests.mostRecent();
-      await request.respondWith({
-        status: 200,
-        response: response,
-      });
-      expect(wrapper.html()).toMatchSnapshot();
-      done();
-    });
-  });
-
-  it("axios request ", (done) => {
-    moxios.wait(() => {
-      let request = moxios.requests.mostRecent();
-      expect(request.config.url).toBe(
-        "http://localhost/cmsbook/chapter-A/.cmsbook3/sections.json"
-      );
-      expect(request.config.method).toBe("get");
-      expect(request.config.data).toBeUndefined();
-      done();
-    });
+  it("snapshot", async () => {
+    retrieveFrom.mockResolvedValue(response);
+    let wrapper = createWrapper();
+    expect(retrieveFrom).toHaveBeenCalledWith("/chapter-A/.cmsbook3/sections.json");
+    await Vue.nextTick();
+    await Vue.nextTick();
+    expect(wrapper.html()).toMatchSnapshot();
   });
 });
