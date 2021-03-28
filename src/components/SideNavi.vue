@@ -176,6 +176,13 @@ export default {
       },
       immediate: true,
     },
+    "$route.path": {
+      handler: function (val) {
+        const { chapter, section, page } = this.$route.params;
+        this.$store.dispatch("onChangePage", { chapter, section, page });
+      },
+      immediate: true,
+    },
   },
 };
 </script>
