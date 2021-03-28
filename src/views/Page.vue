@@ -11,7 +11,7 @@
 import marked from "marked";
 
 // import Prism from 'prism-es6'; // Jest doesn't work with this
-import Prism from 'prismjs';
+import Prism from "prismjs";
 import "prism-es6/components/prism-markup-templating";
 import "prism-es6/components/prism-python";
 import "prism-es6/components/prism-bash";
@@ -89,12 +89,13 @@ export default {
       }
     },
     editHtml(htmlString) {
-      const pathToCurrentDir = this.cmsbook_url + this.$route.path.match(/.*\//);
+      const pathToCurrentDir =
+        this.cmsbook_url + this.$route.path.match(/.*\//);
       let ret = this.editHtmlWithJQuery(htmlString, pathToCurrentDir);
       return ret;
     },
     editHtmlWithJQuery(htmlString, pathToCurrentDir) {
-      const $ = require( "jquery" );
+      const $ = require("jquery");
 
       let tree = $(`<div>${htmlString}</div>`);
       tree.find("a:not([href^='#'])").attr("target", "_blank");
@@ -113,7 +114,10 @@ export default {
       tree
         .find("img:not([src^='http:'],[src^='https:'],[src^='/'])")
         .each(function () {
-          this.setAttribute("src", this.getAttribute("src").replace(/^/, pathToCurrentDir));
+          this.setAttribute(
+            "src",
+            this.getAttribute("src").replace(/^/, pathToCurrentDir)
+          );
         });
 
       return tree.html();
