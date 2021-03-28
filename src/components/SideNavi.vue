@@ -106,16 +106,16 @@ export default {
     },
   },
   watch: {
-    "$route.params.chapter": {
-      handler: function () {
-        this.updatePages();
-      },
-      immediate: true,
-    },
     "$route.path": {
       handler: function (val) {
         const { chapter, section, page } = this.$route.params;
         this.$store.dispatch("onChangePage", { chapter, section, page });
+      },
+      immediate: true,
+    },
+    "$store.state.currentChapterPath": {
+      handler: function (val) {
+        this.updatePages();
       },
       immediate: true,
     },
