@@ -18,12 +18,17 @@ describe("SideNavi.vue", () => {
   let router;
 
   function createWrapper() {
-    let actions = {};
+    let actions = {
+      onChangePage: jest.fn(),
+    };
     let store = new Vuex.Store({
       actions,
       getters: {
         chapterMap: () => {
           return { "/chapter-A": { name: "Chapter A", path: "/chapter-A" } };
+        },
+        currentChapter: () => {
+          return { name: "Chapter A", path: "/chapter-A" };
         },
       },
     });
