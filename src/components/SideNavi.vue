@@ -102,7 +102,7 @@ export default {
   }),
   computed: {
     chapter() {
-      return this.$store.getters.chapterMap["/" + this.$route.params.chapter];
+      return this.$store.getters.currentChapter;
     },
   },
   methods: {
