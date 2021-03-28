@@ -93,8 +93,6 @@
 </template>
 
 <script>
-import { retrieveFrom } from "@/cmsbook3-retrieve";
-
 export default {
   name: "SideNavi",
   data: () => ({
@@ -113,7 +111,7 @@ export default {
       },
       immediate: true,
     },
-    "$store.state.currentChapterPath": {
+    "$store.state.sectionsInCurrentChapter": {
       handler: function (val) {
         this.updatePages();
       },
@@ -122,14 +120,7 @@ export default {
   },
   methods: {
     async updatePages() {
-      let pathToSectionConfig =
-        "/" + this.$route.params.chapter + "/.cmsbook3/sections.json";
-      try {
-        const data = await retrieveFrom(pathToSectionConfig);
-        this.pages = data.sections;
-      } catch (error) {
-        this.pages = [];
-      }
+      this.pages = this.$store.state.sectionsInCurrentChapter || [];
 
       const relativePath = this.$route.path.split("/").slice(2).join("/");
       // relative to chapger path, e.g., "section/web.md"

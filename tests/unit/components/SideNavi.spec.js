@@ -4,9 +4,6 @@ import Vuex from "vuex";
 import Vuetify from "vuetify";
 import { mount, shallowMount, createLocalVue } from "@vue/test-utils";
 
-import { retrieveFrom } from "@/cmsbook3-retrieve";
-jest.mock("@/cmsbook3-retrieve");
-
 import SideNavi from "@/components/SideNavi.vue";
 
 Vue.use(Vuetify);
@@ -17,12 +14,39 @@ describe("SideNavi.vue", () => {
   let localVue;
   let router;
 
+  const sections = [
+    { name: "Inbox", path: "index/inbox.md" },
+    {
+      name: "A",
+      subcontents: [
+        { name: "a1", path: "a1" },
+        { name: "a2", path: "a2" },
+      ],
+    },
+    {
+      name: "B",
+      subcontents: [
+        {
+          name: "b1",
+          subcontents: [
+            { name: "b11", path: "b11" },
+            { name: "b12", path: "b12" },
+          ],
+        },
+        { name: "b2", path: "b2" },
+      ],
+    },
+  ];
+
   function createWrapper() {
     let actions = {
       onChangePage: jest.fn(),
     };
     let store = new Vuex.Store({
       actions,
+      state: {
+        sectionsInCurrentChapter: sections,
+      },
       getters: {
         chapterMap: () => {
           return { "/chapter-A": { name: "Chapter A", path: "/chapter-A" } };
@@ -63,38 +87,8 @@ describe("SideNavi.vue", () => {
     process.env = ENV_ORG;
   });
 
-  const response = {
-    sections: [
-      { name: "Inbox", path: "index/inbox.md" },
-      {
-        name: "A",
-        subcontents: [
-          { name: "a1", path: "a1" },
-          { name: "a2", path: "a2" },
-        ],
-      },
-      {
-        name: "B",
-        subcontents: [
-          {
-            name: "b1",
-            subcontents: [
-              { name: "b11", path: "b11" },
-              { name: "b12", path: "b12" },
-            ],
-          },
-          { name: "b2", path: "b2" },
-        ],
-      },
-    ],
-  };
-
   it("snapshot", async () => {
-    retrieveFrom.mockResolvedValue(response);
     let wrapper = createWrapper();
-    expect(retrieveFrom).toHaveBeenCalledWith("/chapter-A/.cmsbook3/sections.json");
-    await Vue.nextTick();
-    await Vue.nextTick();
     expect(wrapper.html()).toMatchSnapshot();
   });
 });
