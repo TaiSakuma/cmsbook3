@@ -8,6 +8,7 @@ Vue.use(Vuex);
 const state = {
   title: "cmsbook",
   chapters: [], // e.g., [{ name: "Chapter A", path: "/chapter-A" }, ...]
+  currentChapterPath: null, // e.g., "/chapter-A"
   currentPagePath: { chapter: null, section: null, page: null },
 };
 
@@ -34,6 +35,7 @@ const mutations = {
   set_current_page_path(state, routeParams) {
     const { chapter, section, page } = routeParams;
     state.currentPagePath = { chapter, section, page };
+    state.currentChapterPath = `/${chapter}`;
   },
 };
 
