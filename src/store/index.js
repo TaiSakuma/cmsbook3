@@ -1,7 +1,11 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
-import { getTitle, getChapters } from "@/cmsbook3-retrieve";
+import {
+  getTitle,
+  getChapters,
+  getSectionsInChapter,
+} from "@/cmsbook3-retrieve";
 
 Vue.use(Vuex);
 
@@ -10,6 +14,7 @@ const state = {
   chapters: [], // e.g., [{ name: "Chapter A", path: "/chapter-A" }, ...]
   currentChapterPath: null, // e.g., "/chapter-A"
   currentPagePath: { chapter: null, section: null, page: null },
+  sectionsInCurrentChapter: null,
 };
 
 const getters = {
@@ -37,6 +42,9 @@ const mutations = {
     state.currentPagePath = { chapter, section, page };
     state.currentChapterPath = `/${chapter}`;
   },
+  set_sections_in_current_chapter(state, sections) {
+    state.sectionsInCurrentChapter = sections;
+  },
 };
 
 const actions = {
@@ -56,8 +64,19 @@ const actions = {
       console.log(error);
     }
   },
-  onChangePage({ commit }, routeParams) {
+  async onChangePage({ state, commit }, routeParams) {
+    const chapterUnchanged = state.currentPagePath.chapter == routeParams.chapter
     commit("set_current_page_path", routeParams);
+    if(chapterUnchanged) {
+      return;
+    }
+    try {
+      const sections = await getSectionsInChapter(state.currentChapterPath);
+      commit("set_sections_in_current_chapter", sections);
+    } catch (error) {
+      commit("set_sections_in_current_chapter", null);
+      console.log(error);
+    }
   },
 };
 
