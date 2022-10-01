@@ -6,12 +6,18 @@
     <v-app-bar app dense clipped-left>
       <v-app-bar-nav-icon @click="drawer = !drawer" />
       <v-toolbar-title>
-        <router-link to="/" style="text-decoration: none; color: inherit;">{{ $store.state.title }}</router-link>
+        <router-link to="/" style="text-decoration: none; color: inherit">{{
+          $store.state.title
+        }}</router-link>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-tooltip left open-delay="800">
         <template v-slot:activator="{ on }">
-          <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark" v-on="on">
+          <v-btn
+            icon
+            @click="$vuetify.theme.dark = !$vuetify.theme.dark"
+            v-on="on"
+          >
             <v-icon>mdi-invert-colors</v-icon>
           </v-btn>
         </template>
@@ -37,17 +43,17 @@ export default {
   name: "App",
   components: {
     SideNavi,
-    TopNavi
+    TopNavi,
   },
   metaInfo() {
-    const title= this.$store.state.title;
+    const title = this.$store.state.title;
     return {
       title: title,
-      titleTemplate: "%s | " + title
+      titleTemplate: "%s | " + title,
     };
   },
   data: () => ({
-    drawer: null
+    drawer: null,
   }),
   mounted() {
     this.$vuetify.theme.dark = localStorage.dark === "true";
@@ -55,10 +61,10 @@ export default {
     this.$store.dispatch("loadChapters");
   },
   watch: {
-    "$vuetify.theme.dark": function(v) {
+    "$vuetify.theme.dark": function (v) {
       localStorage.dark = v;
-    }
-  }
+    },
+  },
 };
 </script>
 

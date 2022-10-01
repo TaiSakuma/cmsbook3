@@ -65,9 +65,10 @@ const actions = {
     }
   },
   async onChangePage({ state, commit }, routeParams) {
-    const chapterUnchanged = state.currentPagePath.chapter == routeParams.chapter
+    const chapterUnchanged =
+      state.currentPagePath.chapter == routeParams.chapter;
     commit("set_current_page_path", routeParams);
-    if(chapterUnchanged) {
+    if (chapterUnchanged) {
       return;
     }
     try {

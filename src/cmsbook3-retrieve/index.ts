@@ -1,4 +1,4 @@
-import { retrieveFrom } from "./retrieve.js";
+import { retrieveFrom } from "./retrieve";
 
 export { retrieveFrom };
 
@@ -37,7 +37,7 @@ export const lib = {
   retrieveFrom,
   getTitle,
   getChapters,
-  getSectionsInChapter
+  getSectionsInChapter,
 };
 
 export default lib;

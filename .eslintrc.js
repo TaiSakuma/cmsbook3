@@ -1,9 +1,12 @@
 module.exports = {
   root: true,
+
   env: {
     node: true,
   },
+
   extends: ["plugin:vue/essential", "@vue/prettier"],
+
   rules: {
     "no-console": "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "error" : "off",
@@ -12,9 +15,11 @@ module.exports = {
     "no-unused-labels": "off",
     "no-unused-vars": "off",
   },
+
   parserOptions: {
-    parser: "@babel/eslint-parser",
+    parser: "@typescript-eslint/parser",
   },
+
   overrides: [
     {
       files: [
@@ -26,4 +31,6 @@ module.exports = {
       },
     },
   ],
+
+  extends: ["plugin:vue/essential", "@vue/prettier", "@vue/typescript"],
 };
