@@ -17,6 +17,7 @@
     "lodash": "^4.17.21",
     "marked": "^2.0.1",
     "material-design-icons-iconfont": "^6.1.0",
+    "pinia": "^2.0.22",
     "prism-es6": "^1.2.0",
     "prismjs": "^1.23.0",
     "vue": "^2.7.10",
