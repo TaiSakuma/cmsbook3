@@ -24,7 +24,7 @@
     "vue-page-transition": "^0.2.2",
     "vue-router": "^3.5.1",
     "vue-showdown": "^3.0.0",
-    "vuetify": "^2.4.8",
+    "vuetify": "^2.6.10",
     "vuex": "^3.6.2"
   },
   "devDependencies": {
