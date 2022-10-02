@@ -2,20 +2,20 @@ import { retrieveFrom } from "./retrieve";
 
 export { retrieveFrom };
 
-interface Title {
+export interface Title {
   title?: string;
 }
 
-interface Path {
+export interface Path {
   name: string;
   path: string;
 }
 
-interface Paths {
+export interface Paths {
   chapters?: Path[];
 }
 
-interface Sections {
+export interface Sections {
   sections?: (
     | Path
     | {
