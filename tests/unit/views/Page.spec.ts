@@ -40,7 +40,7 @@ describe("Page.vue", () => {
   }
 
   beforeEach(() => {
-    process.env.VUE_APP_CMSBOOK_URL = "http://localhost/cmsbook";
+    import.meta.env.VITE_CMSBOOK_URL = "http://localhost/cmsbook";
     // @ts-ignore
     global.$ = $;
     // @ts-ignore

@@ -24,7 +24,7 @@ export default {
   name: "page",
   data() {
     return {
-      cmsbook_url: process.env.VUE_APP_CMSBOOK_URL,
+      cmsbook_url: import.meta.env.VITE_CMSBOOK_URL,
       md: "",
     };
   },

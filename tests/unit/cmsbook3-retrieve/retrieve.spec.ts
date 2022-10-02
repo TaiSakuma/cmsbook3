@@ -6,7 +6,7 @@ describe("retrieveFrom", () => {
   const ENV_ORG = process.env;
 
   beforeEach(() => {
-    process.env.VUE_APP_CMSBOOK_URL = "http://localhost/cmsbook";
+    import.meta.env.VITE_CMSBOOK_URL = "http://localhost/cmsbook";
     moxios.install();
   });
 

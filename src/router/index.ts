@@ -60,7 +60,7 @@ const routes = [
       const pathChapterSection = to.path;
       // e.g. /abc/xyz
 
-      const defaultPage = process.env.VUE_APP_CMSBOOK_INDEX_FILENAME;
+      const defaultPage = import.meta.env.VITE_CMSBOOK_INDEX_FILENAME;
       // e.g. web.md
 
       const ret = `${pathChapterSection}/${defaultPage}`;
@@ -91,7 +91,7 @@ const routes = [
 
 const router = new VueRouter({
   mode: "history",
-  base: process.env.BASE_URL,
+  base: import.meta.env.VITE_PUBLIC_PATH,
   routes,
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
