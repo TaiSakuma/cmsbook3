@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "dev": "vite",
+    "serve": "vite preview",
+    "build": "vite build",
+    "lint": "eslint src",
+    "test": "vitest"
   },
   "dependencies": {
     "axios": "^0.21.1",
