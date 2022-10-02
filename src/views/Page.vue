@@ -7,8 +7,8 @@
   </div>
 </template>
 
-<script>
-import marked from "marked";
+<script lang="ts">
+import { marked } from "marked";
 
 // import Prism from 'prism-es6'; // Jest doesn't work with this
 import Prism from "prismjs";
@@ -32,7 +32,7 @@ export default {
     content() {
       let htmlString;
       try {
-        htmlString = marked(this.md);
+        htmlString = marked.parse(this.md);
       } catch (error) {
         return "cannot parsed as markdown";
       }
