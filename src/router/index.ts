@@ -1,5 +1,5 @@
 import Vue from "vue";
-import VueRouter from "vue-router";
+import VueRouter, { RouteConfig } from "vue-router";
 import VueMeta from "vue-meta";
 
 import { retrieveFrom } from "@/cmsbook3-retrieve";
@@ -23,7 +23,7 @@ async function getPathToHome() {
   }
 }
 
-async function getPathToChapterHome(chapter) {
+async function getPathToChapterHome(chapter: string) {
   const defaultHome = "index/web.md";
   try {
     const data = await retrieveFrom(`/${chapter}/.cmsbook3/home.json`);
@@ -36,7 +36,7 @@ async function getPathToChapterHome(chapter) {
   }
 }
 
-const routes = [
+const routes: Array<RouteConfig> = [
   {
     path: "/",
     beforeEnter: async (to, from, next) => {
@@ -48,11 +48,7 @@ const routes = [
   {
     path: "/about",
     name: "about",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
+    component: () => import("../views/About.vue"),
   },
   {
     path: "/:chapter/:section",
