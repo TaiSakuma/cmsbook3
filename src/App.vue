@@ -36,8 +36,8 @@
 </template>
 
 <script>
-import SideNavi from "@/components/SideNavi";
-import TopNavi from "@/components/TopNavi";
+import SideNavi from "@/components/SideNavi.vue";
+import TopNavi from "@/components/TopNavi.vue";
 
 export default {
   name: "App",
