@@ -7,7 +7,7 @@ describe("About.vue", () => {
   const ROUTER_HISTORY_CURRNT_ORG = router.history.current;
 
   beforeEach(() => {
-    process.env.VUE_APP_CMSBOOK_INDEX_FILENAME = "test_index.md";
+    import.meta.env.VITE_CMSBOOK_INDEX_FILENAME = "test_index.md";
     moxios.install();
 
     // Ideatly, VueRouter should be instantiated for each test.

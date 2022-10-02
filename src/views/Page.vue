@@ -7,8 +7,10 @@
   </div>
 </template>
 
-<script>
-import marked from "marked";
+<script lang="ts">
+import { defineComponent } from 'vue'
+import { marked } from "marked";
+import $ from "jquery";
 
 // import Prism from 'prism-es6'; // Jest doesn't work with this
 import Prism from "prismjs";
@@ -20,11 +22,11 @@ import "@/prism.css";
 
 import { retrieveFrom } from "@/cmsbook3-retrieve";
 
-export default {
+export default defineComponent({
   name: "page",
   data() {
     return {
-      cmsbook_url: process.env.VUE_APP_CMSBOOK_URL,
+      cmsbook_url: import.meta.env.VITE_CMSBOOK_URL,
       md: "",
     };
   },
@@ -32,7 +34,7 @@ export default {
     content() {
       let htmlString;
       try {
-        htmlString = marked(this.md);
+        htmlString = marked.parse(this.md);
       } catch (error) {
         return "cannot parsed as markdown";
       }
@@ -95,7 +97,7 @@ export default {
       return ret;
     },
     editHtmlWithJQuery(htmlString, pathToCurrentDir) {
-      const $ = require("jquery");
+      // const $ = require("jquery");
 
       let tree = $(`<div>${htmlString}</div>`);
       tree.find("a:not([href^='#'])").attr("target", "_blank");
@@ -123,7 +125,7 @@ export default {
       return tree.html();
     },
   },
-};
+});
 </script>
 
 <!-- https://github.com/sindresorhus/github-markdown-css -->

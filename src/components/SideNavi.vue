@@ -137,7 +137,7 @@ export default {
                       relativePath ==
                       subpage.path +
                         "/" +
-                        process.env.VUE_APP_CMSBOOK_INDEX_FILENAME;
+                        import.meta.env.VITE_CMSBOOK_INDEX_FILENAME;
                   } else {
                     subpage.active = relativePath == subpage.path;
                   }
@@ -150,7 +150,7 @@ export default {
               if (page.path.split("/").length < 2) {
                 page.active =
                   relativePath ==
-                  page.path + "/" + process.env.VUE_APP_CMSBOOK_INDEX_FILENAME;
+                  page.path + "/" + import.meta.env.VITE_CMSBOOK_INDEX_FILENAME;
               } else {
                 page.active = relativePath == page.path;
               }
@@ -165,7 +165,7 @@ export default {
           if (section.path.split("/").length < 2) {
             section.active =
               relativePath ==
-              section.path + "/" + process.env.VUE_APP_CMSBOOK_INDEX_FILENAME;
+              section.path + "/" + import.meta.env.VITE_CMSBOOK_INDEX_FILENAME;
           } else {
             section.active = relativePath == section.path;
           }
