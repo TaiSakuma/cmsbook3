@@ -8,7 +8,9 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { marked } from "marked";
+import $ from "jquery";
 
 // import Prism from 'prism-es6'; // Jest doesn't work with this
 import Prism from "prismjs";
@@ -20,7 +22,7 @@ import "@/prism.css";
 
 import { retrieveFrom } from "@/cmsbook3-retrieve";
 
-export default {
+export default defineComponent({
   name: "page",
   data() {
     return {
@@ -95,7 +97,7 @@ export default {
       return ret;
     },
     editHtmlWithJQuery(htmlString, pathToCurrentDir) {
-      const $ = require("jquery");
+      // const $ = require("jquery");
 
       let tree = $(`<div>${htmlString}</div>`);
       tree.find("a:not([href^='#'])").attr("target", "_blank");
@@ -123,7 +125,7 @@ export default {
       return tree.html();
     },
   },
-};
+});
 </script>
 
 <!-- https://github.com/sindresorhus/github-markdown-css -->
