@@ -40,10 +40,10 @@ export const useStore = defineStore("main", () => {
   const sections = ref<NonNullable<Sections["sections"]>>([]);
 
   const route = ref(useRoute());
-  const currentChapter = computed(() => route.value.params.chapter);
-  const currentChapterPath = computed(() => `/${currentChapter.value}`);
+  const routeParamChapter = computed(() => route.value.params.chapter);
+  const chapterPath = computed(() => `/${routeParamChapter.value}`);
   watch(
-    currentChapterPath,
+    chapterPath,
     async (value, oldValue) => {
       sections.value = await getSectionsInChapter(value);
     },
@@ -56,11 +56,13 @@ export const useStore = defineStore("main", () => {
   //   sections.value = await getSectionsInChapter(currentChapterPath.value);
   // });
 
+  const chapter = computed(() => chapterMap.value[chapterPath.value]);
+
   return {
     packageVersion,
     title,
     chapters,
-    chapterMap,
+    chapter,
     sections,
   };
 });
