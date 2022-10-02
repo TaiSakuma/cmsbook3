@@ -16,6 +16,7 @@
     "lodash": "^4.17.21",
     "marked": "^2.0.1",
     "material-design-icons-iconfont": "^6.1.0",
+    "path-browserify": "^1.0.1",
     "pinia": "^2.0.22",
     "prism-es6": "^1.2.0",
     "prismjs": "^1.23.0",
@@ -48,7 +49,10 @@
     "sass": "~1.54.5",
     "ts-jest": "^27.0.4",
     "typescript": "~4.5.5",
+    "unplugin-vue-components": "^0.22.7",
     "vite": "^3.1.4",
+    "vite-plugin-package-version": "^1.0.2",
+    "vitest": "^0.23.4",
     "vue-template-compiler": "^2.7.10"
   }
 }
