@@ -26,6 +26,7 @@ describe("store", () => {
 
   it("dispatch loadTitle success", async () => {
     expect(store.state.title).toBe("cmsbook");
+    // @ts-ignore
     retrieve.getTitle.mockResolvedValue("new title");
     await store.dispatch("loadTitle");
     expect(store.state.title).toBe("new title");
@@ -33,6 +34,7 @@ describe("store", () => {
 
   it("dispatch loadTitle error", async () => {
     expect(store.state.title).toBe("cmsbook");
+    // @ts-ignore
     retrieve.getTitle.mockRejectedValueOnce("cannot get title");
     await store.dispatch("loadTitle");
     expect(store.state.title).toBe("cmsbook");

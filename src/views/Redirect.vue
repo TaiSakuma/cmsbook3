@@ -13,6 +13,6 @@ export default {
     let path = process.env.VUE_APP_CMSBOOK_URL;
     path = path + this.$route.path;
     window.location = path;
-  }
+  },
 };
 </script>

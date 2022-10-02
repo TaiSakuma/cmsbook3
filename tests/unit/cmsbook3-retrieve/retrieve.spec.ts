@@ -15,11 +15,12 @@ describe("retrieveFrom", () => {
     process.env = ENV_ORG;
   });
 
+  // @ts-ignore
   it("retrieveFrom url", async (done) => {
     const path = "/path/to/data.json";
     const result = retrieveFrom(path);
     moxios.wait(async () => {
-      let request = moxios.requests.mostRecent();
+      const request = moxios.requests.mostRecent();
       expect(request.config.url).toBe(
         "http://localhost/cmsbook/path/to/data.json"
       );
@@ -27,11 +28,12 @@ describe("retrieveFrom", () => {
     });
   });
 
+  // @ts-ignore
   it("retrieveFrom success", async (done) => {
     const path = "/path/to/data.json";
     const promiss = retrieveFrom(path);
     moxios.wait(async () => {
-      let request = moxios.requests.mostRecent();
+      const request = moxios.requests.mostRecent();
       await request.respondWith({
         status: 200,
         response: {
@@ -44,12 +46,13 @@ describe("retrieveFrom", () => {
     });
   });
 
+  // @ts-ignore
   it("retrieveFrom 404 not catched", async (done) => {
     const path = "/path/to/data.json";
     try {
       const promiss = retrieveFrom(path);
       moxios.wait(async () => {
-        let request = moxios.requests.mostRecent();
+        const request = moxios.requests.mostRecent();
         await request.respondWith({
           status: 404,
         });

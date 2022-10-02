@@ -39,10 +39,10 @@ describe("SideNavi.vue", () => {
   ];
 
   function createWrapper() {
-    let actions = {
+    const actions = {
       onChangePage: jest.fn(),
     };
-    let store = new Vuex.Store({
+    const store = new Vuex.Store({
       actions,
       state: {
         sectionsInCurrentChapter: sections,
@@ -88,7 +88,7 @@ describe("SideNavi.vue", () => {
   });
 
   it("snapshot", async () => {
-    let wrapper = createWrapper();
+    const wrapper = createWrapper();
     expect(wrapper.html()).toMatchSnapshot();
   });
 });

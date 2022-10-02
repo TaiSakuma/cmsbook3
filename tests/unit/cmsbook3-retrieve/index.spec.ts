@@ -48,7 +48,7 @@ describe("cmsbook3-retrieve", () => {
   });
 
   it("getChapters error", async () => {
-    retrieve.lib. retrieveFrom = jest.fn().mockResolvedValue({});
+    retrieve.lib.retrieveFrom = jest.fn().mockResolvedValue({});
     try {
       const result = await getChapters();
     } catch (error) {

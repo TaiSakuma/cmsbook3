@@ -25,13 +25,13 @@ describe("App.vue", () => {
 
     actions = {
       loadTitle: jest.fn(),
-      loadChapters: jest.fn()
+      loadChapters: jest.fn(),
     };
     store = new Vuex.Store({
       actions,
       state: {
-        title: "cmsbook"
-      }
+        title: "cmsbook",
+      },
     });
 
     wrapper = shallowMount(App, {
@@ -41,10 +41,10 @@ describe("App.vue", () => {
       store,
       mocks: {
         $route: {
-          path: "/A/b/3.md"
-        }
+          path: "/A/b/3.md",
+        },
       },
-      stubs: ["router-link", "router-view"]
+      stubs: ["router-link", "router-view"],
     });
   });
 
