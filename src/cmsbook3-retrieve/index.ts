@@ -11,7 +11,7 @@ export interface Path {
   path: string;
 }
 
-export interface Paths {
+export interface Chapters {
   chapters?: Path[];
 }
 
@@ -36,7 +36,7 @@ export async function getTitle() {
 
 export async function getChapters() {
   const path = "/.cmsbook3/chapters.json";
-  const data = await lib.retrieveFrom<Paths>(path);
+  const data = await lib.retrieveFrom<Chapters>(path);
   if (data.chapters === undefined) {
     throw new Error("chapters undefined");
   }
