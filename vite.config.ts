@@ -5,6 +5,7 @@ import { VuetifyResolver } from "unplugin-vue-components/resolvers";
 import Components from "unplugin-vue-components/vite";
 import path from "path-browserify";
 import { defaultExclude } from "vitest/config";
+import pluginRewriteAll from 'vite-plugin-rewrite-all';
 
 export default ({ mode }) => {
   // loadEnv: https://stackoverflow.com/a/66389044/7309855
@@ -15,6 +16,7 @@ export default ({ mode }) => {
     plugins: [
       vue(),
       loadVersion(),
+      pluginRewriteAll(),
       Components({
         resolvers: [VuetifyResolver()],
       }),
