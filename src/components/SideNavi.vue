@@ -1,4 +1,5 @@
 <template>
+  <div>
   <v-card flat>
     <v-toolbar flat>
       <router-link
@@ -90,6 +91,10 @@
       </template>
     </v-list>
   </v-card>
+    <v-bottom-navigation absolute class="px-3 justify-start align-center">
+      <span class="grey--text text-caption"> v{{ packageVersion }} </span>
+    </v-bottom-navigation>
+  </div>
 </template>
 
 <script lang="ts">
@@ -118,7 +123,7 @@ export default defineComponent({
   setup() {
     const route = useRoute();
     const store = useStore();
-    const { chapter, sections } = storeToRefs(store);
+    const { packageVersion, chapter, sections } = storeToRefs(store);
 
     // relative to chapter path, e.g., "section/web.md"
     const relativePath = computed(() =>
@@ -180,6 +185,7 @@ export default defineComponent({
     });
 
     return {
+      packageVersion,
       pages,
       chapter,
       sections,
