@@ -6,9 +6,9 @@
     <v-app-bar app dense clipped-left>
       <v-app-bar-nav-icon @click="drawer = !drawer" />
       <v-toolbar-title>
-        <router-link to="/" style="text-decoration: none; color: inherit">{{
-          $store.state.title
-        }}</router-link>
+        <router-link to="/" style="text-decoration: none; color: inherit">
+          {{ title }}
+        </router-link>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-tooltip left open-delay="800">
@@ -36,25 +36,26 @@
 </template>
 
 <script>
+import { defineComponent, ref, watchEffect } from "vue";
+import { storeToRefs } from "pinia";
+import { useStore } from "@/stores/main";
 import SideNavi from "@/components/SideNavi.vue";
 import TopNavi from "@/components/TopNavi.vue";
 
-export default {
+export default defineComponent({
   name: "App",
-  components: {
-    SideNavi,
-    TopNavi,
-  },
-  metaInfo() {
-    const title = this.$store.state.title;
+  components: { SideNavi, TopNavi },
+  setup() {
+    const store = useStore();
+    const { title } = storeToRefs(store);
+    watchEffect(() => {
+      document.title = title.value;
+    });
     return {
-      title: title,
-      titleTemplate: "%s | " + title,
+      title,
+      drawer: ref(null),
     };
   },
-  data: () => ({
-    drawer: null,
-  }),
   mounted() {
     this.$vuetify.theme.dark = localStorage.dark === "true";
     this.$store.dispatch("loadTitle");
@@ -65,7 +66,7 @@ export default {
       localStorage.dark = v;
     },
   },
-};
+});
 </script>
 
 <style>
