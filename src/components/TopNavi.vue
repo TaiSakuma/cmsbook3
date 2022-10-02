@@ -13,16 +13,11 @@
   </v-tabs>
 </template>
 
-<script>
-export default {
-  name: "TopNavi",
-  data: () => ({}),
-  computed: {
-    chapters() {
-      return this.$store.state.chapters;
-    },
-  },
-};
+<script setup lang="ts">
+import { storeToRefs } from "pinia";
+import { useStore } from "@/stores/main";
+const store = useStore();
+const { chapters } = storeToRefs(store);
 </script>
 
 <style scoped>
