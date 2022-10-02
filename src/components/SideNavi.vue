@@ -92,12 +92,19 @@
   </v-card>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent, ref } from "vue";
+export default defineComponent({
   name: "SideNavi",
-  data: () => ({
-    pages: [],
-  }),
+  setup() {
+    const pages = ref([]);
+    return {
+      pages,
+    };
+  },
+  // data: () => ({
+  //   pages: [],
+  // }),
   computed: {
     chapter() {
       return this.$store.getters.currentChapter;
@@ -175,5 +182,5 @@ export default {
       });
     },
   },
-};
+});
 </script>
