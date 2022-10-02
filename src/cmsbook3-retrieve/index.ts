@@ -28,8 +28,8 @@ interface Sections {
 export async function getTitle() {
   const path = "/.cmsbook3/title.json";
   const data = await lib.retrieveFrom<Title>(path);
-  if (data.title == undefined) {
-    throw "title not found";
+  if (data.title === undefined) {
+    throw new Error("title undefined");
   }
   return data.title;
 }
@@ -37,8 +37,8 @@ export async function getTitle() {
 export async function getChapters() {
   const path = "/.cmsbook3/chapters.json";
   const data = await lib.retrieveFrom<Paths>(path);
-  if (data.chapters == undefined) {
-    throw "chapters not found";
+  if (data.chapters === undefined) {
+    throw new Error("chapters undefined");
   }
   return data.chapters;
 }
@@ -47,8 +47,8 @@ export async function getSectionsInChapter(chapterPath: string) {
   const path = `${chapterPath}/.cmsbook3/sections.json`;
   const data = await lib.retrieveFrom<Sections>(path);
 
-  if (data.sections == undefined) {
-    throw "sections not found";
+  if (data.sections === undefined) {
+    throw new Error("sections undefined");
   }
   return data.sections;
 }
