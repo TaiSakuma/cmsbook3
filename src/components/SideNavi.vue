@@ -93,73 +93,69 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { computed, defineComponent } from "vue";
+import { useRoute } from "vue-router/composables";
+import { storeToRefs } from "pinia";
+import { useStore } from "@/stores/main";
+
+type Page =
+  | { name: string; path: string; active: boolean }
+  | {
+      name: string;
+      subcontents?: (
+        | { name: string; path: string; active?: boolean }
+        | {
+            name: string;
+            subcontents: { name: string; path: string; active?: Boolean }[];
+            active?: Boolean;
+          }
+      )[];
+      active?: Boolean;
+    };
+
 export default defineComponent({
   name: "SideNavi",
   setup() {
-    const pages = ref([]);
-    return {
-      pages,
-    };
-  },
-  // data: () => ({
-  //   pages: [],
-  // }),
-  computed: {
-    chapter() {
-      return this.$store.getters.currentChapter;
-    },
-  },
-  watch: {
-    "$route.path": {
-      handler: function (val) {
-        const { chapter, section, page } = this.$route.params;
-        this.$store.dispatch("onChangePage", { chapter, section, page });
-      },
-      immediate: true,
-    },
-    "$store.state.sectionsInCurrentChapter": {
-      handler: function (val) {
-        this.updatePages();
-      },
-      immediate: true,
-    },
-  },
-  methods: {
-    async updatePages() {
-      this.pages = this.$store.state.sectionsInCurrentChapter || [];
+    const route = useRoute();
+    const store = useStore();
+    const { chapter, sections } = storeToRefs(store);
 
-      const relativePath = this.$route.path.split("/").slice(2).join("/");
-      // relative to chapger path, e.g., "section/web.md"
+    // relative to chapter path, e.g., "section/web.md"
+    const relativePath = computed(() =>
+      route.path.split("/").slice(2).join("/")
+    );
+
+    const pages = computed(() => {
+      const ret: Page[] = sections.value;
 
       // open v-list-group containing the current page
-      this.pages.forEach(function (section) {
-        if (section.subcontents) {
-          section.subcontents.forEach(function (page) {
-            if (page.subcontents) {
+      ret.forEach((section) => {
+        if ("subcontents" in section && section.subcontents) {
+          section.subcontents.forEach((page) => {
+            if ("subcontents" in page && page.subcontents) {
               page.subcontents.forEach(function (subpage) {
                 if (subpage.path) {
                   if (subpage.path.split("/").length < 2) {
                     subpage.active =
-                      relativePath ==
-                      subpage.path +
-                        "/" +
-                        import.meta.env.VITE_CMSBOOK_INDEX_FILENAME;
+                      relativePath.value ===
+                      `${subpage.path}/${
+                        import.meta.env.VITE_CMSBOOK_INDEX_FILENAME
+                      }`;
                   } else {
-                    subpage.active = relativePath == subpage.path;
+                    subpage.active = relativePath.value == subpage.path;
                   }
                 } else {
                   subpage.active = false;
                 }
               });
               page.active = page.subcontents.map((s) => s.active).some(Boolean);
-            } else if (page.path) {
+            } else if ("path" in page) {
               if (page.path.split("/").length < 2) {
                 page.active =
-                  relativePath ==
-                  page.path + "/" + import.meta.env.VITE_CMSBOOK_INDEX_FILENAME;
+                  relativePath.value ===
+                  `${page.path}/${import.meta.env.VITE_CMSBOOK_INDEX_FILENAME}`;
               } else {
-                page.active = relativePath == page.path;
+                page.active = relativePath.value == page.path;
               }
             } else {
               page.active = false;
@@ -168,19 +164,26 @@ export default defineComponent({
           section.active = section.subcontents
             .map((s) => s.active)
             .some(Boolean);
-        } else if (section.path) {
+        } else if ("path" in section && section.path) {
           if (section.path.split("/").length < 2) {
             section.active =
-              relativePath ==
-              section.path + "/" + import.meta.env.VITE_CMSBOOK_INDEX_FILENAME;
+              relativePath.value ===
+              `${section.path}/${import.meta.env.VITE_CMSBOOK_INDEX_FILENAME}`;
           } else {
-            section.active = relativePath == section.path;
+            section.active = relativePath.value == section.path;
           }
         } else {
           section.active = false;
         }
       });
-    },
+      return ret;
+    });
+
+    return {
+      pages,
+      chapter,
+      sections,
+    };
   },
 });
 </script>
