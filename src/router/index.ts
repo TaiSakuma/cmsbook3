@@ -1,6 +1,5 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
-import VueMeta from "vue-meta";
 
 import { retrieveFrom } from "@/cmsbook3-retrieve";
 
@@ -8,7 +7,6 @@ import Page from "@/views/Page.vue";
 import PageNotFound from "@/views/PageNotFound.vue";
 
 Vue.use(VueRouter);
-Vue.use(VueMeta);
 
 async function getPathToHome() {
   const defaultHome = "index/web.md";
