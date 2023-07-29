@@ -5,10 +5,14 @@ import { retrieveFrom } from "@/cmsbook3-retrieve";
 import Page from "@/views/Page.vue";
 import PageNotFound from "@/views/PageNotFound.vue";
 
+interface Home {
+  home?: string;
+}
+
 async function getPathToHome() {
   const defaultHome = "index/web.md";
   try {
-    const data = await retrieveFrom("/.cmsbook3/home.json");
+    const data = await retrieveFrom<Home>("/.cmsbook3/home.json");
     if (data.home == undefined) {
       throw "home undefined";
     }
@@ -21,7 +25,7 @@ async function getPathToHome() {
 async function getPathToChapterHome(chapter: string) {
   const defaultHome = "index/web.md";
   try {
-    const data = await retrieveFrom(`/${chapter}/.cmsbook3/home.json`);
+    const data = await retrieveFrom<Home>(`/${chapter}/.cmsbook3/home.json`);
     if (data.home == undefined) {
       throw "home undefined";
     }
@@ -65,7 +69,9 @@ const routes: RouteRecordRaw[] = [
     path: "/:chapter",
     component: () => null,
     beforeEnter: async (to, from, next) => {
-      const relPath = await getPathToChapterHome(to.params.chapter);
+      const maybeChapter = to.params.chapter;
+      const chapter = typeof maybeChapter === "string" ? maybeChapter : maybeChapter[0];
+      const relPath = await getPathToChapterHome(chapter);
       const path = `/${to.params.chapter}/${relPath}`;
       next(path);
     },
