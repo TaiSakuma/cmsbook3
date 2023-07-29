@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import { computed, ref, watch, onUpdated } from "vue";
-import { useRoute } from "vue-router/composables";
+import { useRoute } from "vue-router";
 import { marked } from "marked";
 import $ from "jquery";
 
@@ -28,7 +28,10 @@ const cmsbook_url = ref(import.meta.env.VITE_CMSBOOK_URL);
 const md = ref("");
 
 const path = computed(
-  () => `/${route.params.chapter}/${route.params.section}/${route.params.page}`
+  () =>
+    `/${route.params.chapter}/${route.params.section}/${route.params.page.join(
+      "/"
+    )}`
 );
 
 const content = computed(() => {
@@ -101,13 +104,13 @@ function editHtmlWithJQuery(htmlString: string, pathToCurrentDir: string) {
 }
 
 const breadcrumbsItems = computed(() => {
-  let ret = [{ text: route.params.chapter }];
+  let ret = [{ title: route.params.chapter }];
   if (route.params.section) {
-    ret.push({ text: route.params.section });
+    ret.push({ title: route.params.section });
   }
   if (route.params.page) {
-    route.params.page.split("/").forEach((e) => {
-      ret.push({ text: e });
+    route.params.page.forEach((e) => {
+      ret.push({ title: e });
     });
   }
   return ret;
