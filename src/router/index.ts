@@ -1,12 +1,9 @@
-import Vue from "vue";
-import VueRouter, { RouteConfig } from "vue-router";
+import { RouteRecordRaw, createRouter, createWebHistory } from "vue-router";
 
 import { retrieveFrom } from "@/cmsbook3-retrieve";
 
 import Page from "@/views/Page.vue";
 import PageNotFound from "@/views/PageNotFound.vue";
-
-Vue.use(VueRouter);
 
 async function getPathToHome() {
   const defaultHome = "index/web.md";
@@ -34,9 +31,10 @@ async function getPathToChapterHome(chapter: string) {
   }
 }
 
-const routes: Array<RouteConfig> = [
+const routes: RouteRecordRaw[] = [
   {
     path: "/",
+    component: () => null,
     beforeEnter: async (to, from, next) => {
       const relPath = await getPathToHome();
       const path = to.path + relPath;
@@ -65,6 +63,7 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: "/:chapter",
+    component: () => null,
     beforeEnter: async (to, from, next) => {
       const relPath = await getPathToChapterHome(to.params.chapter);
       const path = `/${to.params.chapter}/${relPath}`;
@@ -77,23 +76,28 @@ const routes: Array<RouteConfig> = [
     component: Page,
   },
   {
-    path: "*",
+    path: "/*",
     name: "pagenotfound",
     component: PageNotFound,
   },
 ];
 
-const router = new VueRouter({
-  mode: "history",
-  base: import.meta.env.VITE_PUBLIC_PATH,
+const router = createRouter({
+  history: createWebHistory(import.meta.env.VITE_PUBLIC_PATH),
   routes,
-  scrollBehavior(to, from, savedPosition) {
-    if (savedPosition) {
-      return savedPosition;
-    } else {
-      return { x: 0, y: 0 };
-    }
-  },
 });
+
+// const router = new VueRouter({
+//   mode: "history",
+//   base: import.meta.env.VITE_PUBLIC_PATH,
+//   routes,
+//   scrollBehavior(to, from, savedPosition) {
+//     if (savedPosition) {
+//       return savedPosition;
+//     } else {
+//       return { x: 0, y: 0 };
+//     }
+//   },
+// });
 
 export default router;

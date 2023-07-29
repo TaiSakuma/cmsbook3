@@ -1,5 +1,5 @@
 import { ref, computed, watchEffect, watch } from "vue";
-import { useRouter, useRoute } from "vue-router/composables";
+import { useRouter, useRoute } from "vue-router";
 import { defineStore } from "pinia";
 
 import {
