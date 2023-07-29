@@ -10,11 +10,7 @@
       <v-spacer></v-spacer>
       <v-tooltip left open-delay="800">
         <template v-slot:activator="{ props }">
-          <v-btn
-            v-bind="props"
-            icon
-            @click="$vuetify.theme.dark = !$vuetify.theme.dark"
-          >
+          <v-btn v-bind="props" icon @click="toggleDarkMode">
             <v-icon>mdi-invert-colors</v-icon>
           </v-btn>
         </template>
@@ -26,7 +22,7 @@
     </v-app-bar>
     <side-navi v-model="drawer"></side-navi>
     <v-main>
-      <router-view :key="$route.path" v-slot="{ Component }">
+      <router-view :key="route.fullPath" v-slot="{ Component }">
         <transition name="fade" mode="out-in">
           <component :is="Component" />
         </transition>
@@ -35,36 +31,40 @@
   </v-app>
 </template>
 
-<script>
-import { defineComponent, ref, watchEffect } from "vue";
+<script setup lang="ts">
+import { ref, watchEffect, onMounted } from "vue";
+import { useTheme } from "vuetify";
+import { useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useStore } from "@/stores/main";
 import SideNavi from "@/components/SideNavi.vue";
 import TopNavi from "@/components/TopNavi.vue";
 
-export default defineComponent({
-  name: "App",
-  components: { SideNavi, TopNavi },
-  setup() {
-    const store = useStore();
-    const { title } = storeToRefs(store);
-    watchEffect(() => {
-      document.title = title.value;
-    });
-    return {
-      title,
-      drawer: ref(true),
-    };
-  },
-  mounted() {
-    this.$vuetify.theme.dark = localStorage.dark === "true";
-  },
-  watch: {
-    "$vuetify.theme.dark": function (v) {
-      localStorage.dark = v;
-    },
-  },
+const store = useStore();
+const { title } = storeToRefs(store);
+watchEffect(() => {
+  document.title = title.value;
 });
+
+const route = useRoute();
+const drawer = ref(true);
+
+const theme = useTheme();
+
+onMounted(() => {
+  theme.global.name.value = JSON.parse(localStorage.getItem("dark") || "false")
+    ? "dark"
+    : "light";
+});
+
+function toggleDarkMode() {
+  theme.global.name.value =
+    theme.global.name.value === "dark" ? "light" : "dark";
+  localStorage.setItem(
+    "dark",
+    JSON.stringify(theme.global.name.value === "dark")
+  );
+}
 </script>
 
 <style>
