@@ -24,9 +24,7 @@
         <TopNavi></TopNavi>
       </template>
     </v-app-bar>
-    <v-navigation-drawer v-model="drawer" permanent>
-      <side-navi></side-navi>
-    </v-navigation-drawer>
+    <side-navi v-model="drawer"></side-navi>
     <v-main>
       <router-view :key="$route.path" v-slot="{ Component }">
         <transition name="fade" mode="out-in">
