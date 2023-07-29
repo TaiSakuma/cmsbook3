@@ -20,7 +20,7 @@
         <TopNavi></TopNavi>
       </template>
     </v-app-bar>
-    <side-navi v-model="drawer"></side-navi>
+    <navigation-drawer v-model="drawer"></navigation-drawer>
     <v-main>
       <router-view :key="route.fullPath" v-slot="{ Component }">
         <transition name="fade" mode="out-in">
@@ -37,7 +37,7 @@ import { useTheme } from "vuetify";
 import { useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useStore } from "@/stores/main";
-import SideNavi from "@/components/SideNavi.vue";
+import NavigationDrawer from "@/components/NavigationDrawer.vue";
 import TopNavi from "@/components/TopNavi.vue";
 
 const store = useStore();
