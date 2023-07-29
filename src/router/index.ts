@@ -70,7 +70,8 @@ const routes: RouteRecordRaw[] = [
     component: () => null,
     beforeEnter: async (to, from, next) => {
       const maybeChapter = to.params.chapter;
-      const chapter = typeof maybeChapter === "string" ? maybeChapter : maybeChapter[0];
+      const chapter =
+        typeof maybeChapter === "string" ? maybeChapter : maybeChapter[0];
       const relPath = await getPathToChapterHome(chapter);
       const path = `/${to.params.chapter}/${relPath}`;
       next(path);
@@ -91,19 +92,13 @@ const routes: RouteRecordRaw[] = [
 const router = createRouter({
   history: createWebHistory(import.meta.env.VITE_PUBLIC_PATH),
   routes,
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      return { top: 0, left: 0 };
+    }
+  },
 });
-
-// const router = new VueRouter({
-//   mode: "history",
-//   base: import.meta.env.VITE_PUBLIC_PATH,
-//   routes,
-//   scrollBehavior(to, from, savedPosition) {
-//     if (savedPosition) {
-//       return savedPosition;
-//     } else {
-//       return { x: 0, y: 0 };
-//     }
-//   },
-// });
 
 export default router;
