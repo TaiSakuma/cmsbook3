@@ -1,9 +1,6 @@
 <template>
   <v-app>
-    <v-navigation-drawer v-model="drawer" app clipped>
-      <SideNavi></SideNavi>
-    </v-navigation-drawer>
-    <v-app-bar app dense clipped-left>
+    <v-app-bar dense>
       <v-app-bar-nav-icon @click="drawer = !drawer" />
       <v-toolbar-title>
         <router-link to="/" style="text-decoration: none; color: inherit">
@@ -12,11 +9,11 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-tooltip left open-delay="800">
-        <template v-slot:activator="{ on }">
+        <template v-slot:activator="{ props }">
           <v-btn
+            v-bind="props"
             icon
             @click="$vuetify.theme.dark = !$vuetify.theme.dark"
-            v-on="on"
           >
             <v-icon>mdi-invert-colors</v-icon>
           </v-btn>
@@ -27,10 +24,15 @@
         <TopNavi></TopNavi>
       </template>
     </v-app-bar>
+    <v-navigation-drawer v-model="drawer" permanent>
+      <side-navi></side-navi>
+    </v-navigation-drawer>
     <v-main>
-      <transition name="fade" mode="out-in">
-        <router-view :key="$route.path"></router-view>
-      </transition>
+      <router-view :key="$route.path" v-slot="{ Component }">
+        <transition name="fade" mode="out-in">
+          <component :is="Component" />
+        </transition>
+      </router-view>
     </v-main>
   </v-app>
 </template>
@@ -53,7 +55,7 @@ export default defineComponent({
     });
     return {
       title,
-      drawer: ref(null),
+      drawer: ref(true),
     };
   },
   mounted() {
