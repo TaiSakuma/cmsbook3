@@ -11,73 +11,67 @@
         </router-link>
       </div>
     </template>
-    <v-list nav>
-      <template v-for="page in pages">
-        <template v-if="page.path">
-          <v-list-item
-            link
-            router
-            :key="page.path"
-            :to="`/${$route.params.chapter}/${page.path}`"
-            prepend-icon="mdi-book"
-            :title="page.name"
-          >
-          </v-list-item>
-        </template>
-        <template v-else-if="page.subcontents">
-          <v-list-group
-            prepend-icon="mdi-book-multiple"
-            :key="page.name"
-            :value="page.active"
-          >
-            <template v-slot:activator="{ props }">
-              <v-list-item
-                v-bind="props"
-                prepend-icon="mdi-book-multiple"
-                :title="page.name"
-              ></v-list-item>
-            </template>
-            <template v-for="subpage in page.subcontents">
-              <template v-if="subpage.path">
+    <v-list nav v-model:opened="opened">
+      <template v-for="listContent in listContents">
+        <v-list-item
+          v-if="listContent.type === 'item'"
+          :to="listContent.to"
+          :title="listContent.title"
+          :prepend-icon="listContent.prependIcon"
+          :append-icon="listContent.appendIcon"
+          :active="listContent.active"
+        >
+        </v-list-item>
+        <v-list-group
+          v-else-if="listContent.type === 'group'"
+          :value="listContent.value"
+        >
+          <template v-slot:activator="{ props }">
+            <v-list-item
+              v-bind="props"
+              :title="listContent.title"
+              :prepend-icon="listContent.prependIcon"
+              :append-icon="listContent.appendIcon"
+            >
+            </v-list-item>
+          </template>
+          <template v-for="groupContent in listContent.contents">
+            <v-list-item
+              v-if="groupContent.type === 'item'"
+              :to="groupContent.to"
+              :title="groupContent.title"
+              :prepend-icon="groupContent.prependIcon"
+              :append-icon="groupContent.appendIcon"
+              :active="groupContent.active"
+            >
+            </v-list-item>
+            <v-list-group
+              v-else-if="groupContent.type === 'group'"
+              :value="groupContent.value"
+            >
+              <template v-slot:activator="{ props }">
                 <v-list-item
-                  link
-                  router
-                  :key="subpage.path"
-                  :to="`/${$route.params.chapter}/${subpage.path}`"
-                  :title="subpage.name"
-                  append-icon="mdi-book"
+                  v-bind="props"
+                  :title="groupContent.title"
+                  :prepend-icon="groupContent.prependIcon"
+                  :append-icon="groupContent.appendIcon"
                 >
                 </v-list-item>
               </template>
-              <template v-else-if="subpage.subcontents">
-                <v-list-group
-                  no-action
-                  sub-group
-                  :key="subpage.name"
-                  :value="subpage.active"
+              <template v-for="subgroupContent in groupContent.contents">
+                <v-list-item
+                  v-if="subgroupContent.type === 'item'"
+                  :to="subgroupContent.to"
+                  :title="subgroupContent.title"
+                  :prepend-icon="subgroupContent.prependIcon"
+                  :append-icon="subgroupContent.appendIcon"
+                  :active="subgroupContent.active"
                 >
-                  <template v-slot:activator="{ props }">
-                    <v-list-item
-                      v-bind="props"
-                      :title="subpage.name"
-                      append-icon="mdi-book-multiple"
-                    ></v-list-item>
-                  </template>
-                  <v-list-item
-                    link
-                    router
-                    v-for="subsubpage in subpage.subcontents"
-                    :key="subsubpage.name"
-                    :to="`/${$route.params.chapter}/${subsubpage.path}`"
-                    :title="subsubpage.name"
-                    append-icon="mdi-book"
-                  >
-                  </v-list-item>
-                </v-list-group>
+                </v-list-item>
               </template>
-            </template>
-          </v-list-group>
-        </template>
+            </v-list-group>
+          </template>
+        </v-list-group>
       </template>
     </v-list>
     <template v-slot:append>
@@ -89,7 +83,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
+import { computed, ref, watch, watchEffect, reactive } from "vue";
 import { useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useStore } from "@/stores/main";
@@ -110,20 +104,26 @@ watch(drawer, (val) => {
   emit("update:modelValue", val);
 });
 
-type Page =
-  | { name: string; path: string; active: boolean }
-  | {
-      name: string;
-      subcontents?: (
-        | { name: string; path: string; active?: boolean }
-        | {
-            name: string;
-            subcontents: { name: string; path: string; active?: Boolean }[];
-            active?: Boolean;
-          }
-      )[];
-      active?: Boolean;
-    };
+interface ListItem {
+  type: "item";
+  title: string;
+  to?: string;
+  prependIcon?: string;
+  appendIcon?: string;
+  active: boolean;
+}
+
+interface ListGroup {
+  type: "group";
+  value: string;
+  title: string;
+  prependIcon?: string;
+  appendIcon?: string;
+  contents: (ListItem | ListGroup)[];
+}
+
+type ListContent = ListItem | ListGroup;
+type ListContents = ListContent[];
 
 const route = useRoute();
 const store = useStore();
@@ -132,55 +132,90 @@ const { packageVersion, chapter, sections } = storeToRefs(store);
 // relative to chapter path, e.g., "section/web.md"
 const relativePath = computed(() => route.path.split("/").slice(2).join("/"));
 
-const pages = computed(() => {
-  const ret: Page[] = sections.value;
+const listContents = reactive<ListContents>([]);
+const opened = reactive<string[]>([]);
+let groupCounter = 0; // for unique value
 
-  // open v-list-group containing the current page
-  ret.forEach((section) => {
-    if ("subcontents" in section && section.subcontents) {
-      section.subcontents.forEach((page) => {
-        if ("subcontents" in page && page.subcontents) {
-          page.subcontents.forEach(function (subpage) {
-            if (subpage.path) {
-              if (subpage.path.split("/").length < 2) {
-                subpage.active =
-                  relativePath.value ===
-                  `${subpage.path}/${
-                    import.meta.env.VITE_CMSBOOK_INDEX_FILENAME
-                  }`;
-              } else {
-                subpage.active = relativePath.value == subpage.path;
-              }
-            } else {
-              subpage.active = false;
+watchEffect(() => {
+  listContents.splice(0, listContents.length);
+  groupCounter = 0;
+  sections.value.forEach((section) => {
+    if (!("subcontents" in section)) {
+      const to =
+        "path" in section ? `${chapter.value.path}/${section.path}` : undefined;
+      const active = "path" in section && isActive(section.path);
+      listContents.push({
+        type: "item",
+        title: section.name,
+        prependIcon: "mdi-book",
+        ...(to && { to }),
+        active,
+      });
+    } else {
+      const groupContents: ListContents = [];
+      const groupValue = `${groupCounter++}-${section.name}`;
+      listContents.push({
+        type: "group",
+        value: groupValue,
+        title: section.name,
+        prependIcon: "mdi-book-multiple",
+        contents: groupContents,
+      });
+      const subsections = section.subcontents;
+      subsections?.forEach((subsection) => {
+        if (!("subcontents" in subsection)) {
+          const to =
+            "path" in subsection
+              ? `${chapter.value.path}/${subsection.path}`
+              : undefined;
+          const active = "path" in subsection && isActive(subsection.path);
+          groupContents.push({
+            type: "item",
+            title: subsection.name,
+            appendIcon: "mdi-book",
+            ...(to && { to }),
+            active,
+          });
+          active && (opened.includes(groupValue) || opened.push(groupValue));
+        } else {
+          const subGroupContents: ListContents = [];
+          const subGroupValue = `${groupCounter++}-${subsection.name}`;
+          groupContents.push({
+            type: "group",
+            value: subGroupValue,
+            title: subsection.name,
+            contents: subGroupContents,
+          });
+          const subsubsections = subsection.subcontents;
+          subsubsections.forEach((subsubsection) => {
+            const to =
+              "path" in subsubsection
+                ? `${chapter.value.path}/${subsubsection.path}`
+                : undefined;
+            const active =
+              "path" in subsubsection && isActive(subsubsection.path);
+            subGroupContents.push({
+              type: "item",
+              title: subsubsection.name,
+              appendIcon: "mdi-book",
+              ...(to && { to }),
+              active,
+            });
+            if (active) {
+              opened.includes(groupValue) || opened.push(groupValue);
+              opened.includes(subGroupValue) || opened.push(subGroupValue);
             }
           });
-          page.active = page.subcontents.map((s) => s.active).some(Boolean);
-        } else if ("path" in page) {
-          if (page.path.split("/").length < 2) {
-            page.active =
-              relativePath.value ===
-              `${page.path}/${import.meta.env.VITE_CMSBOOK_INDEX_FILENAME}`;
-          } else {
-            page.active = relativePath.value == page.path;
-          }
-        } else {
-          page.active = false;
         }
       });
-      section.active = section.subcontents.map((s) => s.active).some(Boolean);
-    } else if ("path" in section && section.path) {
-      if (section.path.split("/").length < 2) {
-        section.active =
-          relativePath.value ===
-          `${section.path}/${import.meta.env.VITE_CMSBOOK_INDEX_FILENAME}`;
-      } else {
-        section.active = relativePath.value == section.path;
-      }
-    } else {
-      section.active = false;
     }
   });
-  return ret;
 });
+
+function isActive(path: string) {
+  return path.split("/").length < 2
+    ? relativePath.value ===
+        `${path}/${import.meta.env.VITE_CMSBOOK_INDEX_FILENAME}`
+    : relativePath.value == path;
+}
 </script>
