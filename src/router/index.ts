@@ -78,7 +78,7 @@ const routes: RouteRecordRaw[] = [
     },
   },
   {
-    path: "/:chapter/:section/:page*",
+    path: "/:chapter/:section/:page+",
     name: "page",
     component: Page,
   },
