@@ -27,11 +27,16 @@ const route = useRoute();
 const cmsbook_url = ref(import.meta.env.VITE_CMSBOOK_URL);
 const md = ref("");
 
+const pageConcat = computed(() => {
+  if (typeof route.params.page === "string") {
+    return route.params.page;
+  } else {
+    return route.params.page.join("/");
+  }
+});
+
 const path = computed(
-  () =>
-    `/${route.params.chapter}/${route.params.section}/${route.params.page.join(
-      "/"
-    )}`
+  () => `/${route.params.chapter}/${route.params.section}/${pageConcat.value}`
 );
 
 const content = computed(() => {
