@@ -22,14 +22,14 @@ import { ref, computed, watchEffect } from "vue";
 import { useDisplay } from "vuetify";
 import { useRoute } from "vue-router";
 
-import { useDarkMode } from "@/utils/dark-mode";
+import { useColorTheme } from "@/utils/color-theme";
 import { useSetTitle } from "./set-title";
 
 import AppBar from "./AppBar.vue";
 import NavigationDrawer from "@/components/NavigationDrawer.vue";
 
 useSetTitle();
-useDarkMode();
+useColorTheme();
 
 const { mobile } = useDisplay();
 
