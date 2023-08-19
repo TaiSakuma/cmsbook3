@@ -121,11 +121,10 @@ const relativePath = computed(() => route.path.split("/").slice(2).join("/"));
 
 const listContents = reactive<ListContents>([]);
 const opened = reactive<string[]>([]);
-let groupCounter = 0; // for unique value
 
 watchEffect(() => {
   listContents.splice(0, listContents.length);
-  groupCounter = 0;
+  let groupCounter = 0; // for unique value
   sections.value.forEach((section) => {
     if (!("subcontents" in section)) {
       const to =
