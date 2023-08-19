@@ -116,26 +116,23 @@ const route = useRoute();
 const store = useStore();
 const { packageVersion, chapter, sections } = storeToRefs(store);
 
-// relative to chapter path, e.g., "section/web.md"
-const relativePath = computed(() => route.path.split("/").slice(2).join("/"));
-
 const listContents = reactive<ListContents>([]);
-const opened = reactive<string[]>([]);
 
 watchEffect(() => {
+  const chapterPath = chapter.value?.path;
+  if (!chapterPath) return;
   listContents.splice(0, listContents.length);
   let groupCounter = 0; // for unique value
   sections.value.forEach((section) => {
     if (!("subcontents" in section)) {
       const to =
-        "path" in section ? `${chapter.value.path}/${section.path}` : undefined;
-      const active = "path" in section && isActive(section.path);
+        "path" in section ? `${chapterPath}/${section.path}` : undefined;
       listContents.push({
         type: "item",
         title: section.name,
         prependIcon: "mdi-book",
         ...(to && { to }),
-        active,
+        active: false,
       });
     } else {
       const groupContents: ListContents = [];
@@ -152,17 +149,15 @@ watchEffect(() => {
         if (!("subcontents" in subsection)) {
           const to =
             "path" in subsection
-              ? `${chapter.value.path}/${subsection.path}`
+              ? `${chapterPath}/${subsection.path}`
               : undefined;
-          const active = "path" in subsection && isActive(subsection.path);
           groupContents.push({
             type: "item",
             title: subsection.name,
             appendIcon: "mdi-book",
             ...(to && { to }),
-            active,
+            active: false,
           });
-          active && (opened.includes(groupValue) || opened.push(groupValue));
         } else {
           const subGroupContents: ListContents = [];
           const subGroupValue = `${groupCounter++}-${subsection.name}`;
@@ -176,21 +171,15 @@ watchEffect(() => {
           subsubsections.forEach((subsubsection) => {
             const to =
               "path" in subsubsection
-                ? `${chapter.value.path}/${subsubsection.path}`
+                ? `${chapterPath}/${subsubsection.path}`
                 : undefined;
-            const active =
-              "path" in subsubsection && isActive(subsubsection.path);
             subGroupContents.push({
               type: "item",
               title: subsubsection.name,
               appendIcon: "mdi-book",
               ...(to && { to }),
-              active,
+              active: false,
             });
-            if (active) {
-              opened.includes(groupValue) || opened.push(groupValue);
-              opened.includes(subGroupValue) || opened.push(subGroupValue);
-            }
           });
         }
       });
@@ -198,10 +187,46 @@ watchEffect(() => {
   });
 });
 
+// relative to chapter path, e.g., "section/web.md"
+const relativePath = computed(() => route.path.split("/").slice(2).join("/"));
+
+const opened = reactive<string[]>([]);
+
 function isActive(path: string) {
-  return path.split("/").length < 2
+  const _path = path.split("/").slice(2).join("/");
+  return _path.split("/").length < 2
     ? relativePath.value ===
-        `${path}/${import.meta.env.VITE_CMSBOOK_INDEX_FILENAME}`
-    : relativePath.value == path;
+        `${_path}/${import.meta.env.VITE_CMSBOOK_INDEX_FILENAME}`
+    : relativePath.value == _path;
 }
+
+watchEffect(() => {
+  listContents.forEach((listContent) => {
+    if (listContent.type === "item") {
+      listContent.active = isActive(listContent.to!);
+    } else {
+      listContent.contents.forEach((groupContent) => {
+        if (groupContent.type === "item") {
+          groupContent.active = isActive(groupContent.to!);
+          if (groupContent.active) {
+            opened.includes(listContent.value) ||
+              opened.push(listContent.value);
+          }
+        } else {
+          groupContent.contents.forEach((subgroupContent) => {
+            if (subgroupContent.type === "item") {
+              subgroupContent.active = isActive(subgroupContent.to!);
+              if (subgroupContent.active) {
+                opened.includes(listContent.value) ||
+                  opened.push(listContent.value);
+                opened.includes(groupContent.value) ||
+                  opened.push(groupContent.value);
+              }
+            }
+          });
+        }
+      });
+    }
+  });
+});
 </script>
