@@ -131,65 +131,8 @@ onUpdated(() => {
 });
 </script>
 
-<!-- https://github.com/sindresorhus/github-markdown-css -->
 <style>
-@import "../../node_modules/github-markdown-css/github-markdown.css";
-
-.markdown-body {
-  /* box-sizing: border-box; */
-  min-width: 200px;
-  /* max-width: 980px; */
-  /* border-radius: 10px; */
-}
-
-.v-application .markdown-body code {
-  box-shadow: none;
-  color: inherit;
-}
-.v-application .markdown-body code:before {
+/* .v-application .markdown-body code:before {
   content: "";
-}
-
-.theme--dark .markdown-body {
-  color: #f5f5f5;
-}
-
-.theme--dark .markdown-body hr {
-  background-color: #757575;
-}
-
-.theme--dark .markdown-body blockquote {
-  border-left-color: #757575;
-  color: #bdbdbd;
-}
-
-.theme--dark .markdown-body pre {
-  background-color: #212121;
-}
-
-.theme--dark .markdown-body code {
-  background-color: inherit;
-  /* color: #f44336; */
-}
-
-.theme--light .markdown-body code {
-  background-color: inherit;
-}
-
-.theme--light .markdown-body pre {
-  background-color: #f6f8fa;
-}
-
-.theme--dark .markdown-body table td,
-.theme--dark .markdown-body table th {
-  border: 1px solid #616161;
-}
-
-.theme--dark .markdown-body table tr {
-  background-color: #212121;
-}
-
-.theme--dark .markdown-body table tr:nth-child(2n) {
-  background-color: #424242;
-}
+} */
 </style>
