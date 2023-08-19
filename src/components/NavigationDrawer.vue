@@ -79,8 +79,6 @@
         <toggle-dark-mode-button></toggle-dark-mode-button>
         <span class="text-secondary text-body-2">v{{ packageVersion }}</span>
       </div>
-      <v-list>
-      </v-list>
     </template>
   </v-navigation-drawer>
 </template>
