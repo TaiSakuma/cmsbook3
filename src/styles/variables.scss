@@ -18,7 +18,9 @@
   padding: 12px;
 }
 
+:is(.v-theme--light, .v-theme--dark) .markdown-body {
+  background-color: inherit;
+}
 :is(.v-theme--light, .v-theme--dark) .markdown-body pre code {
   background-color: inherit;
 }
-
