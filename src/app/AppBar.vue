@@ -11,16 +11,7 @@
       >
       </router-link>
     </template>
-    <template v-slot:append>
-      <v-tooltip left open-delay="800">
-        <template v-slot:activator="{ props }">
-          <v-btn v-bind="props" icon @click="toggleDark()">
-            <v-icon>mdi-invert-colors</v-icon>
-          </v-btn>
-        </template>
-        <span>Toggle dark mode</span>
-      </v-tooltip>
-    </template>
+    <template v-slot:append> </template>
     <template v-slot:extension>
       <TopNavi></TopNavi>
     </template>
@@ -29,15 +20,8 @@
 
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-
-import { useDarkMode } from "@/utils/dark-mode";
 import { useStore } from "@/stores/main";
-
 import TopNavi from "@/components/TopNavi.vue";
-
 const store = useStore();
 const { title } = storeToRefs(store);
-
-const { toggleDark } = useDarkMode();
 </script>
-../utils/dark-mode

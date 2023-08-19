@@ -75,8 +75,11 @@
       </template>
     </v-list>
     <template v-slot:append>
+      <div class="ma-4 d-flex justify-space-around align-center">
+        <toggle-dark-mode-button></toggle-dark-mode-button>
+        <span class="text-secondary text-body-2">v{{ packageVersion }}</span>
+      </div>
       <v-list>
-        <v-list-item :title="`v${packageVersion}`" disabled> </v-list-item>
       </v-list>
     </template>
   </v-navigation-drawer>
@@ -87,6 +90,8 @@ import { computed, watchEffect, reactive } from "vue";
 import { useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useStore } from "@/stores/main";
+
+import ToggleDarkModeButton from "@/components/ToggleDarkModeButton.vue";
 
 interface ListItem {
   type: "item";
