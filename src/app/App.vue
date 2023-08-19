@@ -26,7 +26,7 @@ import { useColorTheme } from "@/utils/color-theme";
 import { useSetTitle } from "./set-title";
 
 import AppBar from "./AppBar.vue";
-import NavigationDrawer from "@/components/NavigationDrawer.vue";
+import NavigationDrawer from "@/components/navigation-drawer/NavigationDrawer.vue";
 
 useSetTitle();
 useColorTheme();
