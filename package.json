@@ -30,6 +30,7 @@
   "devDependencies": {
     "@babel/core": "^7.0.0",
     "@fortawesome/fontawesome-free": "^5.15.3",
+    "@mdi/font": "^7.2.96",
     "@types/jest": "^27.0.1",
     "@types/jquery": "^3.5.14",
     "@types/path-browserify": "^1.0.0",
