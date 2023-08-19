@@ -22,8 +22,8 @@ import { ref, computed, watchEffect } from "vue";
 import { useDisplay } from "vuetify";
 import { useRoute } from "vue-router";
 
+import { useDarkMode } from "@/utils/dark-mode";
 import { useSetTitle } from "./set-title";
-import { useDarkMode } from "./dark-mode";
 
 import AppBar from "./AppBar.vue";
 import NavigationDrawer from "@/components/NavigationDrawer.vue";
@@ -45,3 +45,4 @@ const order = computed(() => (mobile.value ? 0 : -1));
 
 const route = useRoute();
 </script>
+../utils/dark-mode

@@ -30,8 +30,8 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
 
+import { useDarkMode } from "@/utils/dark-mode";
 import { useStore } from "@/stores/main";
-import { useDarkMode } from "./dark-mode";
 
 import TopNavi from "@/components/TopNavi.vue";
 
@@ -40,3 +40,4 @@ const { title } = storeToRefs(store);
 
 const { toggleDark } = useDarkMode();
 </script>
+../utils/dark-mode
