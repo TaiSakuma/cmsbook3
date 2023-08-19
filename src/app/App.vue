@@ -32,19 +32,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watchEffect, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import { useTheme } from "vuetify";
 import { useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useStore } from "@/stores/main";
+
+import { useSetTitle } from "./set-title";
+
 import NavigationDrawer from "@/components/NavigationDrawer.vue";
 import TopNavi from "@/components/TopNavi.vue";
 
+useSetTitle();
+
 const store = useStore();
 const { title } = storeToRefs(store);
-watchEffect(() => {
-  document.title = title.value;
-});
 
 const route = useRoute();
 const drawer = ref(true);
