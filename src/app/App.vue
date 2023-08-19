@@ -8,10 +8,10 @@
       </template>
     </app-bar>
     <v-main>
-      <router-view :key="route.fullPath" v-slot="{ Component }">
-        <transition name="fade" mode="out-in">
-          <component :is="Component" />
-        </transition>
+      <router-view v-slot="{ Component }">
+        <v-fade-transition>
+          <component :key="route.fullPath" :is="Component" />
+        </v-fade-transition>
       </router-view>
     </v-main>
   </v-app>
@@ -45,14 +45,3 @@ const order = computed(() => (mobile.value ? 0 : -1));
 
 const route = useRoute();
 </script>
-
-<style>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.2s;
-}
-.fade-enter,
-.fade-leave-active {
-  opacity: 0;
-}
-</style>
