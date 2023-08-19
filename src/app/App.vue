@@ -1,7 +1,9 @@
 <template>
   <v-app>
-    <v-app-bar dense>
-      <v-app-bar-nav-icon @click="drawer = !drawer" />
+    <navigation-drawer v-model="drawer"></navigation-drawer>
+    <v-app-bar dense :order="order">
+      <v-app-bar-nav-icon @click="toggleDrawer" v-if="mobile">
+      </v-app-bar-nav-icon>
       <v-toolbar-title>
         <router-link to="/" style="text-decoration: none; color: inherit">
           {{ title }}
@@ -20,7 +22,6 @@
         <TopNavi></TopNavi>
       </template>
     </v-app-bar>
-    <navigation-drawer v-model="drawer"></navigation-drawer>
     <v-main>
       <router-view :key="route.fullPath" v-slot="{ Component }">
         <transition name="fade" mode="out-in">
@@ -32,7 +33,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed, watchEffect } from "vue";
+import { useDisplay } from "vuetify";
 import { useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useStore } from "@/stores/main";
@@ -49,8 +51,19 @@ const { toggleDark } = useDarkMode();
 const store = useStore();
 const { title } = storeToRefs(store);
 
+const { mobile } = useDisplay();
+const order = computed(() => (mobile.value ? 0 : -1));
+
 const route = useRoute();
 const drawer = ref(true);
+
+watchEffect(() => {
+  drawer.value = !mobile.value;
+});
+
+function toggleDrawer() {
+  drawer.value = !drawer.value;
+}
 </script>
 
 <style>

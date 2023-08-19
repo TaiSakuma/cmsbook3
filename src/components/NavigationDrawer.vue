@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer v-model="drawer" permanent>
+  <v-navigation-drawer comment="fallthrough attributes">
     <template v-slot:prepend>
       <div class="pa-4">
         <router-link
@@ -83,26 +83,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch, watchEffect, reactive } from "vue";
+import { computed, watchEffect, reactive } from "vue";
 import { useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useStore } from "@/stores/main";
-
-interface Props {
-  modelValue: boolean;
-}
-interface Emits {
-  (event: "update:modelValue", value: boolean): void;
-}
-const props = defineProps<Props>();
-const emit = defineEmits<Emits>();
-const drawer = ref(true);
-watch(props, (val) => {
-  drawer.value = val.modelValue;
-});
-watch(drawer, (val) => {
-  emit("update:modelValue", val);
-});
 
 interface ListItem {
   type: "item";
