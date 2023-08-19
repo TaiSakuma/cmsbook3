@@ -1,9 +1,9 @@
 <template>
   <div class="page">
     <v-breadcrumbs :items="breadcrumbsItems"></v-breadcrumbs>
-    <v-card outlined max-width="980" class="ma-3 pa-3">
-      <v-card-text class="markdown-body" v-html="content"></v-card-text>
-    </v-card>
+    <div outlined max-width="980" class="ma-3 pa-3">
+      <div class="markdown-body" v-html="content"></div>
+    </div>
   </div>
 </template>
 
