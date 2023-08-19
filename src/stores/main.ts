@@ -56,7 +56,9 @@ export const useStore = defineStore("main", () => {
   //   sections.value = await getSectionsInChapter(currentChapterPath.value);
   // });
 
-  const chapter = computed(() => chapterMap.value[chapterPath.value]);
+  const chapter = computed<Path | undefined>(
+    () => chapterMap.value[chapterPath.value]
+  );
 
   return {
     packageVersion,
