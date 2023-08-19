@@ -1,27 +1,27 @@
 <template>
-  <v-tabs optional align-with-title background-color="transparent">
-    <v-tab
-      v-for="chapter in chapters"
-      :key="chapter.name"
-      :to="chapter.path"
-      v-text="chapter.name"
-      class="no-uppercase"
-    ></v-tab>
-    <v-tab to="/" v-show="false">
-      <!-- to hide v-tabs-slider when none is selected -->
+  <v-tabs v-model="tab">
+    <v-tab :value="chapter.name" :to="chapter.path" v-for="chapter in chapters">
+      <span class="text-none"> {{ chapter.name }} </span>
     </v-tab>
   </v-tabs>
 </template>
 
 <script setup lang="ts">
+import { ref, watchEffect } from "vue";
 import { storeToRefs } from "pinia";
 import { useStore } from "@/stores/main";
 const store = useStore();
-const { chapters } = storeToRefs(store);
+const { chapters, chapter } = storeToRefs(store);
+const tab = ref<string | null>(null);
+watchEffect(() => {
+  const value = chapter.value?.name;
+  if (!value) return;
+  tab.value = value;
+});
 </script>
 
 <style scoped>
-.no-uppercase {
-  text-transform: none;
+.v-tab--selected {
+  color: var(--v-theme-primary);
 }
 </style>
