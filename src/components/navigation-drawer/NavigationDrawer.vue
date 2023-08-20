@@ -88,6 +88,7 @@ import { computed, watchEffect, reactive } from "vue";
 import { useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useStore } from "@/stores/main";
+import { useConfig } from "@/utils/config";
 
 import ToggleDarkModeButton from "@/components/ToggleDarkModeButton.vue";
 
@@ -115,6 +116,7 @@ type ListContents = ListContent[];
 const route = useRoute();
 const store = useStore();
 const { packageVersion, chapter, sections } = storeToRefs(store);
+const { config } = useConfig();
 
 const listContents = reactive<ListContents>([]);
 
@@ -195,8 +197,7 @@ const opened = reactive<string[]>([]);
 function isActive(path: string) {
   const _path = path.split("/").slice(2).join("/");
   return _path.split("/").length < 2
-    ? relativePath.value ===
-        `${_path}/${import.meta.env.VITE_CMSBOOK_INDEX_FILENAME}`
+    ? relativePath.value === `${_path}/${config.value.indexFilename}`
     : relativePath.value == _path;
 }
 

@@ -1,14 +1,17 @@
 import { computed, ref, toValue } from "vue";
 import { useRoute } from "vue-router";
 
+import { useConfig } from "@/utils/config";
+
 import { useMarkdownSource } from "./markdown-source";
 import { useParse } from "./parse";
 
 export function useContent() {
-  const cmsbook_url = ref(import.meta.env.VITE_CMSBOOK_URL);
+const { config } = useConfig();
+  const cmsbookUrl = ref(config.value.cmsbookUrl);
   const route = useRoute();
   const pathToCurrentDir = computed(
-    () => toValue(cmsbook_url) + route.path.match(/.*\//)
+    () => toValue(cmsbookUrl) + route.path.match(/.*\//)
   );
   const { md } = useMarkdownSource();
 
