@@ -32,6 +32,13 @@ export function useParse(
     // Open external links in new tab
     tree.find("a:not([href^='#'])").attr("target", "_blank");
 
+    // Add mdi-open-in-new icon after links with target="_blank" on text (not img)
+    tree.find("a[target='_blank']:not(:has(img))").each(function () {
+      $(this).append(
+        ` <i class="mdi-open-in-new mdi v-icon notranslate v-icon--size-xsmall " aria-hidden="true"></i>`
+      );
+    });
+
     // Replace relative links with absolute links
     tree
       .find(
