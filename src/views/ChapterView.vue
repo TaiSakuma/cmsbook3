@@ -12,11 +12,11 @@ interface Home {
 const route = useRoute();
 const router = useRouter();
 
-async function getPathToHome() {
+async function getPathToChapterHome(chapter: string) {
   const { loadFrom } = useLoadFrom();
   const defaultHome = "index/web.md";
   try {
-    const data = await loadFrom<Home>("/.cmsbook3/home.json");
+    const data = await loadFrom<Home>(`/${chapter}/.cmsbook3/home.json`);
     if (data.home == undefined) {
       throw "home undefined";
     }
@@ -27,8 +27,11 @@ async function getPathToHome() {
 }
 
 onBeforeMount(async () => {
-  const relPath = await getPathToHome();
-  const path = route.path + relPath;
+  const maybeChapter = route.params.chapter;
+  const chapter =
+    typeof maybeChapter === "string" ? maybeChapter : maybeChapter[0];
+  const relPath = await getPathToChapterHome(chapter);
+  const path = `/${route.params.chapter}/${relPath}`;
   router.push(path);
 });
 </script>

@@ -1,20 +1,21 @@
 import { ref, computed, watchEffect, watch } from "vue";
-import { useRouter, useRoute } from "vue-router";
+import { useRoute } from "vue-router";
 import { defineStore } from "pinia";
 
 import {
   Path,
   Chapters,
   Sections,
-  getTitle,
-  getChapters,
-  getSectionsInChapter,
-} from "@/cmsbook3-retrieve";
+  useGetTitle,
+  useGetChapters,
+  useGetSectionsInChapter,
+} from "@/utils/cmsbook3";
 
 export const useStore = defineStore("main", () => {
   const packageVersion = ref(import.meta.env.PACKAGE_VERSION || "vx.x.x");
 
   //
+  const { getTitle } = useGetTitle();
   const title = ref("");
 
   watchEffect(async () => {
@@ -22,6 +23,7 @@ export const useStore = defineStore("main", () => {
   });
 
   //
+  const { getChapters } = useGetChapters();
   const chapters = ref<NonNullable<Chapters["chapters"]>>([]);
 
   watchEffect(async () => {
@@ -37,6 +39,7 @@ export const useStore = defineStore("main", () => {
   });
 
   //
+  const { getSectionsInChapter } = useGetSectionsInChapter();
   const sections = ref<NonNullable<Sections["sections"]>>([]);
 
   const route = ref(useRoute());
