@@ -1,42 +1,31 @@
-import { computed, ref, watch } from "vue";
+import { computed, ref, watchEffect, toValue } from "vue";
 import { useRoute } from "vue-router";
 
 import { retrieveFrom } from "@/cmsbook3-retrieve";
 
 export function useMarkdownSource() {
-
   const route = useRoute();
   const md = ref("");
 
   const pageConcat = computed(() => {
-    if (typeof route.params.page === "string") {
-      return route.params.page;
-    } else {
-      return route.params.page.join("/");
-    }
+	const _page = route.params.page;
+	return Array.isArray(_page) ? _page.join("/") : _page;
   });
 
   const path = computed(
     () => `/${route.params.chapter}/${route.params.section}/${pageConcat.value}`
   );
 
-  watch(
-    path,
-    async () => {
-      await getMarkDownFromPath();
-    },
-    { immediate: true }
-  );
+  watchEffect(async () => {
+    md.value = await fetch(toValue(path));
+  });
 
-  async function getMarkDownFromPath() {
-    if (!path.value) {
-      md.value = "";
-      return;
-    }
+  async function fetch(path: string) {
+    if (!path) return "";
     try {
-      md.value = await retrieveFrom(path.value);
+      return await retrieveFrom<string>(path);
     } catch (error) {
-      md.value = "Error: cannot get: " + path.value;
+      return `# Error: cannot get: ${path} \n\n ${error}`;
     }
   }
 
