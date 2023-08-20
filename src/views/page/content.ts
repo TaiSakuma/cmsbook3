@@ -1,4 +1,4 @@
-import { computed, ref, onUpdated } from "vue";
+import { computed, ref, toValue } from "vue";
 import { useRoute } from "vue-router";
 import { marked } from "marked";
 import $ from "jquery";
@@ -6,29 +6,30 @@ import $ from "jquery";
 import { useMarkdownSource } from "./markdown-source";
 
 export function useContent() {
-  const route = useRoute();
   const cmsbook_url = ref(import.meta.env.VITE_CMSBOOK_URL);
+  const route = useRoute();
+  const pathToCurrentDir = computed(
+    () => toValue(cmsbook_url) + route.path.match(/.*\//)
+  );
   const { md } = useMarkdownSource();
 
   const content = computed(() => {
     let htmlString: string;
     try {
-      htmlString = marked.parse(md.value);
+      htmlString = marked.parse(toValue(md));
     } catch (error) {
-      return "cannot parsed as markdown";
+      return `cannot parsed as markdown: ${error}`;
     }
 
     try {
       return editHtml(htmlString);
     } catch (error) {
-      console.error(error);
-      return htmlString;
+      return `<div class="alert alert-danger" role="alert">${error}</div>${htmlString}`;
     }
   });
 
   function editHtml(htmlString: string) {
-    const pathToCurrentDir = cmsbook_url.value + route.path.match(/.*\//);
-    const ret = editHtmlWithJQuery(htmlString, pathToCurrentDir);
+    const ret = editHtmlWithJQuery(htmlString, toValue(pathToCurrentDir));
     return ret;
   }
 
