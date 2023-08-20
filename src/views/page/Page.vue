@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch, onUpdated } from "vue";
+import { computed, ref, onUpdated } from "vue";
 import { useRoute } from "vue-router";
 import { marked } from "marked";
 import $ from "jquery";
@@ -21,23 +21,12 @@ import "prism-es6/components/prism-bash";
 import "prism-es6/components/prism-latex";
 import "@/prism.css";
 
-import { retrieveFrom } from "@/cmsbook3-retrieve";
+import { useMarkdownSource } from "./markdown-source";
 
 const route = useRoute();
 const cmsbook_url = ref(import.meta.env.VITE_CMSBOOK_URL);
-const md = ref("");
 
-const pageConcat = computed(() => {
-  if (typeof route.params.page === "string") {
-    return route.params.page;
-  } else {
-    return route.params.page.join("/");
-  }
-});
-
-const path = computed(
-  () => `/${route.params.chapter}/${route.params.section}/${pageConcat.value}`
-);
+const { md } = useMarkdownSource();
 
 const content = computed(() => {
   let htmlString: string;
@@ -54,26 +43,6 @@ const content = computed(() => {
     return htmlString;
   }
 });
-
-watch(
-  path,
-  async () => {
-    await getMarkDownFromPath();
-  },
-  { immediate: true }
-);
-
-async function getMarkDownFromPath() {
-  if (!path.value) {
-    md.value = "";
-    return;
-  }
-  try {
-    md.value = await retrieveFrom(path.value);
-  } catch (error) {
-    md.value = "Error: cannot get: " + path.value;
-  }
-}
 
 function editHtml(htmlString: string) {
   const pathToCurrentDir = cmsbook_url.value + route.path.match(/.*\//);
