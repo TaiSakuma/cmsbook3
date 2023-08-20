@@ -28,26 +28,28 @@ export function useParse(
 
   function editHtmlWithJQuery(htmlString: string, pathToCurrentDir: string) {
     const tree = $(`<div>${htmlString}</div>`);
+
+    // Open external links in new tab
     tree.find("a:not([href^='#'])").attr("target", "_blank");
 
+    // Replace relative links with absolute links
     tree
       .find(
         "a:not([href^='http:'],[href^='https:'],[href^='file:'],[href^='/'],[href^='#'])"
       )
       .each(function () {
-        this.setAttribute(
-          "href",
-          this.getAttribute("href").replace(/^/, pathToCurrentDir)
-        );
+        const attr = this.getAttribute("href");
+        if (!attr) return;
+        this.setAttribute("href", attr.replace(/^/, pathToCurrentDir));
       });
 
+    // Replace relative links with absolute links for images
     tree
       .find("img:not([src^='http:'],[src^='https:'],[src^='/'])")
       .each(function () {
-        this.setAttribute(
-          "src",
-          this.getAttribute("src").replace(/^/, pathToCurrentDir)
-        );
+        const attr = this.getAttribute("src");
+        if (!attr) return;
+        this.setAttribute("src", attr.replace(/^/, pathToCurrentDir));
       });
 
     return tree.html();
