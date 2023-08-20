@@ -2,7 +2,7 @@ import { RouteRecordRaw, createRouter, createWebHistory } from "vue-router";
 
 import { retrieveFrom } from "@/cmsbook3-retrieve";
 
-import Page from "@/views/Page.vue";
+import Page from "@/views/page/Page.vue";
 import PageNotFound from "@/views/PageNotFound.vue";
 
 interface Home {
