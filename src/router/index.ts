@@ -4,6 +4,7 @@ import Page from "@/views/page/Page.vue";
 import PageNotFound from "@/views/PageNotFound.vue";
 import HomeView from "@/views/HomeView.vue";
 import ChapterView from "@/views/ChapterView.vue";
+import SectionView from "@/views/SectionView.vue";
 
 const routes: RouteRecordRaw[] = [
   {
@@ -18,18 +19,8 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: "/:chapter/:section",
-    redirect: (to) => {
-      const pathChapterSection = to.path;
-      // e.g. /abc/xyz
-
-      const defaultPage = import.meta.env.VITE_CMSBOOK_INDEX_FILENAME;
-      // e.g. web.md
-
-      const ret = `${pathChapterSection}/${defaultPage}`;
-      // e.g., /abc/xyz/web.md
-
-      return ret;
-    },
+    name: "section",
+    component: SectionView,
   },
   {
     path: "/:chapter",
