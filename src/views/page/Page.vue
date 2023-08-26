@@ -30,10 +30,12 @@ const breadcrumbsItems = computed(() => {
   if (route.params.section) {
     ret.push({ title: route.params.section });
   }
-  if (route.params.page) {
+  if (Array.isArray(route.params.page)) {
     route.params.page.forEach((e) => {
       ret.push({ title: e });
     });
+  } else if (route.params.page) {
+    ret.push({ title: route.params.page });
   }
   return ret;
 });
