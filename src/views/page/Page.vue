@@ -8,18 +8,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onUpdated } from "vue";
+import { computed } from "vue";
 import { useRoute } from "vue-router";
 
-// import Prism from 'prism-es6'; // Jest doesn't work with this
-import Prism from "prismjs";
-import "prism-es6/components/prism-markup-templating";
-import "prism-es6/components/prism-python";
-import "prism-es6/components/prism-bash";
-import "prism-es6/components/prism-latex";
-import "@/prism.css";
-
 import { useContent } from "./content";
+import { usePrism } from "./prism";
 import { useMathJax } from "./mathjax";
 
 const route = useRoute();
@@ -41,10 +34,7 @@ const breadcrumbsItems = computed(() => {
   return ret;
 });
 
-onUpdated(() => {
-  Prism.highlightAll();
-});
-
+usePrism();
 useMathJax();
 </script>
 
