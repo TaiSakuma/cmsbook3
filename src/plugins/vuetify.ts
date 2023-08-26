@@ -1,6 +1,24 @@
-import Vue from "vue";
-import Vuetify from "vuetify/lib";
+import "@mdi/font/css/materialdesignicons.css";
+import "vuetify/styles";
+import { createVuetify } from "vuetify";
+import * as components from "vuetify/components";
+import * as directives from "vuetify/directives";
+import { md3 } from "vuetify/blueprints";
+import { aliases, mdi } from "vuetify/iconsets/mdi";
 
-Vue.use(Vuetify);
+import * as labsComponents from "vuetify/labs/components";
 
-export default new Vuetify({});
+import "@/styles/variables.scss";
+
+const vuetify = createVuetify({
+  components: { ...components, ...labsComponents },
+  directives,
+  blueprint: md3,
+  icons: {
+    defaultSet: "mdi",
+    aliases,
+    sets: { mdi },
+  },
+});
+
+export default vuetify;
