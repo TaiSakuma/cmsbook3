@@ -1,5 +1,5 @@
 import moxios from "moxios";
-import router from "@/router/index.js";
+import router from "@/plugins/router.js";
 
 describe("About.vue", () => {
   const ENV_ORG = process.env;
