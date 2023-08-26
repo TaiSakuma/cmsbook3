@@ -20,6 +20,7 @@ import "prism-es6/components/prism-latex";
 import "@/prism.css";
 
 import { useContent } from "./content";
+import { useMathJax } from "./mathjax";
 
 const route = useRoute();
 
@@ -42,13 +43,9 @@ const breadcrumbsItems = computed(() => {
 
 onUpdated(() => {
   Prism.highlightAll();
-  try {
-    // @ts-ignore
-    window.MathJax.typesetPromise();
-  } catch (error) {
-    console.log(error);
-  }
 });
+
+useMathJax();
 </script>
 
 <style>
