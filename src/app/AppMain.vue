@@ -9,7 +9,7 @@
     </app-bar>
     <v-main>
       <router-view v-slot="{ Component, route }">
-        <v-fade-transition>
+        <v-fade-transition leave-absolute>
           <component :key="route.fullPath" :is="Component" />
         </v-fade-transition>
       </router-view>
