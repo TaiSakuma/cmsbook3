@@ -4,7 +4,6 @@ import Page from "@/views/page/Page.vue";
 import PageNotFound from "@/views/PageNotFound.vue";
 import HomeView from "@/views/HomeView.vue";
 import ChapterView from "@/views/ChapterView.vue";
-import SectionView from "@/views/SectionView.vue";
 
 const routes: RouteRecordRaw[] = [
   {
@@ -18,17 +17,12 @@ const routes: RouteRecordRaw[] = [
     component: () => import("../views/About.vue"),
   },
   {
-    path: "/:chapter/:section",
-    name: "section",
-    component: SectionView,
-  },
-  {
     path: "/:chapter",
     name: "chapter",
     component: ChapterView,
   },
   {
-    path: "/:chapter/:section/:page+",
+    path: "/:chapter/:section/:page*",
     name: "page",
     component: Page,
   },
