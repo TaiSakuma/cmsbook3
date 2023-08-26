@@ -19,7 +19,6 @@
           :title="listContent.title"
           :prepend-icon="listContent.prependIcon"
           :append-icon="listContent.appendIcon"
-          :active="listContent.active"
         >
         </v-list-item>
         <v-list-group
@@ -42,7 +41,6 @@
               :title="groupContent.title"
               :prepend-icon="groupContent.prependIcon"
               :append-icon="groupContent.appendIcon"
-              :active="groupContent.active"
             >
             </v-list-item>
             <v-list-group
@@ -65,7 +63,6 @@
                   :title="subgroupContent.title"
                   :prepend-icon="subgroupContent.prependIcon"
                   :append-icon="subgroupContent.appendIcon"
-                  :active="subgroupContent.active"
                 >
                 </v-list-item>
               </template>
@@ -84,11 +81,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed, watchEffect, reactive } from "vue";
-import { useRoute } from "vue-router";
+import { ref, watchEffect, reactive } from "vue";
 import { storeToRefs } from "pinia";
 import { useStore } from "@/plugins/pinia/stores/main";
-import { useConfig } from "@/utils/config";
 
 import ToggleDarkModeButton from "@/components/ToggleDarkModeButton.vue";
 
@@ -98,7 +93,6 @@ interface ListItem {
   to?: string;
   prependIcon?: string;
   appendIcon?: string;
-  active: boolean;
 }
 
 interface ListGroup {
@@ -113,10 +107,8 @@ interface ListGroup {
 type ListContent = ListItem | ListGroup;
 type ListContents = ListContent[];
 
-const route = useRoute();
 const store = useStore();
 const { packageVersion, chapter, sections } = storeToRefs(store);
-const { config } = useConfig();
 
 const listContents = reactive<ListContents>([]);
 
@@ -134,7 +126,6 @@ watchEffect(() => {
         title: section.name,
         prependIcon: "mdi-book",
         ...(to && { to }),
-        active: false,
       });
     } else {
       const groupContents: ListContents = [];
@@ -158,7 +149,6 @@ watchEffect(() => {
             title: subsection.name,
             appendIcon: "mdi-book",
             ...(to && { to }),
-            active: false,
           });
         } else {
           const subGroupContents: ListContents = [];
@@ -180,7 +170,6 @@ watchEffect(() => {
               title: subsubsection.name,
               appendIcon: "mdi-book",
               ...(to && { to }),
-              active: false,
             });
           });
         }
@@ -189,45 +178,5 @@ watchEffect(() => {
   });
 });
 
-// relative to chapter path, e.g., "section/web.md"
-const relativePath = computed(() => route.path.split("/").slice(2).join("/"));
-
-const opened = reactive<string[]>([]);
-
-function isActive(path: string) {
-  const _path = path.split("/").slice(2).join("/");
-  return _path.split("/").length < 2
-    ? relativePath.value === `${_path}/${config.value.indexFilename}`
-    : relativePath.value == _path;
-}
-
-watchEffect(() => {
-  listContents.forEach((listContent) => {
-    if (listContent.type === "item") {
-      listContent.active = isActive(listContent.to!);
-    } else {
-      listContent.contents.forEach((groupContent) => {
-        if (groupContent.type === "item") {
-          groupContent.active = isActive(groupContent.to!);
-          if (groupContent.active) {
-            opened.includes(listContent.value) ||
-              opened.push(listContent.value);
-          }
-        } else {
-          groupContent.contents.forEach((subgroupContent) => {
-            if (subgroupContent.type === "item") {
-              subgroupContent.active = isActive(subgroupContent.to!);
-              if (subgroupContent.active) {
-                opened.includes(listContent.value) ||
-                  opened.push(listContent.value);
-                opened.includes(groupContent.value) ||
-                  opened.push(groupContent.value);
-              }
-            }
-          });
-        }
-      });
-    }
-  });
-});
+const opened = ref<string[]>([]);
 </script>
