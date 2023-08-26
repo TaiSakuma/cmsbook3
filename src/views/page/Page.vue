@@ -43,7 +43,8 @@ const breadcrumbsItems = computed(() => {
 onUpdated(() => {
   Prism.highlightAll();
   try {
-    MathJax.Hub.Typeset();
+    // @ts-ignore
+    window.MathJax.typesetPromise();
   } catch (error) {
     console.log(error);
   }
