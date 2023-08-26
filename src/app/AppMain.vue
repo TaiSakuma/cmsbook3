@@ -8,7 +8,7 @@
       </template>
     </app-bar>
     <v-main>
-      <router-view v-slot="{ Component }">
+      <router-view v-slot="{ Component, route }">
         <v-fade-transition>
           <component :key="route.fullPath" :is="Component" />
         </v-fade-transition>
@@ -18,9 +18,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, toValue } from "vue";
 import { useDisplay } from "vuetify";
-import { useRoute } from "vue-router";
 
 import { useColorTheme } from "@/utils/color-theme";
 import { useSetTitle } from "./set-title";
@@ -31,9 +30,7 @@ import NavigationDrawer from "@/components/navigation-drawer/NavigationDrawer.vu
 
 useSetTitle();
 useColorTheme();
-
 const { mobile } = useDisplay();
 const { drawer, toggleDrawer } = useDrawer();
-const order = computed(() => (mobile.value ? 0 : -1));
-const route = useRoute();
+const order = computed(() => (toValue(mobile) ? 0 : -1));
 </script>
