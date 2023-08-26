@@ -1,40 +1,51 @@
-import { ref, computed } from "vue";
+import { ref, computed, watch, toValue } from "vue";
 import { useAxios } from "@vueuse/integrations/useAxios";
 import * as path from "path";
 
-import { defaultConfig, validateConfig } from "./config";
-import type { Config } from "./config";
-
-export function useLoadConfig() {
-  const url = ref(path.join(import.meta.env.VITE_PUBLIC_PATH, "config.json"));
+export function useLoadConfigT<T extends object>(
+  defaultConfig: Partial<T> = {},
+  validate: (config: T) => void = () => true
+) {
+  const { configUrl } = useConfigUrl();
 
   const {
     data,
     error: axiosError,
     isLoading: loading,
-  } = useAxios<Config>(url.value);
+    execute,
+  } = useAxios<T>(toValue(configUrl));
+  watch(configUrl, () => execute());
 
   // undefined until data is loaded
-  const config = computed(
+  const config = computed<T | undefined>(
     () => data.value && { ...defaultConfig, ...(data.value ?? {}) }
   );
 
-  const typeError = computed(() => {
+  const validationError = computed(() => {
     if (loading.value) return;
     if (!config.value) return;
     try {
-      validateConfig(config.value);
+      validate(config.value);
     } catch (e) {
       return e;
     }
   });
 
-  const error = computed(() => axiosError.value || typeError.value);
+  const error = computed(() => axiosError.value || validationError.value);
 
   return {
-    url,
     loading,
     error,
     config,
+  };
+}
+
+function useConfigUrl() {
+  const configUrl = ref(
+    path.join(import.meta.env.VITE_PUBLIC_PATH, "config.json")
+  );
+
+  return {
+    configUrl,
   };
 }
