@@ -20,7 +20,7 @@
 
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import { useStore } from "@/stores/main";
+import { useStore } from "@/plugins/pinia/stores/main";
 import TopNavi from "@/components/TopNavi.vue";
 const store = useStore();
 const { title } = storeToRefs(store);

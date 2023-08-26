@@ -87,7 +87,7 @@
 import { computed, watchEffect, reactive } from "vue";
 import { useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
-import { useStore } from "@/stores/main";
+import { useStore } from "@/plugins/pinia/stores/main";
 import { useConfig } from "@/utils/config";
 
 import ToggleDarkModeButton from "@/components/ToggleDarkModeButton.vue";

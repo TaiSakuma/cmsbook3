@@ -9,7 +9,7 @@
 <script setup lang="ts">
 import { ref, watchEffect } from "vue";
 import { storeToRefs } from "pinia";
-import { useStore } from "@/stores/main";
+import { useStore } from "@/plugins/pinia/stores/main";
 const store = useStore();
 const { chapters, chapter } = storeToRefs(store);
 const tab = ref<string | null>(null);
