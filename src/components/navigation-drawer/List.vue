@@ -1,5 +1,10 @@
 <template>
-  <v-list nav v-model:opened="opened">
+  <v-list
+    v-if="listContents.length"
+    nav
+    v-model:opened="opened"
+    open-strategy="multiple"
+  >
     <template v-for="listContent in listContents">
       <v-list-item
         v-if="listContent.type === 'item'"
@@ -157,5 +162,5 @@ watchEffect(() => {
   });
 });
 
-const opened = ref<string[]>([]);
+const opened = ref<string[]>();
 </script>
