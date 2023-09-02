@@ -1,4 +1,5 @@
-import { onUpdated } from "vue";
+import { onUpdated, toValue } from "vue";
+import type { MaybeRefOrGetter } from "vue";
 
 // import Prism from 'prism-es6'; // Jest doesn't work with this
 import Prism from "prismjs";
@@ -8,8 +9,10 @@ import "prismjs/components/prism-bash";
 import "prismjs/components/prism-latex";
 import "@/prism.css";
 
-export function usePrism() {
+export function usePrism(element: MaybeRefOrGetter<HTMLElement | undefined>) {
   onUpdated(() => {
-    Prism.highlightAll();
+    const ele = toValue(element);
+    if (!ele) return;
+    Prism.highlightAllUnder(ele);
   });
 }

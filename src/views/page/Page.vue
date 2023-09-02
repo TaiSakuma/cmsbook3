@@ -18,7 +18,7 @@ import Breadcrumbs from "./breadcrumbs/Breadcrumbs.vue";
 const markdownBody = ref<HTMLElement>();
 const { content } = useContent();
 
-usePrism();
+usePrism(markdownBody);
 useMathJax(markdownBody);
 </script>
 
