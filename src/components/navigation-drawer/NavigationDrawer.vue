@@ -11,7 +11,9 @@
         </router-link>
       </div>
     </template>
-    <list></list>
+    <v-fade-transition leave-absolute>
+      <list :key="chapter.path" v-if="chapter"></list>
+    </v-fade-transition>
     <template v-slot:append>
       <div class="ma-4 d-flex justify-space-around align-center">
         <toggle-dark-mode-button></toggle-dark-mode-button>
