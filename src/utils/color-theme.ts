@@ -1,24 +1,76 @@
-import { ref, watch } from "vue";
+import { ref, computed, watchEffect, toValue } from "vue";
+import type { MaybeRefOrGetter, UnwrapRef } from "vue";
 import { useTheme } from "vuetify";
+import type { ThemeDefinition } from "vuetify";
+import type { OmitIndexSignature } from "type-fest";
 
-import { generate } from "@/utils/material-color";
-import { useDarkMode } from "@/utils/dark-mode";
+import { useDynamicColors } from "./material-color";
+import { useDarkMode } from "./dark-mode";
+
+type DynamicColors = UnwrapRef<ReturnType<typeof useDynamicColors>["colors"]>;
+type DynamicColorName = keyof DynamicColors;
+
+type VuetifyColors = NonNullable<ThemeDefinition["colors"]>;
+type RequiredVuetifyColors = OmitIndexSignature<Required<VuetifyColors>>;
+type VuetifyColorName = keyof RequiredVuetifyColors;
+
+type MissingColorName = Exclude<VuetifyColorName, DynamicColorName>;
+
+function useSourceColor() {
+  const sourceColor = ref("#607D8B"); // blue grey
+  return { sourceColor };
+}
 
 export function useColorTheme() {
-  useDarkMode();
+  // https://vuetifyjs.com/en/features/theme/
+  const { isDark } = useDarkMode();
+  const { sourceColor } = useSourceColor();
+
+  const { colors: lightColors } = useDynamicColors(sourceColor, false);
+  const { colors: darkColors } = useDynamicColors(sourceColor, true);
+
+  useSetDynamicColors(lightColors, false);
+  useSetDynamicColors(darkColors, true);
+
   const theme = useTheme();
-  const sourceColor = ref("#607D8B"); // blue grey
-  watch(
-    sourceColor,
-    (val) => {
-      const [dynamicLight, dynamicDark] = generate(val);
 
-      // @ts-ignore
-      theme.themes.value.light.colors = dynamicLight.colors;
+  watchEffect(() => {
+    theme.global.name.value = toValue(isDark) ? "dark" : "light";
+  });
 
-      // @ts-ignore
-      theme.themes.value.dark.colors = dynamicDark.colors;
-    },
-    { immediate: true }
-  );
 }
+
+function useSetDynamicColors(
+  dynamicColors: MaybeRefOrGetter<DynamicColors>,
+  isDark: MaybeRefOrGetter<boolean>
+) {
+  const missing = computed(() => createMissingColors(toValue(dynamicColors)));
+  const colors = computed(() => ({
+    ...toValue(dynamicColors),
+    ...toValue(missing),
+  }));
+  const { themes } = useTheme();
+  const theme = computed(
+    () => themes.value[toValue(isDark) ? "dark" : "light"]
+  );
+
+  watchEffect(() => {
+    theme.value.colors = toValue(colors);
+  });
+
+  return theme;
+}
+
+function createMissingColors(dynamicColors: DynamicColors): {
+  [K in MissingColorName]: string;
+} {
+  return {
+    success: dynamicColors.primary,
+    "on-success": dynamicColors["on-primary"],
+    info: dynamicColors.secondary,
+    "on-info": dynamicColors["on-secondary"],
+    warning: dynamicColors.error,
+    "on-warning": dynamicColors["on-error"],
+  };
+}
+
