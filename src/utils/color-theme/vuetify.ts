@@ -1,10 +1,10 @@
-import { ref, computed, watchEffect, toValue } from "vue";
+import { computed, watchEffect, toValue } from "vue";
 import type { MaybeRefOrGetter, UnwrapRef } from "vue";
 import { useTheme } from "vuetify";
 import type { ThemeDefinition } from "vuetify";
 import type { OmitIndexSignature } from "type-fest";
 
-import { useDynamicColors } from "./material-color";
+import { useDynamicColors } from "@/utils/dynamic-color";
 import { useDarkMode } from "./dark-mode";
 
 type DynamicColors = UnwrapRef<ReturnType<typeof useDynamicColors>["colors"]>;
@@ -16,34 +16,20 @@ type VuetifyColorName = keyof RequiredVuetifyColors;
 
 type MissingColorName = Exclude<VuetifyColorName, DynamicColorName>;
 
-function useSourceColor() {
-  const sourceColor = ref("#607D8B"); // blue grey
-  return { sourceColor };
-}
-
-export function useColorTheme() {
-  // https://vuetifyjs.com/en/features/theme/
+export function useDarkModeOnVuetify() {
   const { isDark } = useDarkMode();
-  const { sourceColor } = useSourceColor();
-
-  const { colors: lightColors } = useDynamicColors(sourceColor, false);
-  const { colors: darkColors } = useDynamicColors(sourceColor, true);
-
-  useSetDynamicColors(lightColors, false);
-  useSetDynamicColors(darkColors, true);
-
+  const themeName = computed(() => (isDark.value ? "dark" : "light"));
   const theme = useTheme();
-
   watchEffect(() => {
-    theme.global.name.value = toValue(isDark) ? "dark" : "light";
+    theme.global.name.value = themeName.value;
   });
-
 }
 
-function useSetDynamicColors(
+export function useDynamicColorsOnVuetify(
   dynamicColors: MaybeRefOrGetter<DynamicColors>,
   isDark: MaybeRefOrGetter<boolean>
 ) {
+  // https://vuetifyjs.com/en/features/theme/
   const missing = computed(() => createMissingColors(toValue(dynamicColors)));
   const colors = computed(() => ({
     ...toValue(dynamicColors),
@@ -73,4 +59,3 @@ function createMissingColors(dynamicColors: DynamicColors): {
     "on-warning": dynamicColors["on-error"],
   };
 }
-
