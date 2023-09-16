@@ -2,7 +2,6 @@ import { fileURLToPath, URL } from "node:url";
 import { defineConfig, loadEnv } from "vite";
 import vue from "@vitejs/plugin-vue";
 import loadVersion from "vite-plugin-package-version";
-// import { defaultExclude } from "vitest/config";
 import pluginRewriteAll from "vite-plugin-rewrite-all";
 
 export default ({ mode }) => {
@@ -19,12 +18,5 @@ export default ({ mode }) => {
         path: "path-browserify",
       },
     },
-    // test: {
-    //   globals: true,
-    //   environment: "jsdom",
-    //   alias: [{ find: /^vue$/, replacement: "vue/dist/vue.runtime.common.js" }],
-    //   exclude: [...defaultExclude, "tests-old/**"],
-    //   setupFiles: "./tests/unit/setup.ts",
-    // },
   });
 };
