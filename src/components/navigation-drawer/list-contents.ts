@@ -31,7 +31,6 @@ export function useListContents() {
   type Section = (typeof sections.value)[0];
   type Path = Extract<Section, { path: string }>;
   type SubSection = Exclude<Section, Path>;
-  type SubSubSection = Exclude<NonNullable<SubSection["subcontents"]>[0], Path>;
 
   const createListItem = (chapterPath: string, section: Path) => {
     const to = `${chapterPath}/${section.path}`;
@@ -43,10 +42,7 @@ export function useListContents() {
     };
   };
 
-  const createListGroupForSubSection = (
-    chapterPath: string,
-    section: SubSection
-  ) => {
+  const createListGroup = (chapterPath: string, section: SubSection) => {
     const groupContents: ListContents = [];
     const groupValue = `${_groupCounter++}-${section.name}`;
     const subsections = section.subcontents;
@@ -54,7 +50,7 @@ export function useListContents() {
       if ("path" in subsection) {
         groupContents.push(createListItem(chapterPath, subsection));
       } else {
-		groupContents.push(createListGroupForSubSubSection(chapterPath, subsection));
+        groupContents.push(createListGroup(chapterPath, subsection));
       }
     });
     return {
@@ -63,24 +59,6 @@ export function useListContents() {
       title: section.name,
       prependIcon: "mdi-book-multiple",
       contents: groupContents,
-    };
-  };
-
-  const createListGroupForSubSubSection = (
-    chapterPath: string,
-    subsection: SubSubSection
-  ) => {
-    const subGroupContents: ListContents = [];
-    const subGroupValue = `${_groupCounter++}-${subsection.name}`;
-    const subsubsections = subsection.subcontents;
-    subsubsections.forEach((subsubsection) => {
-      subGroupContents.push(createListItem(chapterPath, subsubsection));
-    });
-    return {
-      type: "group" as const,
-      value: subGroupValue,
-      title: subsection.name,
-      contents: subGroupContents,
     };
   };
 
@@ -93,7 +71,7 @@ export function useListContents() {
       if ("path" in section) {
         _ret.push(createListItem(chapterPath, section));
       } else {
-        _ret.push(createListGroupForSubSection(chapterPath, section));
+        _ret.push(createListGroup(chapterPath, section));
       }
     });
     return _ret;
