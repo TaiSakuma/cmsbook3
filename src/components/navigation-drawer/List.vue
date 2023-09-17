@@ -67,9 +67,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watchEffect, reactive } from "vue";
+import { ref } from "vue";
 import { storeToRefs } from "pinia";
 import { useStore } from "@/plugins/pinia/stores/main";
+import { computed } from "vue";
 
 interface ListItem {
   type: "item";
@@ -94,18 +95,16 @@ type ListContents = ListContent[];
 const store = useStore();
 const { chapter, sections } = storeToRefs(store);
 
-const listContents = reactive<ListContents>([]);
-
-watchEffect(() => {
+const listContents = computed<ListContents>(() => {
   const chapterPath = chapter.value?.path;
-  if (!chapterPath) return;
-  listContents.splice(0, listContents.length);
+  if (!chapterPath) return [];
+  const _ret: ListContents = [];
   let groupCounter = 0; // for unique value
   sections.value.forEach((section) => {
     if (!("subcontents" in section)) {
       const to =
         "path" in section ? `${chapterPath}/${section.path}` : undefined;
-      listContents.push({
+      _ret.push({
         type: "item",
         title: section.name,
         prependIcon: "mdi-book",
@@ -114,7 +113,7 @@ watchEffect(() => {
     } else {
       const groupContents: ListContents = [];
       const groupValue = `${groupCounter++}-${section.name}`;
-      listContents.push({
+      _ret.push({
         type: "group",
         value: groupValue,
         title: section.name,
@@ -160,6 +159,7 @@ watchEffect(() => {
       });
     }
   });
+  return _ret;
 });
 
 const opened = ref<string[]>();
