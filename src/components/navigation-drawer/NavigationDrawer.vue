@@ -1,15 +1,7 @@
 <template>
   <v-navigation-drawer comment="fallthrough attributes">
     <template v-slot:prepend>
-      <div class="pa-4">
-        <router-link
-          v-if="chapter"
-          :to="chapter.path"
-          style="text-decoration: none; color: inherit"
-        >
-          {{ chapter.name }}
-        </router-link>
-      </div>
+      <top></top>
     </template>
     <v-fade-transition leave-absolute>
       <list :key="chapter.path" v-if="chapter"></list>
@@ -24,6 +16,7 @@
 import { storeToRefs } from "pinia";
 import { useStore } from "@/plugins/pinia/stores/main";
 
+import Top from "./Top.vue";
 import List from "./List.vue";
 import Bottom from "./Bottom.vue";
 
