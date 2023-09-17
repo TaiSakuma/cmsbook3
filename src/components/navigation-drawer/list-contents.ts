@@ -20,19 +20,27 @@ interface ListGroup {
 }
 
 type ListContent = ListItem | ListGroup;
-
 type ListContents = ListContent[];
+
+function useCreateGroupValue() {
+  // for unique values of VListGroup for expand / collapse
+  let counter = 0;
+  const create = (name: string) => `${counter++}-${name}`;
+  const reset = () => (counter = 0);
+  return { create, reset };
+}
+
 export function useListContents() {
   const store = useStore();
   const { chapter, sections } = storeToRefs(store);
-
-  let _groupCounter = 0; // for unique value
+  const { create: createGroupValue, reset: resetGroupValue } =
+    useCreateGroupValue();
 
   type Section = (typeof sections.value)[0];
   type Path = Extract<Section, { path: string }>;
   type SubSection = Exclude<Section, Path>;
 
-  const createListItem = (chapterPath: string, section: Path) => {
+  const createListItem = (chapterPath: string, section: Path): ListItem => {
     const to = `${chapterPath}/${section.path}`;
     return {
       type: "item" as const,
@@ -42,9 +50,12 @@ export function useListContents() {
     };
   };
 
-  const createListGroup = (chapterPath: string, section: SubSection) => {
-    const groupValue = `${_groupCounter++}-${section.name}`;
-    const groupContents: ListContents =
+  const createListGroup = (
+    chapterPath: string,
+    section: SubSection
+  ): ListGroup => {
+    const groupValue = createGroupValue(section.name);
+    const groupContents =
       section.subcontents?.map((subsection) =>
         "path" in subsection
           ? createListItem(chapterPath, subsection)
@@ -62,7 +73,7 @@ export function useListContents() {
   const listContents = computed<ListContents>(() => {
     const chapterPath = chapter.value?.path;
     if (!chapterPath) return [];
-    _groupCounter = 0; // for unique value
+    resetGroupValue();
     return sections.value.map((section) =>
       "path" in section
         ? createListItem(chapterPath, section)
