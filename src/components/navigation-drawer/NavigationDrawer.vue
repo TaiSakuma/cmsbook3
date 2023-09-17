@@ -15,10 +15,7 @@
       <list :key="chapter.path" v-if="chapter"></list>
     </v-fade-transition>
     <template v-slot:append>
-      <div class="ma-4 d-flex justify-space-around align-center">
-        <toggle-dark-mode-button></toggle-dark-mode-button>
-        <span class="text-secondary text-body-2">v{{ packageVersion }}</span>
-      </div>
+      <bottom></bottom>
     </template>
   </v-navigation-drawer>
 </template>
@@ -28,8 +25,8 @@ import { storeToRefs } from "pinia";
 import { useStore } from "@/plugins/pinia/stores/main";
 
 import List from "./List.vue";
-import ToggleDarkModeButton from "@/components/ToggleDarkModeButton.vue";
+import Bottom from "./Bottom.vue";
 
 const store = useStore();
-const { packageVersion, chapter } = storeToRefs(store);
+const { chapter } = storeToRefs(store);
 </script>
