@@ -43,16 +43,13 @@ export function useListContents() {
   };
 
   const createListGroup = (chapterPath: string, section: SubSection) => {
-    const groupContents: ListContents = [];
     const groupValue = `${_groupCounter++}-${section.name}`;
-    const subsections = section.subcontents;
-    subsections?.forEach((subsection) => {
-      if ("path" in subsection) {
-        groupContents.push(createListItem(chapterPath, subsection));
-      } else {
-        groupContents.push(createListGroup(chapterPath, subsection));
-      }
-    });
+    const groupContents: ListContents =
+      section.subcontents?.map((subsection) =>
+        "path" in subsection
+          ? createListItem(chapterPath, subsection)
+          : createListGroup(chapterPath, subsection)
+      ) ?? [];
     return {
       type: "group" as const,
       value: groupValue,
@@ -65,16 +62,12 @@ export function useListContents() {
   const listContents = computed<ListContents>(() => {
     const chapterPath = chapter.value?.path;
     if (!chapterPath) return [];
-    const _ret: ListContents = [];
     _groupCounter = 0; // for unique value
-    sections.value.forEach((section) => {
-      if ("path" in section) {
-        _ret.push(createListItem(chapterPath, section));
-      } else {
-        _ret.push(createListGroup(chapterPath, section));
-      }
-    });
-    return _ret;
+    return sections.value.map((section) =>
+      "path" in section
+        ? createListItem(chapterPath, section)
+        : createListGroup(chapterPath, section)
+    );
   });
 
   return { listContents };
