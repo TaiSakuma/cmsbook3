@@ -26,68 +26,74 @@ export function useListContents() {
   const store = useStore();
   const { chapter, sections } = storeToRefs(store);
 
+  let _groupCounter = 0; // for unique value
+
+  type Section = (typeof sections.value)[0];
+  type Path = Extract<Section, { path: string }>;
+  type SubSection = Exclude<Section, Path>;
+  type SubSubSection = Exclude<NonNullable<SubSection["subcontents"]>[0], Path>;
+
+  const createListItem = (chapterPath: string, section: Path) => {
+    const to = `${chapterPath}/${section.path}`;
+    return {
+      type: "item" as const,
+      title: section.name,
+      prependIcon: "mdi-book",
+      ...(to && { to }),
+    };
+  };
+
+  const createListGroupForSubSection = (
+    chapterPath: string,
+    section: SubSection
+  ) => {
+    const groupContents: ListContents = [];
+    const groupValue = `${_groupCounter++}-${section.name}`;
+    const subsections = section.subcontents;
+    subsections?.forEach((subsection) => {
+      if ("path" in subsection) {
+        groupContents.push(createListItem(chapterPath, subsection));
+      } else {
+		groupContents.push(createListGroupForSubSubSection(chapterPath, subsection));
+      }
+    });
+    return {
+      type: "group" as const,
+      value: groupValue,
+      title: section.name,
+      prependIcon: "mdi-book-multiple",
+      contents: groupContents,
+    };
+  };
+
+  const createListGroupForSubSubSection = (
+    chapterPath: string,
+    subsection: SubSubSection
+  ) => {
+    const subGroupContents: ListContents = [];
+    const subGroupValue = `${_groupCounter++}-${subsection.name}`;
+    const subsubsections = subsection.subcontents;
+    subsubsections.forEach((subsubsection) => {
+      subGroupContents.push(createListItem(chapterPath, subsubsection));
+    });
+    return {
+      type: "group" as const,
+      value: subGroupValue,
+      title: subsection.name,
+      contents: subGroupContents,
+    };
+  };
+
   const listContents = computed<ListContents>(() => {
     const chapterPath = chapter.value?.path;
     if (!chapterPath) return [];
     const _ret: ListContents = [];
-    let groupCounter = 0; // for unique value
+    _groupCounter = 0; // for unique value
     sections.value.forEach((section) => {
-      if (!("subcontents" in section)) {
-        const to =
-          "path" in section ? `${chapterPath}/${section.path}` : undefined;
-        _ret.push({
-          type: "item",
-          title: section.name,
-          prependIcon: "mdi-book",
-          ...(to && { to }),
-        });
+      if ("path" in section) {
+        _ret.push(createListItem(chapterPath, section));
       } else {
-        const groupContents: ListContents = [];
-        const groupValue = `${groupCounter++}-${section.name}`;
-        _ret.push({
-          type: "group",
-          value: groupValue,
-          title: section.name,
-          prependIcon: "mdi-book-multiple",
-          contents: groupContents,
-        });
-        const subsections = section.subcontents;
-        subsections?.forEach((subsection) => {
-          if (!("subcontents" in subsection)) {
-            const to =
-              "path" in subsection
-                ? `${chapterPath}/${subsection.path}`
-                : undefined;
-            groupContents.push({
-              type: "item",
-              title: subsection.name,
-              appendIcon: "mdi-book",
-              ...(to && { to }),
-            });
-          } else {
-            const subGroupContents: ListContents = [];
-            const subGroupValue = `${groupCounter++}-${subsection.name}`;
-            groupContents.push({
-              type: "group",
-              value: subGroupValue,
-              title: subsection.name,
-              contents: subGroupContents,
-            });
-            const subsubsections = subsection.subcontents;
-            subsubsections.forEach((subsubsection) => {
-              const to =
-                "path" in subsubsection
-                  ? `${chapterPath}/${subsubsection.path}`
-                  : undefined;
-              subGroupContents.push({
-                type: "item",
-                title: subsubsection.name,
-                appendIcon: "mdi-book",
-                ...(to && { to }),
-              });
-            });
-          }
-        });
+        _ret.push(createListGroupForSubSection(chapterPath, section));
       }
     });
     return _ret;
