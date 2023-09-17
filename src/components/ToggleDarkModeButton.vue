@@ -6,6 +6,6 @@
 </template>
 
 <script setup lang="ts">
-import { useDarkMode } from "@/utils/dark-mode";
+import { useDarkMode } from "@/utils/color-theme";
 const { isDark, toggleDark } = useDarkMode();
 </script>
