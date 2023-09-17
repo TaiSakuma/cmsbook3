@@ -1,4 +1,4 @@
-import { ref, watchEffect } from "vue";
+import { ref, computed, watchEffect, toValue } from "vue";
 import { useDisplay } from "vuetify";
 
 export function useDrawer() {
@@ -13,5 +13,7 @@ export function useDrawer() {
     drawer.value = !drawer.value;
   }
 
-  return { drawer, toggleDrawer };
+  const order = computed(() => (toValue(mobile) ? 0 : -1));
+
+  return { drawer, toggleDrawer, order };
 }

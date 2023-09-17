@@ -18,7 +18,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed, toValue } from "vue";
 import { useDisplay } from "vuetify";
 
 import { useColorTheme } from "@/utils/color-theme";
@@ -31,8 +30,7 @@ import NavigationDrawer from "@/components/navigation-drawer/NavigationDrawer.vu
 useSetTitle();
 useColorTheme();
 const { mobile } = useDisplay();
-const { drawer, toggleDrawer } = useDrawer();
-const order = computed(() => (toValue(mobile) ? 0 : -1));
+const { drawer, toggleDrawer, order } = useDrawer();
 </script>
 
 <style scoped>
