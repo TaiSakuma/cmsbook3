@@ -10,7 +10,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useContent } from "./content";
-import { usePrism } from "./prism";
 import { useMathJax } from "./mathjax";
 
 import Breadcrumbs from "./breadcrumbs/Breadcrumbs.vue";
@@ -18,7 +17,6 @@ import Breadcrumbs from "./breadcrumbs/Breadcrumbs.vue";
 const markdownBody = ref<HTMLElement>();
 const { content } = useContent();
 
-usePrism(markdownBody);
 useMathJax(markdownBody);
 </script>
 
