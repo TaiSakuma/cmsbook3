@@ -17,6 +17,11 @@ const routes: RouteRecordRaw[] = [
     component: () => import("@/views/About.vue"),
   },
   {
+    path: "/theme",
+    name: "theme",
+    component: () => import("@/views/theme/Theme.vue"),
+  },
+  {
     path: "/:chapter",
     name: "chapter",
     component: ChapterView,
