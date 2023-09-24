@@ -20,9 +20,7 @@ function editWithJQuery(htmlString: string, pathToCurrentDir: string) {
   tree.find("a:not([href^='#'])").attr("target", "_blank");
 
   // Add an icon after links with target="_blank" on text (not img)
-  tree.find("a[target='_blank']:not(:has(img))").each(function () {
-    $(this).append(` ${newTabIcon}`); // Add space before icon
-  });
+  tree.find("a[target='_blank']:not(:has(img))").append(` ${newTabIcon}`); // Add space before icon
 
   // Replace relative links with absolute links
   tree
