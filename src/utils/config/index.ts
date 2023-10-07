@@ -25,5 +25,5 @@ export const useProvideConfig = (config: MaybeRefOrGetter<Config>) =>
  * Read the config from the config file.
  * Use useProvideConfig to provide the config to the child components.
  */
-export const useLoadConfig = () =>
-  useLoadConfigT<Config>(defaultConfig, validateConfig);
+export const useLoadConfig = async () =>
+  await useLoadConfigT<Config>(defaultConfig, validateConfig);
