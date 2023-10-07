@@ -1,20 +1,18 @@
 <template>
-  <v-app>
-    <navigation-drawer v-model="drawer"></navigation-drawer>
-    <app-bar :order="order">
-      <template v-slot:prepend>
-        <v-app-bar-nav-icon @click="toggleDrawer" v-if="mobile">
-        </v-app-bar-nav-icon>
-      </template>
-    </app-bar>
-    <v-main>
-      <router-view v-slot="{ Component, route }">
-        <v-fade-transition leave-absolute>
-          <component :key="route.fullPath" :is="Component" />
-        </v-fade-transition>
-      </router-view>
-    </v-main>
-  </v-app>
+  <navigation-drawer v-model="drawer"></navigation-drawer>
+  <app-bar :order="order">
+    <template v-slot:prepend>
+      <v-app-bar-nav-icon @click="toggleDrawer" v-if="mobile">
+      </v-app-bar-nav-icon>
+    </template>
+  </app-bar>
+  <v-main>
+    <router-view v-slot="{ Component, route }">
+      <v-fade-transition leave-absolute>
+        <component :key="route.fullPath" :is="Component" />
+      </v-fade-transition>
+    </router-view>
+  </v-main>
 </template>
 
 <script setup lang="ts">
