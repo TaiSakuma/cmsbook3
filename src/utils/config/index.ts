@@ -1,4 +1,4 @@
-import type { MaybeRefOrGetter } from "vue";
+import type { ShallowRef } from "vue";
 
 import { defaultConfig, validateConfig } from "./config";
 import type { Config } from "./config";
@@ -18,8 +18,8 @@ export const useConfig = () => useConfigT<Config>();
  * Provide the config to the child components.
  * In the child components, use `useConfig` to get the config.
  */
-export const useProvideConfig = async (config: MaybeRefOrGetter<Config>) =>
-  await useProvideConfigT<Config>(config);
+export const useProvideConfig = (config: Config | ShallowRef<Config>) =>
+  useProvideConfigT<Config>(config);
 
 /**
  * Read the config from the config file.

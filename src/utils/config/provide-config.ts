@@ -1,16 +1,10 @@
-import { ref, provide, watchEffect, toValue } from "vue";
-import type { MaybeRefOrGetter, InjectionKey, Ref } from "vue";
+import type { InjectionKey, Ref, ShallowRef } from "vue";
+import { isRef, provide, shallowRef } from "vue";
 
 import { injectionKey } from "./key";
 
-/**
- * Provide the config of type `T` to the child components.
- * In the child components, use `useConfig` to get the config.
- */
-export async function useProvideConfigT<T>(config: MaybeRefOrGetter<T>) {
-  const configRef = ref(toValue(config)) as Ref<T>;
-  watchEffect(() => {
-    configRef.value = toValue(config);
-  });
+export function useProvideConfigT<T>(config: T | ShallowRef<T>) {
+  const configRef = isRef(config) ? config : shallowRef(config);
   provide(injectionKey as InjectionKey<Ref<T>>, configRef);
+  return { config: configRef };
 }

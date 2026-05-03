@@ -16,7 +16,7 @@
  * Load config asynchronously and provide it to the child components.
  */
 import { ref, watchEffect } from "vue";
-import type { ComputedRef } from "vue";
+import type { Ref } from "vue";
 import { useLoadConfig } from "@/utils/config";
 import { useProvideConfig, Config } from "@/utils/config";
 
@@ -28,7 +28,7 @@ watchEffect(() => {
 });
 
 if (!config.value) throw new Error("Config is null");
-await useProvideConfig(config as ComputedRef<Config>);
+useProvideConfig(config as Ref<Config>);
 
 // For test reactivity of loading.
 // await new Promise((resolve) => setTimeout(resolve, 1000));
