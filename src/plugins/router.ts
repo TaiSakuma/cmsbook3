@@ -32,7 +32,7 @@ const routes: RouteRecordRaw[] = [
     component: Page,
   },
   {
-    path: "/*",
+    path: "/:pathMatch(.*)*",
     name: "pagenotfound",
     component: PageNotFound,
   },
