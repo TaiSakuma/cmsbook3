@@ -15,7 +15,7 @@
 /**
  * Load config asynchronously and provide it to the child components.
  */
-import { ref, watchEffect, nextTick } from "vue";
+import { ref, watchEffect } from "vue";
 import type { ComputedRef } from "vue";
 import { useLoadConfig } from "@/utils/config";
 import { useProvideConfig, Config } from "@/utils/config";

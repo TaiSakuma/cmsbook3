@@ -28,7 +28,7 @@ import type { UseDynamicSchemeOptions } from "./dynamic-scheme";
 import { ColorNameMap } from "./colors";
 import type { ColorName } from "./colors";
 
-export interface UseDynamicColorsOptions extends UseDynamicSchemeOptions {}
+export type UseDynamicColorsOptions = UseDynamicSchemeOptions;
 
 export function useDynamicColors(options?: UseDynamicColorsOptions) {
   const { scheme, ...rest } = useDynamicScheme(options);

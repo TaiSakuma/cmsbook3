@@ -47,7 +47,7 @@ export const useStore = defineStore("main", () => {
   const chapterPath = computed(() => `/${routeParamChapter.value}`);
   watch(
     chapterPath,
-    async (value, oldValue) => {
+    async (value) => {
       sections.value = await getSectionsInChapter(value);
     },
     { immediate: true },
