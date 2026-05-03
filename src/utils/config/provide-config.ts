@@ -7,7 +7,7 @@ import { injectionKey } from "./key";
  * Provide the config of type `T` to the child components.
  * In the child components, use `useConfig` to get the config.
  */
-export function useProvideConfigT<T>(config: MaybeRefOrGetter<T>) {
+export async function useProvideConfigT<T>(config: MaybeRefOrGetter<T>) {
   const configRef = ref(toValue(config)) as Ref<T>;
   watchEffect(() => {
     configRef.value = toValue(config);

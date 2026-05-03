@@ -28,7 +28,7 @@ watchEffect(() => {
 });
 
 if (!config.value) throw new Error("Config is null");
-useProvideConfig(config as ComputedRef<Config>);
+await useProvideConfig(config as ComputedRef<Config>);
 
 // For test reactivity of loading.
 // await new Promise((resolve) => setTimeout(resolve, 1000));
