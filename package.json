@@ -2,6 +2,9 @@
   "name": "cmsbook3_bind",
   "version": "0.3.4",
   "private": true,
+  "engines": {
+    "node": "^20.0.0"
+  },
   "scripts": {
     "dev": "vite",
     "serve": "vite preview",
@@ -33,7 +36,7 @@
     "@fortawesome/fontawesome-free": "^5.15.3",
     "@mdi/font": "^7.2.96",
     "@types/jquery": "^3.5.22",
-    "@types/node": "^18.11.9",
+    "@types/node": "^20",
     "@types/path-browserify": "^1.0.0",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
     "@typescript-eslint/parser": "^6.7.4",
