@@ -17,7 +17,7 @@ In the steps below, placeholders like `<codeAndMathPage>` refer to keys defined 
 
 ## Preconditions
 
-- Dev server up at `http://localhost:8081` (run by the user via `yarn dev`). If not, ask — do not start it yourself; the user owns that process.
+- Dev server up at `http://localhost:8081` (run by the user via `pnpm dev`). If not, ask — do not start it yourself; the user owns that process.
 - Backend reachable at the URL configured in `public/config.json` (`cmsbookUrl`). Quick probe: `curl -sS -o /dev/null -w "%{http_code}\n" "$cmsbookUrl/.cmsbook3/title.json"` should return `200`.
 - Playwright MCP tools available: `mcp__playwright__browser_navigate`, `_click`, `_snapshot`, `_console_messages`, `_take_screenshot`, `_wait_for`, `_evaluate`, `_resize`, `_close`. Load via `ToolSearch` if not already loaded.
 

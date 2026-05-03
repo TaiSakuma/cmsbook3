@@ -4,17 +4,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Common Commands
 
-Package manager: **yarn** (lockfile is `yarn.lock`).
+Package manager: **pnpm** (lockfile is `pnpm-lock.yaml`; pinned via `packageManager` field in `package.json`).
 
 ```bash
-yarn install            # install deps
-yarn dev                # vite dev server on http://localhost:8081
-yarn build              # production build into dist/
-yarn serve              # preview the production build
-yarn lint               # eslint over src/
-yarn test               # run vitest (jsdom env)
-yarn test path/to/file.spec.ts   # run a single test file
-yarn test -t "name"     # run tests matching a name
+pnpm install            # install deps
+pnpm dev                # vite dev server on http://localhost:8081
+pnpm build              # production build into dist/
+pnpm serve              # preview the production build
+pnpm lint               # eslint over src/
+pnpm test               # run vitest (jsdom env)
+pnpm test path/to/file.spec.ts   # run a single test file
+pnpm test -t "name"     # run tests matching a name
 ```
 
 Build base path comes from `VITE_PUBLIC_PATH` (`.env` / `.env.production`); the
@@ -24,7 +24,7 @@ The TS path alias `@/*` maps to `src/*` (configured in both
 [tsconfig.json](tsconfig.json) and [vite.config.ts](vite.config.ts)). The
 `path` import is aliased to `path-browserify` for the browser bundle.
 
-CI runs only `yarn test` (see [.github/workflows/unit-test.yml](.github/workflows/unit-test.yml)).
+CI runs only `pnpm test` (see [.github/workflows/unit-test.yml](.github/workflows/unit-test.yml)).
 
 ## Architecture
 
@@ -117,4 +117,4 @@ colocated with the code they cover (see `src/utils/config/__tests__/`,
 - Composables follow Vue's `useXxx` naming and are colocated with their feature directory; prefer adding new logic as a composable next to the consumer rather than in a global utils dump.
 - Shared logic that is genuinely generic (like config provide/inject) is exposed as a `*T` generic helper plus a concrete wrapper — keep that split if you extend it.
 - Imports use the `@/...` alias rather than long relative paths.
-- The repo uses ESLint + Prettier ([.eslintrc.ts](.eslintrc.ts)) — run `yarn lint` before committing.
+- The repo uses ESLint + Prettier ([eslint.config.ts](eslint.config.ts)) — run `pnpm lint` before committing.
