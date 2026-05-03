@@ -1,3 +1,5 @@
+@use "sass:meta";
+
 // Fira Code: https://fonts.google.com/specimen/Fira+Code
 @import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;700&display=swap");
 
@@ -15,13 +17,13 @@ body,
 // - node_modules/highlight.js/styles/
 // file extension is changed to .scss.
 .v-theme--light {
-  @import "./github-markdown-light.scss";
-  @import "./highlight/github.scss";
+  @include meta.load-css("./github-markdown-light");
+  @include meta.load-css("./highlight/github");
 }
 
 .v-theme--dark {
-  @import "./github-markdown-dark.scss";
-  @import "./highlight/github-dark.scss";
+  @include meta.load-css("./github-markdown-dark");
+  @include meta.load-css("./highlight/github-dark");
 }
 
 /* https://github.com/sindresorhus/github-markdown-css */
