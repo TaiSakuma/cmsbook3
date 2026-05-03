@@ -2,6 +2,7 @@ import js from "@eslint/js";
 import prettierConfig from "eslint-config-prettier";
 import prettierPlugin from "eslint-plugin-prettier";
 import vuePlugin from "eslint-plugin-vue";
+import globals from "globals";
 import * as tseslint from "typescript-eslint";
 import vueParser from "vue-eslint-parser";
 
@@ -38,6 +39,7 @@ export default [
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: "module",
+      globals: { ...globals.browser },
     },
     plugins: { prettier: prettierPlugin },
     rules: {
