@@ -102,10 +102,6 @@ type KeyOfMDCKebab = KebabCase<KeyOfMDC>;
 type Missing = Exclude<KeyOfMDCKebab, ColorName>;
 type Extra = Exclude<ColorName, KeyOfMDCKebab>;
 
-// If these are not never, the expected errors below will not occur.
-
-// @ts-expect-error
-const missing: Missing = null as any;
-
-// @ts-expect-error
-const extra: Extra = null as any;
+// Type error if not `never`.
+true satisfies Missing extends never ? true : false;
+true satisfies Extra extends never ? true : false;
