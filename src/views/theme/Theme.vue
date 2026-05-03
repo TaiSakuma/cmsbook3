@@ -13,4 +13,3 @@
   place-items: center;
 }
 </style>
-

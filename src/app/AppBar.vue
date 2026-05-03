@@ -6,8 +6,8 @@
     <template v-slot:title>
       <router-link
         to="/"
-        v-text="title"
         class="text-primary font-weight-medium text-decoration-none"
+        v-text="title"
       >
       </router-link>
     </template>

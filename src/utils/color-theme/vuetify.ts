@@ -27,7 +27,7 @@ export function useDarkModeOnVuetify() {
 
 export function useDynamicColorsOnVuetify(
   dynamicColors: MaybeRefOrGetter<DynamicColors>,
-  isDark: MaybeRefOrGetter<boolean>
+  isDark: MaybeRefOrGetter<boolean>,
 ) {
   // https://vuetifyjs.com/en/features/theme/
   const missing = computed(() => createMissingColors(toValue(dynamicColors)));
@@ -37,7 +37,7 @@ export function useDynamicColorsOnVuetify(
   }));
   const { themes } = useTheme();
   const theme = computed(
-    () => themes.value[toValue(isDark) ? "dark" : "light"]
+    () => themes.value[toValue(isDark) ? "dark" : "light"],
   );
 
   watchEffect(() => {

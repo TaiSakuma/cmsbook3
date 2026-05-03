@@ -1,8 +1,8 @@
 <template>
   <v-list
     v-if="listContents.length"
-    nav
     v-model:opened="opened"
+    nav
     open-strategy="multiple"
   >
     <template v-for="listContent in listContents">

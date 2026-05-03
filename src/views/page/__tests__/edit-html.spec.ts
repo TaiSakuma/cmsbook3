@@ -12,7 +12,7 @@ describe("useEditHtml()", () => {
 
   it("external links", () => {
     const src = ref(
-      "[link1](https://example.com), [link2](https://example.com)"
+      "[link1](https://example.com), [link2](https://example.com)",
     );
     const { html } = useMarkdown(src);
     const edited = useEditHtml(html, ref(""));
@@ -31,7 +31,7 @@ describe("useEditHtml()", () => {
 
   it("link on image", () => {
     const src = ref(
-      "[<img src='https://example.com/image.png'>](https://example.com/image.png)"
+      "[<img src='https://example.com/image.png'>](https://example.com/image.png)",
     );
     const { html } = useMarkdown(src);
     const edited = useEditHtml(html, ref(""));

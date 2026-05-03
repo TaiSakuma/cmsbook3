@@ -3,10 +3,10 @@ import $ from "jquery";
 
 export function useEditHtml(
   html: MaybeRef<string>,
-  pathToCurrentDir: MaybeRef<string>
+  pathToCurrentDir: MaybeRef<string>,
 ) {
   const edited = computed(() =>
-    editWithJQuery(unref(html), unref(pathToCurrentDir))
+    editWithJQuery(unref(html), unref(pathToCurrentDir)),
   );
   return edited;
 }
@@ -25,7 +25,7 @@ function editWithJQuery(htmlString: string, pathToCurrentDir: string) {
   // Replace relative links with absolute links
   tree
     .find(
-      "a:not([href^='http:'],[href^='https:'],[href^='file:'],[href^='/'],[href^='#'])"
+      "a:not([href^='http:'],[href^='https:'],[href^='file:'],[href^='/'],[href^='#'])",
     )
     .each(function () {
       const attr = this.getAttribute("href");

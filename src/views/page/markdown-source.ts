@@ -19,7 +19,8 @@ export function useMarkdownSource() {
   });
 
   const path = computed(
-    () => `/${route.params.chapter}/${route.params.section}/${pageConcat.value}`
+    () =>
+      `/${route.params.chapter}/${route.params.section}/${pageConcat.value}`,
   );
 
   watchEffect(async () => {

@@ -41,5 +41,5 @@ const generateColors = (scheme: DynamicScheme) =>
     {},
     ...Object.entries(ColorNameMap).map(([colorName, dynamicColor]) => ({
       [colorName]: hexFromArgb(dynamicColor.getArgb(scheme)),
-    }))
+    })),
   ) as { [k in ColorName]: string };

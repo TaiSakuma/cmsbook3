@@ -4,7 +4,7 @@ import * as path from "path";
 
 export async function useLoadConfigT<T extends object>(
   defaultConfig: Partial<T> = {},
-  validate: (config: T) => void = () => true
+  validate: (config: T) => void = () => true,
 ) {
   const { configUrl } = useConfigUrl();
 
@@ -19,7 +19,7 @@ export async function useLoadConfigT<T extends object>(
 
   // null until data is loaded
   const toBeValidated = computed<T | null>(
-    () => data.value && { ...defaultConfig, ...(data.value ?? {}) }
+    () => data.value && { ...defaultConfig, ...(data.value ?? {}) },
   );
 
   const validationError = computed(() => {
@@ -34,11 +34,11 @@ export async function useLoadConfigT<T extends object>(
   });
 
   const error = computed(
-    () => (fetchError.value as Error | undefined) || validationError.value
+    () => (fetchError.value as Error | undefined) || validationError.value,
   );
 
   const config = computed<T | null>(() =>
-    error.value ? null : toBeValidated.value
+    error.value ? null : toBeValidated.value,
   );
 
   return {
@@ -50,7 +50,7 @@ export async function useLoadConfigT<T extends object>(
 
 function useConfigUrl() {
   const configUrl = ref(
-    path.join(import.meta.env.VITE_PUBLIC_PATH, "config.json")
+    path.join(import.meta.env.VITE_PUBLIC_PATH, "config.json"),
   );
 
   return {

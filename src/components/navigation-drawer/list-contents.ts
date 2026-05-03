@@ -52,14 +52,14 @@ export function useListContents() {
 
   const createListGroup = (
     chapterPath: string,
-    section: SubSection
+    section: SubSection,
   ): ListGroup => {
     const groupValue = createGroupValue(section.name);
     const groupContents =
       section.subcontents?.map((subsection) =>
         "path" in subsection
           ? createListItem(chapterPath, subsection)
-          : createListGroup(chapterPath, subsection)
+          : createListGroup(chapterPath, subsection),
       ) ?? [];
     return {
       type: "group" as const,
@@ -77,7 +77,7 @@ export function useListContents() {
     return sections.value.map((section) =>
       "path" in section
         ? createListItem(chapterPath, section)
-        : createListGroup(chapterPath, section)
+        : createListGroup(chapterPath, section),
     );
   });
 

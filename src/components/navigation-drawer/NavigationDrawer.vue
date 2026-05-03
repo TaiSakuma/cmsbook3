@@ -4,7 +4,7 @@
       <top></top>
     </template>
     <v-fade-transition leave-absolute>
-      <list :key="chapter.path" v-if="chapter"></list>
+      <list v-if="chapter" :key="chapter.path"></list>
     </v-fade-transition>
     <template v-slot:append>
       <bottom></bottom>

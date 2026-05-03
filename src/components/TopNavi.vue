@@ -1,6 +1,6 @@
 <template>
   <v-tabs v-model="tab" align-tabs="title">
-    <v-tab :value="chapter.name" :to="chapter.path" v-for="chapter in chapters">
+    <v-tab v-for="chapter in chapters" :value="chapter.name" :to="chapter.path">
       <span class="text-none"> {{ chapter.name }} </span>
     </v-tab>
   </v-tabs>

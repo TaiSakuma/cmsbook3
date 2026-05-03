@@ -83,7 +83,7 @@ describe("useLoadConfigT", () => {
     vi.mocked(fetch).mockResolvedValue(createResponse(responseData));
     const { config, loading, error } = await useLoadConfigT<Config>(
       defaultConfig,
-      validateConfig
+      validateConfig,
     );
     expect(loading.value).toBe(false);
     expect(error.value).toBeUndefined();
@@ -97,7 +97,7 @@ describe("useLoadConfigT", () => {
     vi.mocked(fetch).mockResolvedValue(createResponse(responseData));
     const { config, loading, error } = await useLoadConfigT<Config>(
       defaultConfig,
-      validateConfig
+      validateConfig,
     );
     expect(loading.value).toBe(false);
     expect(error.value?.message).toEqual("apiUrl is empty");

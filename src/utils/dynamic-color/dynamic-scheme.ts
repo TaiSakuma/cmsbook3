@@ -23,21 +23,21 @@ const optDefault: Required<UnwrapRef<UseDynamicSchemeOptions>> = {
 export function useDynamicScheme(options?: UseDynamicSchemeOptions) {
   const schemeName = ref(options?.schemeName ?? optDefault.schemeName);
   const sourceColorHex = ref(
-    options?.sourceColorHex ?? optDefault.sourceColorHex
+    options?.sourceColorHex ?? optDefault.sourceColorHex,
   );
   const dark = ref(options?.dark ?? optDefault.dark);
   const contrastLevel = ref(options?.contrastLevel ?? optDefault.contrastLevel);
   const schemeClass = computed(() => SchemeNameMap[schemeName.value]);
   const sourceColorHct = computed(() =>
-    Hct.fromInt(argbFromHex(sourceColorHex.value))
+    Hct.fromInt(argbFromHex(sourceColorHex.value)),
   );
   const scheme = computed(
     () =>
       new schemeClass.value(
         sourceColorHct.value,
         dark.value,
-        contrastLevel.value
-      )
+        contrastLevel.value,
+      ),
   );
   return {
     scheme,

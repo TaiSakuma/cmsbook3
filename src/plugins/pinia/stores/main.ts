@@ -34,7 +34,7 @@ export const useStore = defineStore("main", () => {
     type ChapterMap = { [key: string]: Path };
     return chapters.value.reduce(
       (a, c) => ({ ...a, [c.path]: c }),
-      {} as ChapterMap
+      {} as ChapterMap,
     );
   });
 
@@ -50,7 +50,7 @@ export const useStore = defineStore("main", () => {
     async (value, oldValue) => {
       sections.value = await getSectionsInChapter(value);
     },
-    { immediate: true }
+    { immediate: true },
   );
   // The watchEffect commented out below is in principle concise equivalent to
   // the watch above. However, this somehow gets triggered on every route
@@ -60,7 +60,7 @@ export const useStore = defineStore("main", () => {
   // });
 
   const chapter = computed<Path | undefined>(
-    () => chapterMap.value[chapterPath.value]
+    () => chapterMap.value[chapterPath.value],
   );
 
   return {

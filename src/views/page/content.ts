@@ -7,11 +7,11 @@ import { useMarkdownSource } from "./markdown-source";
 import { useParse } from "./parse";
 
 export function useContent() {
-const { config } = useConfig();
+  const { config } = useConfig();
   const cmsbookUrl = ref(config.value.cmsbookUrl);
   const route = useRoute();
   const pathToCurrentDir = computed(
-    () => toValue(cmsbookUrl) + route.path.match(/.*\//)
+    () => toValue(cmsbookUrl) + route.path.match(/.*\//),
   );
   const { md } = useMarkdownSource();
 
