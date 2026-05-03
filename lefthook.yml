@@ -1,0 +1,7 @@
+pre-commit:
+  parallel: true
+  commands:
+    eslint:
+      glob: "*.{ts,vue,js}"
+      run: yarn eslint --fix {staged_files}
+      stage_fixed: true
